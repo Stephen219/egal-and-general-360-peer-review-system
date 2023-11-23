@@ -15,7 +15,7 @@ CREATE TABLE users (
 
 CREATE TABLE forms (
    form_id INT AUTO_INCREMENT PRIMARY KEY,
-   user_id INT, -
+   user_id INT,
    form_name VARCHAR(100) NOT NULL,
    form_status VARCHAR(20) DEFAULT 'in progress',
    approval_status BOOLEAN DEFAULT FALSE,

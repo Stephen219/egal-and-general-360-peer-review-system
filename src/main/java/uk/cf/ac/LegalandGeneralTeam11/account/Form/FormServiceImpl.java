@@ -1,9 +1,12 @@
 package uk.cf.ac.LegalandGeneralTeam11.account.Form;
 
-import java.util.List;
+import org.springframework.stereotype.Service;
 
-public class FormServiceImpl {
-    FormRequestRepository formRequestRepository ;
+import java.util.List;
+@Service
+
+public class FormServiceImpl implements FormRequestService {
+    private FormRequestRepository formRequestRepository ;
 
     /**
      * Constructor for FormServiceImpl
@@ -56,6 +59,10 @@ public class FormServiceImpl {
 
     public List<FormRequest> getAllByUser(Long userId) {
         return formRequestRepository.getAllByUser(userId);}
+    public void createFormRequest(FormRequest formRequest) {
+        System.out.println("i have created a form request");
+
+    }
 
 
 

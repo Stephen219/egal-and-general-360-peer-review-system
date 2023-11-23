@@ -11,4 +11,13 @@ public class FormRequest {
     private Long userId;
     private String formName;
     private String approvalStatus = "pending";
+
+    public FormRequest() {
+        this.formId = 0L;
+        this.userId = 0L;
+        this.formName = "";
+        this.approvalStatus = "";
+    }
+
+
 }

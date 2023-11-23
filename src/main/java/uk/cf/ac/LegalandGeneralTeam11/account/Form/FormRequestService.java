@@ -1,8 +1,10 @@
 package uk.cf.ac.LegalandGeneralTeam11.account.Form;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
-public interface FormService {
+public interface FormRequestService {
     /**
      * Save a form request.
      *
@@ -31,14 +33,12 @@ public interface FormService {
      * @return List of form requests for a specific user.
      */
     List<FormRequest> getAllByUser(Long userId);
+    /**
+     * Create a form request.
+     *
+     * @param formRequest The form request to be created.
+     */
 
 
-
-
-
-
-
-
-
-
+    void createFormRequest(FormRequest formRequest);
 }

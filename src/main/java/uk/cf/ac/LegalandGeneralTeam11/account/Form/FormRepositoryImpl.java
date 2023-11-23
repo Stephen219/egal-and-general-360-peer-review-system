@@ -1,10 +1,12 @@
 package uk.cf.ac.LegalandGeneralTeam11.account.Form;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+@Repository
 
-public class FormRepositoryImpl {
+public class FormRepositoryImpl implements FormRequestRepository {
     JdbcTemplate jdbcTemplate;
     /**
      * Default constructor
