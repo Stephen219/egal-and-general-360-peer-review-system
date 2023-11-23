@@ -11,22 +11,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class LoginController {
 
-    // Mocking a user (you might use a database in a real application)
+    // Create a user object with a username and password
     private User user = new User("user", "password");
 
     @GetMapping("/login")
     public String login() {
-        return "login"; // This will return the login.html Thymeleaf template
+        return "login"; // This will return the login.html template
     }
 
     @PostMapping("/login")
     public String loginSubmit(@RequestParam String username, @RequestParam String password, Model model) {
         if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-            model.addAttribute("username", username); // Use flash attribute for redirection
+            model.addAttribute("username", username); // Add the username to the model
             return "/home"; // Redirect to the home page upon successful login
         } else {
             model.addAttribute("error", "Incorrect details"); // Add an error attribute to the model
-            return "/login"; // Redirect back to the login page with an error parameter
+            return "/login"; // Return the login page with an error parameter
         }
     }
 
