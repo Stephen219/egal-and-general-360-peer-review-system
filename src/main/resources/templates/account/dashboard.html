@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<html x-data="data()" lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/build.css}" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+</head>
+
+<body>
+<div class="flex h-screen bg-gray-200" :class="{ 'overflow-hidden': isSideMenuOpen }">
+
+    <!-- Desktop sidebar -->
+    <aside class="z-20 flex-shrink-0 hidden w-60 pl-2 overflow-y-auto bg-gray-800 md:block round-md">
+        <div class="round-md mt-5">
+            <div class="text-white round-md">
+                <div class="flex bg-gray-800">
+                    <div class="flex py-3 px-2 items-center">
+
+                        <img  th:src="@{legal.png}" alt="logo" class="h-auto w-1/2 rounded-3xl ml-7">
+
+
+                    </div>
+                </div>
+                <div class="flex flex-col items-center space-y-3">
+                    <img alt="user profile picture"
+                         src="https://th.bing.com/th/id/OIP.eGHa3HgHxIlTHmcvKNDs7AHaGe?rs=1&pid=ImgDetMain"
+                         class="w-auto h-28 rounded-full mt-3" />
+                    <span class="text-xl font-semibold capitalize">John member</span>
+                </div>
+                <div class="flex flex-col space-y-16">
+                    <ul class="mt-6 leading-10 ml-5 list-disc list-inside list-none">
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
+                               href=" #">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg>
+                                <span class="ml-4">DASHBOARD</span>
+                            </a>
+                        </li>
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
+                               href=" #">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                                </svg>
+
+                                <span class="ml-4 uppercase">Analytics</span>
+                            </a>
+                        </li>
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
+                               href=" #">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="28" height="30"
+                                     viewBox="0 0 50 50" style="fill:#FFFFFF;">
+                                    <path
+                                            d="M 41.707031 13.792969 L 30.207031 2.292969 C 30.019531 2.105469 29.765625 2 29.5 2 L 11.492188 2 C 9.566406 2 8 3.5625 8 5.480469 L 8 43.902344 C 8 46.160156 9.84375 48 12.113281 48 L 37.886719 48 C 40.15625 48 42 46.160156 42 43.902344 L 42 14.5 C 42 14.234375 41.894531 13.980469 41.707031 13.792969 Z M 17 37 C 16.449219 37 16 36.550781 16 36 C 16 35.449219 16.449219 35 17 35 C 17.550781 35 18 35.449219 18 36 C 18 36.550781 17.550781 37 17 37 Z M 17 32 C 16.449219 32 16 31.550781 16 31 C 16 30.449219 16.449219 30 17 30 C 17.550781 30 18 30.449219 18 31 C 18 31.550781 17.550781 32 17 32 Z M 17 27 C 16.449219 27 16 26.550781 16 26 C 16 25.449219 16.449219 25 17 25 C 17.550781 25 18 25.449219 18 26 C 18 26.550781 17.550781 27 17 27 Z M 33 37 L 21 37 L 21 35 L 33 35 Z M 33 32 L 21 32 L 21 30 L 33 30 Z M 33 27 L 21 27 L 21 25 L 33 25 Z M 31.667969 14 C 30.746094 14 30 13.253906 30 12.332031 L 30 4.914063 L 39.085938 14 Z">
+                                    </path>
+                                </svg>
+                                <span class="ml-4 uppercase">My forms</span>
+                            </a>
+                        </li>
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
+                               href=" #">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="26px"
+                                     height="24px" fill="#f2eded" mirror-in-rtl="true">
+
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                    </g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path fill="#fafafa"
+                                              d="M7.63 12.82a1 1 0 0 0 1.4.195 1.022 1.022 0 0 0 .4-.778v-.072A6.174 6.174 0 0 1 10.5 8.32a3.672 3.672 0 0 1 .71-.72l.612.812a.973.973 0 0 0 .96.362 1 1 0 0 0 .786-.7l1.394-4.8A1 1 0 0 0 14 2H9.007a1.048 1.048 0 0 0-.6.22 1.032 1.032 0 0 0-.293.358A.985.985 0 0 0 8.2 3.6l.612.812C7.092 5.708 5.95 10.44 7.63 12.82z">
+                                        </path>
+                                        <path fill="#fafafa"
+                                              d="M18 8a.34.34 0 0 1-.01.1V17a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1l.01-9a1 1 0 1 1 2 0 .34.34 0 0 1-.01.1V16h13.99V8H16a1 1 0 1 1 2 0z">
+                                        </path>
+                                    </g>
+                                </svg>
+
+
+                                <span class="ml-4 uppercase">export Results</span>
+                            </a>
+                        </li>
+
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
+                               href=" #">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg" fill="#f3f2f2">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                    </g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <title>support</title>
+                                        <rect width="24" height="24" fill="none"></rect>
+                                        <path
+                                                d="M12,2a8,8,0,0,0-8,8v1.9A2.92,2.92,0,0,0,3,14a2.88,2.88,0,0,0,1.94,2.61C6.24,19.72,8.85,22,12,22h3V20H12c-2.26,0-4.31-1.7-5.34-4.39l-.21-.55L5.86,15A1,1,0,0,1,5,14a1,1,0,0,1,.5-.86l.5-.29V11a1,1,0,0,1,1-1H17a1,1,0,0,1,1,1v5H13.91a1.5,1.5,0,1,0-1.52,2H20a2,2,0,0,0,2-2V14a2,2,0,0,0-2-2V10A8,8,0,0,0,12,2Z">
+                                        </path>
+                                    </g>
+                                </svg>
+
+
+
+                                <span class="ml-4 uppercase">support</span>
+                            </a>
+                        </li>
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
+                               href=" #">
+                                <svg width="24px" height="24px" viewBox="0 0 48 48"
+                                     xmlns="http://www.w3.org/2000/svg" fill="#f7f7f7">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                    </g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path d="M0 0h48v48H0z" fill="none"></path>
+                                        <g id="Shopicon">
+                                            <path
+                                                    d="M33.843,26.914L24,36l-9.843-9.086C8.674,30.421,5,36.749,5,44h38C43,36.749,39.326,30.421,33.843,26.914z">
+                                            </path>
+                                            <path
+                                                    d="M24,28c3.55,0,6.729-1.55,8.926-4C34.831,21.876,36,19.078,36,16c0-6.627-5.373-12-12-12S12,9.373,12,16 c0,3.078,1.169,5.876,3.074,8C17.271,26.45,20.45,28,24,28z">
+                                            </path>
+                                        </g>
+                                    </g>
+                                </svg>
+
+
+
+
+                                <span class="ml-4 uppercase">Account</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+
+                    <li class="flex ml-5 space-x-2">
+                        <a class="text-white inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md "
+                           href="#">
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path
+                                            d="M9.00195 7C9.01406 4.82497 9.11051 3.64706 9.87889 2.87868C10.7576 2 12.1718 2 15.0002 2L16.0002 2C18.8286 2 20.2429 2 21.1215 2.87868C22.0002 3.75736 22.0002 5.17157 22.0002 8L22.0002 16C22.0002 18.8284 22.0002 20.2426 21.1215 21.1213C20.2429 22 18.8286 22 16.0002 22H15.0002C12.1718 22 10.7576 22 9.87889 21.1213C9.11051 20.3529 9.01406 19.175 9.00195 17"
+                                            stroke="#eff1f5" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path d="M15 12L2 12M2 12L5.5 9M2 12L5.5 15" stroke="#eff1f5" stroke-width="1.5"
+                                          stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+
+                            <span class="uppercase ml-4">Log out</span>
+                        </a>
+                    </li>
+
+                </div>
+            </div>
+        </div>
+
+    </aside>
+
+
+    <div x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
+         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"></div>
+
+    <aside
+            class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto  bg-gray-900 dark:bg-gray-800 md:hidden"
+            x-show="isSideMenuOpen" x-transition:enter="transition ease-in-out duration-150"
+            x-transition:enter-start="opacity-0 transform -translate-x-20" x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in-out duration-150" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0 transform -translate-x-20" @click.away="closeSideMenu"
+            @keydown.escape="closeSideMenu">
+        <div>
+            <div class="text-white round-md">
+                <div class="flex bg-gray-800">
+                    <div class="flex py-3 px-2 items-center">
+                        <img th:src="@{~/legal.png}" alt="logso" class="h-auto w-1/2 rounded-3xl ml-7"/>
+
+
+                    </div>
+                </div>
+                <div class="flex flex-col items-center space-y-3">
+                    <img alt="user profile picture"
+                         src="https://th.bing.com/th/id/OIP.eGHa3HgHxIlTHmcvKNDs7AHaGe?rs=1&pid=ImgDetMain"
+                         class="w-auto h-28 rounded-full mt-3" />
+                    <span class="text-xl font-semibold capitalize">John member</span>
+                </div>
+                <div class="flex flex-col space-y-16">
+                    <ul class="mt-6 leading-10 ml-5 list-disc list-inside list-none">
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
+                               href=" #">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg>
+                                <span class="ml-4">DASHBOARD</span>
+                            </a>
+                        </li>
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
+                               href=" #">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                                </svg>
+
+                                <span class="ml-4 uppercase">Analytics</span>
+                            </a>
+                        </li>
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
+                               href=" #">
+                                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="28" height="30"
+                                     viewBox="0 0 50 50" style="fill:#FFFFFF;">
+                                    <path
+                                            d="M 41.707031 13.792969 L 30.207031 2.292969 C 30.019531 2.105469 29.765625 2 29.5 2 L 11.492188 2 C 9.566406 2 8 3.5625 8 5.480469 L 8 43.902344 C 8 46.160156 9.84375 48 12.113281 48 L 37.886719 48 C 40.15625 48 42 46.160156 42 43.902344 L 42 14.5 C 42 14.234375 41.894531 13.980469 41.707031 13.792969 Z M 17 37 C 16.449219 37 16 36.550781 16 36 C 16 35.449219 16.449219 35 17 35 C 17.550781 35 18 35.449219 18 36 C 18 36.550781 17.550781 37 17 37 Z M 17 32 C 16.449219 32 16 31.550781 16 31 C 16 30.449219 16.449219 30 17 30 C 17.550781 30 18 30.449219 18 31 C 18 31.550781 17.550781 32 17 32 Z M 17 27 C 16.449219 27 16 26.550781 16 26 C 16 25.449219 16.449219 25 17 25 C 17.550781 25 18 25.449219 18 26 C 18 26.550781 17.550781 27 17 27 Z M 33 37 L 21 37 L 21 35 L 33 35 Z M 33 32 L 21 32 L 21 30 L 33 30 Z M 33 27 L 21 27 L 21 25 L 33 25 Z M 31.667969 14 C 30.746094 14 30 13.253906 30 12.332031 L 30 4.914063 L 39.085938 14 Z">
+                                    </path>
+                                </svg>
+                                <span class="ml-4 uppercase">My forms</span>
+                            </a>
+                        </li>
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
+                               href=" #">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="26px"
+                                     height="24px" fill="#f2eded" mirror-in-rtl="true">
+
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                    </g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path fill="#fafafa"
+                                              d="M7.63 12.82a1 1 0 0 0 1.4.195 1.022 1.022 0 0 0 .4-.778v-.072A6.174 6.174 0 0 1 10.5 8.32a3.672 3.672 0 0 1 .71-.72l.612.812a.973.973 0 0 0 .96.362 1 1 0 0 0 .786-.7l1.394-4.8A1 1 0 0 0 14 2H9.007a1.048 1.048 0 0 0-.6.22 1.032 1.032 0 0 0-.293.358A.985.985 0 0 0 8.2 3.6l.612.812C7.092 5.708 5.95 10.44 7.63 12.82z">
+                                        </path>
+                                        <path fill="#fafafa"
+                                              d="M18 8a.34.34 0 0 1-.01.1V17a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1l.01-9a1 1 0 1 1 2 0 .34.34 0 0 1-.01.1V16h13.99V8H16a1 1 0 1 1 2 0z">
+                                        </path>
+                                    </g>
+                                </svg>
+
+
+                                <span class="ml-4 uppercase">export Results</span>
+                            </a>
+                        </li>
+
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
+                               href=" #">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24"
+                                     xmlns="http://www.w3.org/2000/svg" fill="#f3f2f2">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                    </g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <title>support</title>
+                                        <rect width="24" height="24" fill="none"></rect>
+                                        <path
+                                                d="M12,2a8,8,0,0,0-8,8v1.9A2.92,2.92,0,0,0,3,14a2.88,2.88,0,0,0,1.94,2.61C6.24,19.72,8.85,22,12,22h3V20H12c-2.26,0-4.31-1.7-5.34-4.39l-.21-.55L5.86,15A1,1,0,0,1,5,14a1,1,0,0,1,.5-.86l.5-.29V11a1,1,0,0,1,1-1H17a1,1,0,0,1,1,1v5H13.91a1.5,1.5,0,1,0-1.52,2H20a2,2,0,0,0,2-2V14a2,2,0,0,0-2-2V10A8,8,0,0,0,12,2Z">
+                                        </path>
+                                    </g>
+                                </svg>
+
+
+
+                                <span class="ml-4 uppercase">support</span>
+                            </a>
+                        </li>
+                        <li class="relative px-2 py-1 ">
+                            <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
+                               href=" #">
+                                <svg width="24px" height="24px" viewBox="0 0 48 48"
+                                     xmlns="http://www.w3.org/2000/svg" fill="#f7f7f7">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                    </g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path d="M0 0h48v48H0z" fill="none"></path>
+                                        <g id="Shopicon">
+                                            <path
+                                                    d="M33.843,26.914L24,36l-9.843-9.086C8.674,30.421,5,36.749,5,44h38C43,36.749,39.326,30.421,33.843,26.914z">
+                                            </path>
+                                            <path
+                                                    d="M24,28c3.55,0,6.729-1.55,8.926-4C34.831,21.876,36,19.078,36,16c0-6.627-5.373-12-12-12S12,9.373,12,16 c0,3.078,1.169,5.876,3.074,8C17.271,26.45,20.45,28,24,28z">
+                                            </path>
+                                        </g>
+                                    </g>
+                                </svg>
+
+
+
+
+                                <span class="ml-4 uppercase">Account</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+
+                    <li class="flex ml-5 space-x-2">
+                        <a class="text-white inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md "
+                           href="#">
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path
+                                            d="M9.00195 7C9.01406 4.82497 9.11051 3.64706 9.87889 2.87868C10.7576 2 12.1718 2 15.0002 2L16.0002 2C18.8286 2 20.2429 2 21.1215 2.87868C22.0002 3.75736 22.0002 5.17157 22.0002 8L22.0002 16C22.0002 18.8284 22.0002 20.2426 21.1215 21.1213C20.2429 22 18.8286 22 16.0002 22H15.0002C12.1718 22 10.7576 22 9.87889 21.1213C9.11051 20.3529 9.01406 19.175 9.00195 17"
+                                            stroke="#eff1f5" stroke-width="1.5" stroke-linecap="round"></path>
+                                    <path d="M15 12L2 12M2 12L5.5 9M2 12L5.5 15" stroke="#eff1f5" stroke-width="1.5"
+                                          stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+
+                            <span class="uppercase ml-4">Log out</span>
+                        </a>
+                    </li>
+
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <div class="flex flex-col flex-1 w-full overflow-y-auto">
+        <header class="z-40 py-4  bg-gray-800  ">
+            <div class="flex items-center justify-between h-8 px-6 mx-auto">
+
+                <button class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
+                        @click="toggleSideMenu" aria-label="Menu">
+                    <x-heroicon-o-menu class="w-6 h-6 text-white" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 6h16M4 12h16M4 18h7" />
+                    </svg>
+                </button>
+
+                <!-- Search Input -->
+                <div class="flex justify-center  mt-2 mr-4">
+                    <div class="relative flex w-full flex-wrap items-stretch mb-3">
+                        <input type="search" placeholder="Search" {{ $attributes }}
+                               class="form-input px-3 py-2 placeholder-gray-400 text-gray-700 relative bg-white rounded-lg text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pr-10" />
+                        <span
+                                class="z-10 h-full leading-snug font-normal  text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 right-0 pr-3 py-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -mt-1" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </span>
+                    </div>
+                </div>
+
+                <ul class="flex items-center flex-shrink-0 space-x-6">
+
+
+
+
+                    <li>
+
+
+                        <a  th:href="@{/form/new}" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Request Form</a>
+
+
+
+
+
+                    <li class="relative">
+                        <button
+                                class="p-2 bg-white text-green-400 align-middle rounded-full hover:text-white hover:bg-green-400 focus:outline-none "
+                                @click="toggleProfileMenu" @keydown.escape="closeProfileMenu" aria-label="Account"
+                                aria-haspopup="true">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                     viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                        </button>
+                        <template x-if="isProfileMenuOpen">
+                            <ul x-transition:leave="transition ease-in duration-150"
+                                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                                @click.away="closeProfileMenu" @keydown.escape="closeProfileMenu"
+                                class="absolute right-0 w-56 p-2 mt-2 space-y-2 text-gray-600 bg-green-400 border border-green-500 rounded-md shadow-md"
+                                aria-label="submenu">
+                                <li class="flex">
+                                    <a class=" text-white inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800"
+                                       href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none"
+                                             viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span>Profile</span>
+                                    </a>
+                                </li>
+                                <li class="flex">
+                                    <a class="text-white inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800"
+                                       href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none"
+                                             viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                        </svg>
+                                        <span>Log out</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </template>
+                    </li>
+                </ul>
+
+            </div>
+        </header>
+        <main>
+            <div>
+                hello user
+            </div>
+        </main>
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    function data() {
+
+        return {
+
+            isSideMenuOpen: false,
+            toggleSideMenu() {
+                this.isSideMenuOpen = !this.isSideMenuOpen
+            },
+            closeSideMenu() {
+                this.isSideMenuOpen = false
+            },
+            isNotificationsMenuOpen: false,
+            toggleNotificationsMenu() {
+                this.isNotificationsMenuOpen = !this.isNotificationsMenuOpen
+            },
+            closeNotificationsMenu() {
+                this.isNotificationsMenuOpen = false
+            },
+            isProfileMenuOpen: false,
+            toggleProfileMenu() {
+                this.isProfileMenuOpen = !this.isProfileMenuOpen
+            },
+            closeProfileMenu() {
+                this.isProfileMenuOpen = false
+            },
+            isPagesMenuOpen: false,
+            togglePagesMenu() {
+                this.isPagesMenuOpen = !this.isPagesMenuOpen
+            },
+
+        }
+    }
+</script>
+
+</body>
+
+</html>
