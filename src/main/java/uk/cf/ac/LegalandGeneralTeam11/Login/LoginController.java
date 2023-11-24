@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController {
 
-    private final UserService userService;
+    private final LoginService loginService;
 
     @Autowired
-    public LoginController(UserService userService) {
+    public LoginController(LoginService loginService) {
 
-        this.userService = userService;
+        this.loginService = loginService;
     }
 
     @GetMapping("/login")
@@ -27,7 +27,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String processLogin(@ModelAttribute("loginForm") @RequestParam String username, @RequestParam String password, Model model) {
-        boolean isAuthenticated = userService.authenticate(username, password);
+        boolean isAuthenticated = loginService.authenticate(username, password);
 
         if (isAuthenticated) {
             // Successful login

@@ -5,12 +5,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class LoginService {
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public UserService(JdbcTemplate jdbcTemplate) {
+    public LoginService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
