@@ -1,4 +1,4 @@
-package uk.cf.ac.LegalandGeneralTeam11;
+package uk.cf.ac.LegalandGeneralTeam11.Login;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
