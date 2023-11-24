@@ -1,6 +1,6 @@
 package uk.cf.ac.LegalandGeneralTeam11.Login;
 
-        import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.stereotype.Controller;
         import org.springframework.ui.Model;
         import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +15,14 @@ public class LoginController {
 
     @Autowired
     public LoginController(UserService userService) {
+
         this.userService = userService;
     }
 
     @GetMapping("/login")
     public String showLoginPage(Model model) {
         model.addAttribute("loginForm", new ModelAndView());
-        return "login";
+        return "Login";
     }
 
     @PostMapping("/login")
@@ -34,7 +35,7 @@ public class LoginController {
         } else {
             // Failed login, display error message
             model.addAttribute("error", "Invalid credentials. Login failed.");
-            return "login"; // Redirect back to the login page with an error message
+            return "Login"; // Redirect back to the login page with an error message
         }
     }
 }
