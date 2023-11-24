@@ -4,19 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class LoginForm {
     private String username;
     private String password;
 }
 
 
-    // Validate method to check username and password
-   /* public boolean validate(String username, String password) {
-        return this.username.equals(username) && this.password.equals(password);
-    }
-}*/
+
