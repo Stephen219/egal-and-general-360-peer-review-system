@@ -17,6 +17,7 @@ public class Securitymock {
             "/images/**",
             "/",
             "/403",
+            "legal.png",
             "/order/**"
     };
 
@@ -26,23 +27,17 @@ public class Securitymock {
             Exception {
         http
                 .authorizeHttpRequests(request -> request
+//
                         .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
-                        // .requestMatchers( "/order/**").hasRole("USER")
-                        .requestMatchers("/kitchen/**").hasRole("COOK")
-                        //.requestMatchers(("/account/**")).hasRole("USER")
-                        //.requestMatchers("/order/**").hasRole("ADMIN")
-
-
-                        .anyRequest().hasRole("ADMIN"))
-
-                // require authentication for all other requests
-                //.anyRequest().authenticated())//hasRole("USER") // require authentication for all other requests
-
-                //.csrf().disable() // i have removed the above line to disable cross site request forgery  .it is when i wanted to implement logout
+                        .requestMatchers("/form/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/account/**").hasAnyRole( "USER"))
                 .formLogin(form -> form
                         .loginPage("/login").
                         permitAll()
                         .defaultSuccessUrl("/account", true)
+                        .defaultSuccessUrl("/admin", true)
+                        //currently the admin url is not working
                         .failureUrl("/login?error=true")
 
                 )
@@ -57,6 +52,7 @@ public class Securitymock {
 
         return http.build();
     }
+
 
     @Bean
     public UserDetailsService userDetailsService() {

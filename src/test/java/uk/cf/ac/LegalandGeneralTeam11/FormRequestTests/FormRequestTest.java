@@ -1,16 +1,10 @@
 package uk.cf.ac.LegalandGeneralTeam11.FormRequestTests;
-
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,16 +12,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.web.servlet.FlashMap;
-import org.springframework.test.web.servlet.MvcResult;
-import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
-import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestRepoImpl;
-import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
 
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.BDDAssumptions.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,6 +34,8 @@ import static org.mockito.BDDMockito.given;
 public class FormRequestTest {
     @Autowired
     private MockMvc mockMvc;
+
+    // TODO: Incase this tests fail, please comment because it uses a mocked security context
 
     //please dont tpuch this test, am implementing it
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
@@ -89,14 +76,4 @@ public class FormRequestTest {
 
 
     }
-
-
-
-
-
-
-
-
-
-
 }
