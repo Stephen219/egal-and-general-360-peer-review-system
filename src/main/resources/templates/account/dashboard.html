@@ -1,15 +1,15 @@
 
 <!DOCTYPE html>
-<html x-data="data()" lang="en">
+
+<html x-data="data()"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" th:href="@{/build.css}" />
     <script src="https://cdn.tailwindcss.com"></script>
-
-
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <a  href="https://icons8.com/icon/40401/bell"></a><a href="https://icons8.com"></a>
 </head>
 
 <body>
@@ -371,15 +371,18 @@
                     </div>
                 </div>
 
+
+
                 <ul class="flex items-center flex-shrink-0 space-x-6">
 
 
 
 
                     <li>
+                        <button onclick="toggleConfirmationCard()" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Request Form</button>
 
 
-                        <a  th:href="@{/form/new}" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Request Form</a>
+<!--                        <a  th:href="@{/form/new}" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Request Form</a>-->
 
 
 
@@ -436,9 +439,50 @@
             </div>
         </header>
         <main>
-            <div>
-                hello user
+            <div class="relative">
+                <style>
+                    .flash-message {
+                        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+
+                    .flash-message.hidden {
+                        opacity: 0;
+                        transform: translateX(100%);
+                    }
+                </style>
+
+
+
+
+
+                <!-- Display success message if it exists -->
+                    <div th:if="${flashMessage}" id="flashMessage" class="bg-green-400 text-white p-4 fixed mt-2 mr-2 top-0 right-0 -z-100 absolute flash-message rounded-md">
+                        <p th:text="${flashMessage}" class="inline"></p>
+                        <button onclick="cancelFlash()" class="ml-4 bg-white text-green-500 border border-green-500 px-2 py-1 rounded">Cancel</button>
+                    </div>
+
+                    <!-- Display error message if it exists -->
+                    <div th:if="${flashError}" id="flashError" class="bg-red-500 text-white p-4 fixed top-0 right-0 z-100 absolute rounded-md ml-2 mt-2">
+                        <p th:text="${flashError}" class="inline"></p>
+                        <button onclick="cancelFlash()" class="ml-4 bg-white text-red-500 border border-red-500 px-2 py-1 rounded">Cancel</button>
+                    </div>
+
+
+
+
+
+                <div id="confirmationCard" style="display: none;" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-md shadow-md font-light text-center">
+                    <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/228BE6/alarm.png" alt="alarm" class="mx-auto mb-4"/>
+                    <p class="font-light text-lg mb-6">Are you sure you want to send the form request?</p>
+                    <button onclick="redirectToForm()" class="bg-green-500 text-white px-4 py-2 rounded-md">Yes</button>
+                    <button onclick="cancelFormRequest()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md">Cancel</button>
+                </div>
+
             </div>
+                hello <span sec:authentication="name"></span> sdbbdsbdjkf
+
         </main>
     </div>
 
@@ -495,6 +539,62 @@
 
         }
     }
+
+    function toggleConfirmationCard() {
+        var confirmationCard = document.getElementById('confirmationCard');
+        if (confirmationCard.style.display === 'none') {
+            confirmationCard.style.display = 'block';
+        } else {
+            confirmationCard.style.display = 'none';
+        }
+    }
+
+    function sendFormRequest() {
+        // Add logic to send the form request
+        // ...
+
+        // After sending the request, hide the confirmation card
+        hideConfirmationCard();
+    }
+    function redirectToForm() {
+        window.location.href = '/form/new';
+    }
+
+    function cancelFormRequest() {
+        // Add any additional cancellation logic if needed
+        hideConfirmationCard();
+    }
+
+    function hideConfirmationCard() {
+        var confirmationCard = document.getElementById('confirmationCard');
+        confirmationCard.style.display = 'none';
+    }
+    function cancelFlash() {
+        var flashMessage = document.getElementById("flashMessage");
+        var flashError = document.getElementById("flashError");
+
+        if (flashMessage) {
+            flashMessage.style.display = "none";
+        }
+
+        if (flashError) {
+            flashError.style.display = "none";
+        }
+    }
+
+
+    setTimeout(function() {
+        var flashMessage = document.getElementById("flashMessage");
+        var flashError = document.getElementById("flashError");
+
+        if (flashMessage) {
+            flashMessage.style.display = "none";
+        }
+
+        if (flashError) {
+            flashError.style.display = "none";
+        }
+    }, 5000);
 </script>
 
 </body>
