@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller
+//@Controller
 public class LoginController {
 
     // Create a user object with a username and password
     private User user = new User("user", "password");
 
-    @GetMapping("/login")
+    //@GetMapping("/login")
     public String login() {
         return "login"; // This will return the login.html template
     }
 
-    @PostMapping("/login")
+    //@PostMapping("/login")
     public String loginSubmit(@RequestParam String username, @RequestParam String password, Model model) {
         if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
             model.addAttribute("username", username); // Add the username to the model
@@ -30,7 +30,7 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/home")
+   // @GetMapping("/home")
     public String home(Model model) {
         // Retrieve the username from the model and pass it to the home page
         if (model.containsAttribute("username")) {

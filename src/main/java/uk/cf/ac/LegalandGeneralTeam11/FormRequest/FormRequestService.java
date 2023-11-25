@@ -1,14 +1,14 @@
-package uk.cf.ac.LegalandGeneralTeam11.account.FormRequest;
+package uk.cf.ac.LegalandGeneralTeam11.FormRequest;
 
 import java.util.List;
 
-public interface FormRequestRepository {
+public interface FormRequestService {
     /**
      * Save a form request.
      *
      * @param formRequest The form request to be saved.
      */
-    void saveFormRequest(FormRequest formRequest);
+//    void saveFormRequest(FormRequest formRequest);
 
     /**
      * Get a list of all form requests.
@@ -30,9 +30,19 @@ public interface FormRequestRepository {
      *
      * @return List of form requests for a specific user.
      */
-
     List<FormRequest> getAllByUser(Long userId);
+    /**
+     * Create a form request.
+     *
+     * @param formRequest The form request to be created.
+     */
 
 
+    void createFormRequest(FormRequest formRequest);
+    /**
+     * finding pending requests by username
+     * @param username The username of the user.
+     */
+    public List<FormRequest> findPendingRequestsByUsername(String username);
 
 }
