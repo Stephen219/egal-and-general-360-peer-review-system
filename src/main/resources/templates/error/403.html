@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lots of Spam</title>
+</head>
+<body>
+You are welcome to browse parts of Lots of Spam, but not that page.
+
+<form th:action="@{/logout}" th:method="post">
+    <input type="submit" value="logout"/>
+    <input name="${_csrf.parameterName}"
+           type="hidden"
+           value="${_csrf.token}"/>
+</form>
+</body>
+</html>
