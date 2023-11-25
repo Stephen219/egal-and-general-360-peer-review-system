@@ -10,4 +10,11 @@ Create TABLE IF NOT EXISTS form_requests (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (Id)
 );
+drop table if exists users;
+create table if not exists users (
+    id int not null auto_increment primary key,
+    username varchar(255) not null,
+    password varchar(255) not null
+)engine=InnoDB;
+
 
