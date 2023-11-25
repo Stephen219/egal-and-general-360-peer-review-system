@@ -1,4 +1,4 @@
-package uk.ac.cf.spring.takeaway.security;
+package uk.cf.ac.LegalandGeneralTeam11.mocksecurity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 import javax.sql.DataSource;
 
 @Configuration
@@ -22,7 +23,7 @@ public class Securitymock {
     public static final String[] ENDPOINTS_WHITELIST = {
             "/images/**",
             "/",
-            "/403", "/account/**"
+            "/403"
     };
 
     @Autowired
@@ -42,7 +43,7 @@ public class Securitymock {
                         .permitAll()
                 )
 
-                .logout((l) -> l.permitAll().logoutSuccessUrl("/order"))
+                .logout((l) -> l.permitAll().logoutSuccessUrl("/home"))
 
                 .exceptionHandling().accessDeniedPage("/403");
 

@@ -1,7 +1,14 @@
+drop table if exists roles;
+drop table if exists users_roles;
+drop table if exists users;
+drop table if exists form_requests;
+
+
 drop schema if exists legalandgeneral;
 CREATE SCHEMA legalandgeneral;
+
 use legalandgeneral;
-drop table if exists form_requests;
+
 Create TABLE IF NOT EXISTS form_requests (
     Id INT NOT NULL AUTO_INCREMENT,
     username VARCHAR(45) NOT NULL,

@@ -6,6 +6,11 @@
 <body>
 <h1>Login</h1>
 
+<div th:if="${param.logout}">
+    You have been logged out.
+</div>
+
+
 <!-- Display error message if it exists -->
 <div th:if="${error != null}" style="color: red;">
     <p th:text="${error}"></p>
