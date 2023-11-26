@@ -12,4 +12,10 @@ public class accountController {
     public String getAccount() {
         return "account/dashboard";
     }
+
+    @GetMapping("/admin")
+    public String home() {
+
+        return "testfile";
+    }
 }

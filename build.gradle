@@ -33,6 +33,8 @@ dependencies {
 	//from https://mariadb.com/kb/en/java-connector-using-gradle/
 	// the below line is used for the database connection`
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
+	implementation 'org.springframework.security:spring-security-config:6.1.2'
+	implementation 'org.springframework.security:spring-security-web:6.1.2'
 	testImplementation 'junit:junit:4.13.1'
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
@@ -41,7 +43,6 @@ dependencies {
 	// this is for security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 
 
