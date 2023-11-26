@@ -43,7 +43,7 @@ public class Securitymock {
 
 
                 .formLogin(form -> form
-                        //.loginPage("/login")
+                        .loginPage("/login")
                         .permitAll()
                         .successHandler((request, response, authentication) -> {
                             for (GrantedAuthority auth : authentication.getAuthorities()) {
