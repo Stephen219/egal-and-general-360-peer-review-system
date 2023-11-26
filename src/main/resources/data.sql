@@ -12,6 +12,4 @@ values (2, 'USER');
 insert into users_roles (username, role_id)
 values ('admin', 1);
 insert into users_roles (username, role_id)
-values ('admin', 2);
-insert into users_roles (username, role_id)
 values ('user', 2);

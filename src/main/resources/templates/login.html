@@ -17,7 +17,7 @@
 </div>
 
 <!-- Form for login -->
-<form action="#" th:action="@{/login}" th:object="${loginForm}" method="post">
+<form action="#" th:action="@{/templates/login}" th:object="${loginForm}" method="post">
     <label>Username: <input type="text" th:field="*{username}" /></label><br>
     <label>Password: <input type="password" th:field="*{password}" /></label><br>
     <button type="submit">Login</button>

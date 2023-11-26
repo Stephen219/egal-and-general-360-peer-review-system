@@ -1,4 +1,4 @@
-package uk.cf.ac.LegalandGeneralTeam11.Login;
+/*package uk.cf.ac.LegalandGeneralTeam11.Login;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,4 +39,4 @@ public class LoginController {
             return "login/login"; // Redirect back to the login page with an error message
         }
     }
-}
+}*/

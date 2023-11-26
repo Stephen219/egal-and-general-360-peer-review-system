@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,13 +35,26 @@ public class Securitymock {
         http
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
-                        .anyRequest().hasRole("ADMIN")
+                        .requestMatchers("/form/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/account/**").hasAnyRole( "USER")
                 )
 
 
+
                 .formLogin(form -> form
-                        .loginPage("/login")
+                        //.loginPage("/login")
                         .permitAll()
+                        .successHandler((request, response, authentication) -> {
+                            for (GrantedAuthority auth : authentication.getAuthorities()) {
+                                if (auth.getAuthority().equals("ROLE_ADMIN")) {
+                                    response.sendRedirect("/home");
+                                } else if (auth.getAuthority().equals("ROLE_USER")) {
+                                    response.sendRedirect("/account");
+                                }
+                            }
+                        })
+                        .failureUrl("/login?error=true")
                 )
 
                 .logout((l) -> l.permitAll().logoutSuccessUrl("/home"))
