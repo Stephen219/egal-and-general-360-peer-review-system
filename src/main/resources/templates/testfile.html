@@ -5,10 +5,27 @@
     <title>Title</title>
     <meta charset="UTF-8">
     <title th:text="${title}">Home Page</title>
-    <link rel="stylesheet" th:href="@{/build.css}" />
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 <body>
-<p>hello l&g user</p>
+<p class="font-bold text-green-500 text-lg">hello l&g user</p>
+<div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
+    <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">Welcome to the test home page!</div>
+        <p class="text-gray-700 text-base">
+            This is a test home page.
+        </p>
+        <div class="flex items-center mt-1">
+            <button class="h-5 w-5 rounded-full bg-blue-600 border-2 border-blue-200 mr-2 focus:outline-none"></button>
+            <button class="h-5 w-5 rounded-full bg-teal-600 mr-2 focus:outline-none"></button>
+            <button class="h-5 w-5 rounded-full bg-pink-600 mr-2 focus:outline-none"></button>
+        </div>
+    </div>
+
+
+
 
 </body>
 </html>

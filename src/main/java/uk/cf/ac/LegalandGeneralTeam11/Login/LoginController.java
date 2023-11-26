@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@Controller
+//@Controller
 public class LoginController {
 
     private final LoginService loginService;
@@ -19,13 +19,13 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    @GetMapping("/login")
+   // @GetMapping("/login")
     public String showLoginPage(Model model) {
         model.addAttribute("loginForm", new LoginForm());
         return "login/login";
     }
 
-    @PostMapping("/login")
+    //@PostMapping("/login")
     public String processLogin(@ModelAttribute("loginForm") @RequestParam String username, @RequestParam String password, Model model) {
         boolean isAuthenticated = loginService.authenticate(username, password);
 
@@ -38,5 +38,6 @@ public class LoginController {
             model.addAttribute("error", "Invalid credentials. Login failed.");
             return "login/login"; // Redirect back to the login page with an error message
         }
+
     }
 }

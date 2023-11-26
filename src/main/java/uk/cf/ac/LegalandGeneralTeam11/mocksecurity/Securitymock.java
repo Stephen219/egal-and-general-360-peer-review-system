@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +17,7 @@ public class Securitymock {
     public static final String[] ENDPOINTS_WHITELIST = {
             "/images/**",
             "/",
+
             "/403",
             "legal.png",
             "/order/**"
@@ -32,15 +34,33 @@ public class Securitymock {
                         .requestMatchers("/form/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/account/**").hasAnyRole( "USER"))
+//
+//                .formLogin(form -> form
+//                        //.loginPage("/login")
+//                        .permitAll()
+//                        .defaultSuccessUrl("/account",false)
+//                        //.defaultSuccessUrl("/admin", true)
+//                        //currently the admin url is not working
+//                        .failureUrl("/login?error=true")
+//
+//                )
                 .formLogin(form -> form
-                        .loginPage("/login").
-                        permitAll()
-                        .defaultSuccessUrl("/account", true)
-                        .defaultSuccessUrl("/admin", true)
-                        //currently the admin url is not working
+                        //.loginPage("/login")
+                        .permitAll()
+                        .successHandler((request, response, authentication) -> {
+                            for (GrantedAuthority auth : authentication.getAuthorities()) {
+                                if (auth.getAuthority().equals("ROLE_ADMIN")) {
+                                    response.sendRedirect("/admin");
+                                } else if (auth.getAuthority().equals("ROLE_USER")) {
+                                    response.sendRedirect("/account");
+                                }
+                            }
+                        })
                         .failureUrl("/login?error=true")
-
                 )
+
+
+
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
@@ -62,6 +82,12 @@ public class Securitymock {
                         .password("password")
                         .roles("USER")
                         .build();
+        UserDetails user2 =
+                User.withDefaultPasswordEncoder()
+                        .username("user2")
+                        .password("password")
+                        .roles("USER")
+                        .build();
         UserDetails admin =
                 User.withDefaultPasswordEncoder()
                         .username("admin")
@@ -69,7 +95,7 @@ public class Securitymock {
                         .roles("ADMIN")
                         .build();
 
-        return new InMemoryUserDetailsManager(user,admin);
+        return new InMemoryUserDetailsManager(user,admin,user2);
     }
 
 }

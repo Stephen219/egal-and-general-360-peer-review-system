@@ -21,7 +21,7 @@ public class FormRequestController {
 
 
     @GetMapping("form/new")
-    public ModelAndView getForm(RedirectAttributes redirectAttributes) {
+    public ModelAndView addFormRequest(RedirectAttributes redirectAttributes) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
