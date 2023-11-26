@@ -38,7 +38,7 @@ public class FormRequestTest {
     // TODO: Incase this tests fail, please comment because it uses a mocked security context
 
     //please dont tpuch this test, am implementing it
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser(username = "user", password = "password", roles = "USER")
     @Test
     public void testGetForm() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/form/new"))
@@ -53,7 +53,7 @@ public class FormRequestTest {
 
 
 
-    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
+    @WithMockUser(username = "user", password = "password", roles = "ADMIN")
     @Test
     public void testGetFormWithSecondAttempt() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/form/new"))
