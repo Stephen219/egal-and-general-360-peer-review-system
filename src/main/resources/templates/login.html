@@ -2,25 +2,40 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login Page</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/build.css}" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<h1>Login</h1>
 
-<div th:if="${param.logout}">
-    You have been logged out.
+<body class="bg-gray-100">
+
+<div class="container mx-auto mt-10 p-6 bg-white rounded shadow-lg max-w-md">
+    <h1 class="text-3xl font-bold mb-4">Login</h1>
+
+    <div th:if="${param.logout}" class="text-red-500">
+        You have been logged out.
+    </div>
+
+    <!-- Display error message if it exists -->
+    <div th:if="${error != null}" class="text-red-500">
+        <p th:text="${error}"></p>
+    </div>
+
+    <!-- Form for login -->
+    <form action="#" th:action="@{/login}" th:object="${loginForm}" method="post">
+        <label class="block mb-2">
+            Username:
+            <input type="text" th:field="*{username}" class="border border-gray-300 rounded-md p-2 w-full mt-1">
+        </label>
+        <label class="block mb-2">
+            Password:
+            <input type="password" th:field="*{password}" class="border border-gray-300 rounded-md p-2 w-full mt-1">
+        </label>
+        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 mt-2">Login</button>
+    </form>
 </div>
 
-
-<!-- Display error message if it exists -->
-<div th:if="${error != null}" style="color: red;">
-    <p th:text="${error}"></p>
-</div>
-
-<!-- Form for login -->
-<form method="post" th:action="@{/login}">
-    <div><label> User Name : <input name="username" type="text"/> </label></div>
-    <div><label> Password: <input name="password" type="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
 </body>
 </html>
