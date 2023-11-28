@@ -23,7 +23,9 @@ create table if not exists users (
     id int not null auto_increment primary key,
     username varchar(255) not null,
     password varchar(255) not null,
-    enabled boolean not null
+    category_id int not null default 1,
+    enabled boolean not null,
+    FOREIGN KEY (category_id) REFERENCES job_categories(Id)
 )engine=InnoDB;
 
 drop table if exists roles;
