@@ -49,3 +49,68 @@ from users u
 
 
 
+drop table if exists 360forms;
+CREATE TABLE if not exists 360forms
+(
+    Id INT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(45) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    progress_status enum('in progress','completed') not NULL default 'in progress',
+    PRIMARY KEY (Id)
+) engine = InnoDB;
+
+-- creating a table for storing the questions
+CREATE TABLE if not exists questions
+(
+    Id INT NOT NULL AUTO_INCREMENT,
+    question VARCHAR(255) NOT NULL,
+    PRIMARY KEY (Id)
+) engine = InnoDB;
+
+
+-- creating a table for storing the answers
+CREATE TABLE if not exists answers
+(
+    Id INT NOT NULL AUTO_INCREMENT,
+    form_id INT NOT NULL,
+    question_id INT NOT NULL,
+    responder_id INT NOT NULL,
+
+    answer VARCHAR(255) NOT NULL,
+    answer_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (form_id) REFERENCES 360forms(Id),
+    FOREIGN KEY (question_id) REFERENCES questions(Id),
+    FOREIGN KEY (responder_id) REFERENCES users(id),
+
+    PRIMARY KEY (Id)
+) engine = InnoDB;
+
+
+
+-- creating a table for storing responders assigned to a form
+-- the responders can be stored in a list in the form table but this will make it difficult to query the responders
+-- this table will make it easier to query the responders assigned to a form
+
+CREATE TABLE if not exists form_responders
+(
+    Id INT NOT NULL AUTO_INCREMENT,
+    form_id INT NOT NULL,
+    responder_id INT NOT NULL,
+    FOREIGN KEY (form_id) REFERENCES 360forms(Id),
+    FOREIGN KEY (responder_id) REFERENCES users(id),
+    PRIMARY KEY (Id)
+) engine = InnoDB;
+
+
+CREATE TABLE  IF NOT EXISTs job_categories
+(
+    Id INT NOT NULL AUTO_INCREMENT,
+    category_name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (Id)
+) engine = InnoDB;
+
+
+
+
+
+
