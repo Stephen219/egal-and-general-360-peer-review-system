@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login Page</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/build.css}" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Ensure the body takes up the full height of the viewport */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+
+<!-- Navbar -->
+<nav class="bg-gray-800 p-4 text-white">
+    <div class="flex justify-between items-center">
+        <div>
+            <h2>Legal and General 360</h2>
+        </div>
+        <div>
+            <button class="block lg:hidden border border-white rounded px-2 py-1">
+                Menu
+            </button>
+            <ul class="hidden lg:flex space-x-4">
+                <li>
+                    <a href="/home" class="hover:text-gray-300">Home</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Login Form Section -->
+<div class="container mx-auto mt-10 p-6 bg-white rounded shadow-lg max-w-md">
+    <h1 class="text-3xl font-bold mb-4">Login</h1>
+
+    <div th:if="${param.logout}" class="text-red-500">
+        You have been logged out.
+    </div>
+
+    <!-- Display error message if it exists -->
+    <div th:if="${error != null}" class="text-red-500">
+        <p th:text="${error}"></p>
+    </div>
+
+    <!-- Form for login -->
+    <form th:action="@{/login}" method="post">
+        <label class="block mb-2">
+            Username:
+            <input type="text" class="border border-gray-300 rounded-md p-2 w-full mt-1" name="username">
+        </label>
+        <label class="block mb-2">
+            Password:
+            <input type="password" class="border border-gray-300 rounded-md p-2 w-full mt-1" name="password">
+        </label>
+        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 mt-2">Login</button>
+    </form>
+</div>
+
+<!-- Footer Section -->
+<!--<footer class="bg-gray-800 text-white p-4 text-center">
+    <p class="text-sm">&copy; Legal and General. All rights reserved.</p>
+    <p class="text-xs mt-2">Terms & Conditions</p>
+    <p class="text-xs mt-2">FAQ's</p>
+</footer> -->
+
+</body>
+</html>
+

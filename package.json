@@ -1,21 +1,15 @@
 {
   "name": "legal-and-general-team-11",
   "version": "1.0.0",
-  "description": "",
+  "description": "Before proceeding with the steps below, ensure that you have **Node** installed, as it is necessary for setting up Tailwind CSS.",
   "main": "index.js",
+  "devDependencies": {
+    "tailwindcss": "^3.3.5"
+  },
   "scripts": {
-    "tailwindcss": "npx tailwindcss -i ./input.css -o ./static/css/build.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "tailwindcss": "^3.3.5"
-  }
+  "license": "ISC"
 }
-
-
-
-
-

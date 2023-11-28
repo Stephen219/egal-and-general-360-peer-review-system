@@ -24,9 +24,32 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+
+
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+
+	//from https://mariadb.com/kb/en/java-connector-using-gradle/
+	// the below line is used for the database connection`
+	implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
+	implementation 'org.springframework.security:spring-security-config:6.1.2'
+	implementation 'org.springframework.security:spring-security-web:6.1.2'
+	testImplementation 'junit:junit:4.13.1'
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+
+
+	// this is for security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('bootBuildImage') {
