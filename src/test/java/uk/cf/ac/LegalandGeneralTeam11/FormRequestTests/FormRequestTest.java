@@ -53,7 +53,7 @@ public class FormRequestTest {
 
 
 
-    @WithMockUser(username = "user", password = "password", roles = "ADMIN")
+    @WithMockUser(username = "user", password = "password", roles = "USER")
     @Test
     public void testGetFormWithSecondAttempt() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/form/new"))

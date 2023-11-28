@@ -1,6 +1,5 @@
 drop table if exists roles;
 drop table if exists users_roles;
-drop table if exists users;
 drop table if exists form_requests;
 
 
@@ -8,6 +7,12 @@ drop schema if exists legalandgeneral;
 CREATE SCHEMA legalandgeneral;
 
 use legalandgeneral;
+# CREATE TABLE  IF NOT EXISTs job_categories
+# (
+#     Id INT NOT NULL AUTO_INCREMENT,
+#     category_name VARCHAR(255) NOT NULL,
+#     PRIMARY KEY (Id)
+# ) engine = InnoDB;
 
 Create TABLE IF NOT EXISTS form_requests (
     Id INT NOT NULL AUTO_INCREMENT,
@@ -24,8 +29,8 @@ create table if not exists users (
     username varchar(255) not null,
     password varchar(255) not null,
     category_id int not null default 1,
-    enabled boolean not null,
-    FOREIGN KEY (category_id) REFERENCES job_categories(Id)
+    enabled boolean not null default true
+        -- FOREIGN KEY (category_id) REFERENCES job_categories(Id)
 )engine=InnoDB;
 
 drop table if exists roles;
