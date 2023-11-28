@@ -2,16 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Lots of Spam</title>
+    <title>403 Forbidden</title>
+    <link href="https://cdn.jsdelivr.net/npm/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>403 Forbidden</title>
 </head>
-<body>
-You are welcome to browse parts of legal and general 360, but not that page.
-
-<form th:action="@{/logout}" th:method="post">
-    <input type="submit" value="logout"/>
-    <input name="${_csrf.parameterName}"
-           type="hidden"
-           value="${_csrf.token}"/>
-</form>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+<div class="text-center">
+    <h1 class="font-bold text-9xl">
+        <span class="text-yellow-500">4</span>
+        <span class="text-blue-500">0</span>
+        <span class="text-red-500">3</span>
+    </h1>
+    <p class="text-xl mb-4">Forbidden - Access Denied</p>
+    <form class="inline-block" th:action="@{/logout}" th:method="post">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+            Logout
+        </button>
+        <input name="${_csrf.parameterName}" type="hidden" value="${_csrf.token}"/>
+    </form>
+</div>
 </body>
 </html>
+
+
+

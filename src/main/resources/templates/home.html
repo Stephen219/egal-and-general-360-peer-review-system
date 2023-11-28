@@ -1,9 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-  <title>Home</title>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<h2>Welcome to the test home page!</h2>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+<div class="text-center">
+  <h1 class="text-4xl font-bold mb-4">Home</h1>
+
+  <!-- Employee Login Button -->
+  <a href="/login"><button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-4">
+    Employee Login
+  </button></a>
+
+  <!-- Admin Login Button -->
+  <a href="/login"><button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+    Admin Login
+  </button></a>
+</div>
 </body>
 </html>
