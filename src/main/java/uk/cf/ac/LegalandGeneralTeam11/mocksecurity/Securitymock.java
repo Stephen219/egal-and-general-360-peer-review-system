@@ -40,6 +40,8 @@ public class Securitymock {
                         .requestMatchers("/form/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/account/**").hasAnyRole( "USER")
+                        .requestMatchers("/self-assessment").hasAnyRole( "USER", "ADMIN")
+                        .requestMatchers("/selfAssessment").hasAnyRole( "USER", "ADMIN")
                 )
 
 
