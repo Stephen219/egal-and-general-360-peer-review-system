@@ -24,7 +24,9 @@ public class Securitymock {
     public static final String[] ENDPOINTS_WHITELIST = {
             "/images/**",
             "/",
-            "/403"
+            "/403",
+            "/css/**",
+            "legal.png"
     };
 
     @Autowired
@@ -48,7 +50,7 @@ public class Securitymock {
                         .successHandler((request, response, authentication) -> {
                             for (GrantedAuthority auth : authentication.getAuthorities()) {
                                 if (auth.getAuthority().equals("ROLE_ADMIN")) {
-                                    response.sendRedirect("/home");
+                                    response.sendRedirect("/admin");
                                 } else if (auth.getAuthority().equals("ROLE_USER")) {
                                     response.sendRedirect("/account");
                                 }
