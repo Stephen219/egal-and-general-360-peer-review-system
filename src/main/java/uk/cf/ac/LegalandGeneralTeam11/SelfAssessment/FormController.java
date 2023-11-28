@@ -25,7 +25,7 @@ public class FormController {
         System.out.println(selfAssessment.getOneOne());
         System.out.println(oneOne);
 
-        ModelAndView modelAndView = new ModelAndView("redirect:/hello");
+        ModelAndView modelAndView = new ModelAndView("redirect:/login");
         return modelAndView;
     }
 
