@@ -45,4 +45,11 @@ public interface FormRequestService {
      */
     public List<FormRequest> findPendingRequestsByUsername(String username);
 
+
+    /**
+     * finding all pending requests
+     */
+
+    public List<FormRequest> getAllByStatus(String status);
+
 }

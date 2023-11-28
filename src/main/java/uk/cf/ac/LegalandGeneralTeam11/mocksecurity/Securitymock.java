@@ -3,6 +3,7 @@ package uk.cf.ac.LegalandGeneralTeam11.mocksecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 import javax.sql.DataSource;
@@ -40,6 +42,14 @@ public class Securitymock {
                         .requestMatchers("/form/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/account/**").hasAnyRole( "USER")
+                        .requestMatchers("/review/**").hasRole("USER")
+                        .requestMatchers("/self-assessment/**").hasAnyRole( "USER", "ADMIN")
+                        .requestMatchers("/accept/**").hasRole("ADMIN")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/accept/**")).hasRole("ADMIN")
+
+                        .requestMatchers("/account/**").hasAnyRole( "USER")
+                        .requestMatchers("/accept/**").hasAnyRole("ADMIN")
+                        .anyRequest().hasRole("ADMIN")
                 )
 
 
@@ -68,7 +78,7 @@ public class Securitymock {
 
                 .logout((l) -> l.permitAll().logoutSuccessUrl("/home"))
 
-                .exceptionHandling().accessDeniedPage("/403");
+                .exceptionHandling(access -> access.accessDeniedPage("/403"));
 
         return http.build();
 
