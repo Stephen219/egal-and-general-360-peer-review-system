@@ -81,14 +81,14 @@
 <body>
 <div class ="container">
     <h1>Please Fill Out Your Self Review Questionnaire</h1>
-    <form action="/selfAssessment" method="post">
+    <form th:action="@{'/review/' + ${form.id}}" method="post" th:object="${reviewForm}">
 
         <div class="">
             <label class="form-label" for="first-name">First Name:</label>
-            <input class="form-control" id="first-name" name="first-name" placeholder="First Name" type="text"/>
+            <input class="form-control" id="first-name" th:field="*{firstName}" placeholder="First Name" type="text"/>
 
             <label class="form-label" for="second-name">Second Name:</label>
-            <input class="form-control" id="second-name" name="second-name" placeholder="Second Name" type="text"/>
+            <input class="form-control" id="second-name" th:field="*{lastName}" placeholder="Second Name" type="text"/>
         </div>
 
         <div>
@@ -386,11 +386,11 @@
 
         <div>
             <label class="form-label" for="superpower">7. What do you consider to be your superpower? :</label>
-            <input class="form-control" id="superpower" name="superpower" placeholder="SuperPower?" type="text"/>
+            <input class="form-control" id="superpower" th:field="*{superpower}" placeholder="SuperPower?" type="text"/>
         </div>
         <div>
             <label class="form-label" for="impact">8. What is the one thing you could do to improve your impact? :</label>
-            <input class="form-control" id="impact" name="impact" placeholder="Enter Your Answer" type="text"/>
+            <input class="form-control" id="impact" th:field="*{impact}" placeholder="Enter Your Answer" type="text"/>
         </div>
         <input type="submit" value="Submit">
 

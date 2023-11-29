@@ -3,13 +3,11 @@ package uk.cf.ac.LegalandGeneralTeam11.Form;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
+import uk.cf.ac.LegalandGeneralTeam11.SelfAssessment.SelfAssessment;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,12 +16,12 @@ import java.util.List;
 
 public class FormControllerImpl {
     @Autowired
-    private FormServiceImpl formServiceImpl;
+    private FormService formService;
     @Autowired
     private FormRequestService FormRequestService;
 
     public FormControllerImpl(FormServiceImpl formServiceImpl) {
-        this.formServiceImpl = formServiceImpl;
+        this.formService = formServiceImpl;
     }
 
 //    @GetMapping("/accept{id}")
@@ -38,17 +36,15 @@ public class FormControllerImpl {
     @GetMapping("/accept/{id}")
     public String acceptForm(@PathVariable Long id) {
         // Assuming you have a method to retrieve the username associated with the form request
-        String username = formServiceImpl.getUsernameForFormRequest(id);
+        String username = formService.getUsernameForFormRequest(id);
         System.out.println(username);
         System.out.println(id);
 
         FormRequest formRequest = FormRequestService.getFormRequestById(id);
         System.out.println(formRequest);
-        formServiceImpl.updateFormRequest(formRequest);
+        formService.updateFormRequest(formRequest);
         LocalDate formDate = LocalDate.now();
-
-        // Grant form access for the user associated with the form request
-        formServiceImpl.grantFormAccess(username, formDate);
+        formService.grantFormAccess(username, formDate);
 
         return "redirect:/admin";
     }
@@ -58,34 +54,36 @@ public class FormControllerImpl {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/review/{formId}")
     public ModelAndView getForm(@PathVariable String formId) {
-        Form form = formServiceImpl.getFormById(formId);
+        Form form = formService.getFormById(formId);
+        SelfAssessment list = new SelfAssessment("", "", "", "" );
 
-        List<String> assesors = formServiceImpl.getUsers();
-        ModelAndView modelAndView = new ModelAndView("fix");
+
+        List<String> assesors = formService.getUsers(); // we will deal  with the group of assesors later
+        ModelAndView modelAndView = new ModelAndView("forms/360form");
+        modelAndView.addObject("reviewForm", list);
         modelAndView.addObject("form", form);
         modelAndView.addObject("assessors", assesors);
         return modelAndView;
     }
-
-// the below method is used to submit the form and redirect the user to the account page
-
-    // it can be changed    but as per now i keep it
-
-
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/review/{formId}")
-    public ModelAndView submitAssesors(@PathVariable String formId, @RequestParam("assessors") List<String> selectedAssessors) {
-        System.out.println("Selected Assessors:");
-        Form form = formServiceImpl.getFormById(formId);
-        ModelAndView modelAndView = new ModelAndView("redirect:/account");
+    public String submitReview(@PathVariable String formId, @ModelAttribute SelfAssessment reviewForm) {
 
+        Form form = formService.getFormById(formId);
+        System.out.println(formId);
+
+        ModelAndView modelAndView = new ModelAndView("redirect:/account");
         modelAndView.addObject("form", form);
-        for (String assessor : selectedAssessors) {
-            System.out.println(assessor);
-            System.out.println(formId);
-        }
-        return modelAndView;
-    }
+        modelAndView.addObject("list", reviewForm);
+
+        System.out.println(reviewForm);
+
+
+
+        return "redirect:/account";}
+
+
+
 
 
 }

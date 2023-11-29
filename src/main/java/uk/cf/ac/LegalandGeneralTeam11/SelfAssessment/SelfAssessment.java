@@ -2,9 +2,11 @@ package uk.cf.ac.LegalandGeneralTeam11.SelfAssessment;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class SelfAssessment {
     private Long id;
     private String oneOne;
@@ -34,4 +36,19 @@ public class SelfAssessment {
     private String sixFour;
     private String superpower;
     private String impact;
+
+
+    // extrw
+    private String firstName;
+    private String lastName;
+
+
+
+    public SelfAssessment(String firstName, String lastName, String impact, String superpower) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.impact = impact;
+        this.superpower = superpower;
+    }
+
 }
