@@ -1,9 +1,6 @@
 package uk.cf.ac.LegalandGeneralTeam11.SelfAssessment;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,10 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "self_assessment")
+
 public class SelfAssessment {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "self_assessment_SEQ")
+    @SequenceGenerator(name = "self_assessment_SEQ", sequenceName = "self_assessment_SEQ", allocationSize = 1)
     private Long id;
     private String oneOne;
     private String oneTwo;

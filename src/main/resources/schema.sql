@@ -1,3 +1,4 @@
+use legalandgeneral;
 drop table if exists roles;
 drop table if exists users_roles;
 drop table if exists form_requests;
@@ -6,7 +7,47 @@ drop table if exists form_requests;
 drop schema if exists legalandgeneral;
 CREATE SCHEMA legalandgeneral;
 
+ -- create a sequence for generating the answer  id
+
+
+
 use legalandgeneral;
+CREATE SEQUENCE self_assessment_seq START WITH 1;
+CREATE TABLE self_assessment (
+             id BIGINT PRIMARY KEY,
+             oneOne VARCHAR(255),
+             oneTwo VARCHAR(255),
+            oneThree VARCHAR(255),
+            oneFour VARCHAR(255),
+            twoOne VARCHAR(255),
+            twoTwo VARCHAR(255),
+            twoThree VARCHAR(255),
+            twoFour VARCHAR(255),
+            threeOne VARCHAR(255),
+            threeTwo VARCHAR(255),
+            threeThree VARCHAR(255),
+            threeFour VARCHAR(255),
+            fourOne VARCHAR(255),
+            fourTwo VARCHAR(255),
+            fourThree VARCHAR(255),
+            fourFour VARCHAR(255),
+            fiveOne VARCHAR(255),
+            fiveTwo VARCHAR(255),
+            fiveThree VARCHAR(255),
+            fiveFour VARCHAR(255),
+            fiveFive VARCHAR(255),
+            sixOne VARCHAR(255),
+            sixTwo VARCHAR(255),
+            sixThree VARCHAR(255),
+            sixFour VARCHAR(255),
+
+             superpower VARCHAR(255),
+             impact VARCHAR(255),
+             first_name VARCHAR(255),
+             last_name VARCHAR(255)
+);
+
+
 # CREATE TABLE  IF NOT EXISTs job_categories
 # (
 #     Id INT NOT NULL AUTO_INCREMENT,

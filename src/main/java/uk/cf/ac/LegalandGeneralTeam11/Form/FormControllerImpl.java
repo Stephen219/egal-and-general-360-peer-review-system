@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
+import uk.cf.ac.LegalandGeneralTeam11.SelfAssessment.SelfAssessService;
 import uk.cf.ac.LegalandGeneralTeam11.SelfAssessment.SelfAssessment;
 
 import java.time.LocalDate;
@@ -19,6 +20,8 @@ public class FormControllerImpl {
     private FormService formService;
     @Autowired
     private FormRequestService FormRequestService;
+    @Autowired
+    SelfAssessService selfAssessService;
 
     public FormControllerImpl(FormServiceImpl formServiceImpl) {
         this.formService = formServiceImpl;
@@ -75,8 +78,11 @@ public class FormControllerImpl {
         ModelAndView modelAndView = new ModelAndView("redirect:/account");
         modelAndView.addObject("form", form);
         modelAndView.addObject("list", reviewForm);
+        selfAssessService.saveSelfAssessment(reviewForm);
+
 
         System.out.println(reviewForm);
+        System.out.println("succes inndcncfjndbnef");
 
 
 
