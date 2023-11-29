@@ -2,11 +2,14 @@ package uk.cf.ac.LegalandGeneralTeam11.Form;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
+import uk.cf.ac.LegalandGeneralTeam11.SelfAssessment.SelfAssessService;
 import uk.cf.ac.LegalandGeneralTeam11.SelfAssessment.SelfAssessment;
 
 import java.time.LocalDate;
@@ -19,6 +22,8 @@ public class FormControllerImpl {
     private FormService formService;
     @Autowired
     private FormRequestService FormRequestService;
+    @Autowired
+    SelfAssessService selfAssessService;
 
     public FormControllerImpl(FormServiceImpl formServiceImpl) {
         this.formService = formServiceImpl;
@@ -55,7 +60,7 @@ public class FormControllerImpl {
     @GetMapping("/review/{formId}")
     public ModelAndView getForm(@PathVariable String formId) {
         Form form = formService.getFormById(formId);
-        SelfAssessment list = new SelfAssessment("", "", "", "" );
+        SelfAssessment list = new SelfAssessment("", "" );
 
 
         List<String> assesors = formService.getUsers(); // we will deal  with the group of assesors later
@@ -68,6 +73,8 @@ public class FormControllerImpl {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/review/{formId}")
     public String submitReview(@PathVariable String formId, @ModelAttribute SelfAssessment reviewForm) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
 
         Form form = formService.getFormById(formId);
         System.out.println(formId);
@@ -75,8 +82,13 @@ public class FormControllerImpl {
         ModelAndView modelAndView = new ModelAndView("redirect:/account");
         modelAndView.addObject("form", form);
         modelAndView.addObject("list", reviewForm);
+        reviewForm.setResponder(username);
+        reviewForm.setFormId(formId);
+        selfAssessService.saveSelfAssessment(reviewForm);
+
 
         System.out.println(reviewForm);
+        System.out.println("succes inndcncfjndbnef");
 
 
 
