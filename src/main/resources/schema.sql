@@ -16,6 +16,7 @@ use legalandgeneral;
 CREATE SEQUENCE self_assessment_seq START WITH 1;
 CREATE TABLE self_assessment (
             id BIGINT PRIMARY KEY,
+            responder_id VARCHAR(45) NOT NULL,
             one_one VARCHAR(255),
             one_two VARCHAR(255),
             one_three VARCHAR(255),
@@ -111,7 +112,8 @@ CREATE TABLE if not exists 360forms
 CREATE TABLE if not exists questions
 (
     Id INT NOT NULL AUTO_INCREMENT,
-    question VARCHAR(255) NOT NULL,
+    question_self VARCHAR(255) NOT NULL,
+    question_peer VARCHAR(255) NOT NULL,
     PRIMARY KEY (Id)
 ) engine = InnoDB;
 

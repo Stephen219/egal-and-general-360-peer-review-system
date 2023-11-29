@@ -17,6 +17,8 @@ public class SelfAssessment {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "self_assessment_SEQ")
     @SequenceGenerator(name = "self_assessment_SEQ", sequenceName = "self_assessment_SEQ", allocationSize = 1)
     private Long id;
+    @Column(name = "responder_id")
+    private String responder;
     @Column(name = "one_one")
     private String oneOne;
     @Column(name = "one_two")
@@ -60,7 +62,6 @@ public class SelfAssessment {
     @Column(name = "five_five")
     private String fiveFive;
     @Column(name = "six_one")
-
     private String sixOne;
     @Column(name = "six_two")
     private String sixTwo;

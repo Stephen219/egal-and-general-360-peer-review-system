@@ -2,6 +2,8 @@ package uk.cf.ac.LegalandGeneralTeam11.Form;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -71,6 +73,8 @@ public class FormControllerImpl {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/review/{formId}")
     public String submitReview(@PathVariable String formId, @ModelAttribute SelfAssessment reviewForm) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
 
         Form form = formService.getFormById(formId);
         System.out.println(formId);
@@ -78,6 +82,7 @@ public class FormControllerImpl {
         ModelAndView modelAndView = new ModelAndView("redirect:/account");
         modelAndView.addObject("form", form);
         modelAndView.addObject("list", reviewForm);
+        reviewForm.setResponder(username);
         selfAssessService.saveSelfAssessment(reviewForm);
 
 
