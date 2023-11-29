@@ -60,7 +60,7 @@ public class FormControllerImpl {
     @GetMapping("/review/{formId}")
     public ModelAndView getForm(@PathVariable String formId) {
         Form form = formService.getFormById(formId);
-        SelfAssessment list = new SelfAssessment("", "", "", "" );
+        SelfAssessment list = new SelfAssessment("", "" );
 
 
         List<String> assesors = formService.getUsers(); // we will deal  with the group of assesors later
@@ -83,6 +83,7 @@ public class FormControllerImpl {
         modelAndView.addObject("form", form);
         modelAndView.addObject("list", reviewForm);
         reviewForm.setResponder(username);
+        reviewForm.setFormId(formId);
         selfAssessService.saveSelfAssessment(reviewForm);
 
 

@@ -83,14 +83,6 @@
     <h1>Please Fill Out Your Self Review Questionnaire</h1>
     <form th:action="@{'/review/' + ${form.id}}" method="post" th:object="${reviewForm}">
 
-        <div class="">
-            <label class="form-label" for="first-name">First Name:</label>
-            <input class="form-control" id="first-name" th:field="*{firstName}" placeholder="First Name" type="text"/>
-
-            <label class="form-label" for="second-name">Second Name:</label>
-            <input class="form-control" id="second-name" th:field="*{lastName}" placeholder="Second Name" type="text"/>
-        </div>
-
         <div>
             <table>
                 <h2>1. Collaborative: While working, to what extent do you experience yourself... </h2>

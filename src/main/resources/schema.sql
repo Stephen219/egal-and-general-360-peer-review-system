@@ -17,6 +17,7 @@ CREATE SEQUENCE self_assessment_seq START WITH 1;
 CREATE TABLE self_assessment (
             id BIGINT PRIMARY KEY,
             responder_id VARCHAR(45) NOT NULL,
+            form_id VARCHAR(45) NOT NULL,
             one_one VARCHAR(255),
             one_two VARCHAR(255),
             one_three VARCHAR(255),
@@ -43,9 +44,7 @@ CREATE TABLE self_assessment (
             six_three VARCHAR(255),
             six_four VARCHAR(255),
             superpower VARCHAR(255),
-            impact VARCHAR(255),
-            first_name VARCHAR(255),
-            last_name VARCHAR(255)
+            impact VARCHAR(255)
 );
 
 
@@ -111,27 +110,9 @@ CREATE TABLE if not exists 360forms
 -- creating a table for storing the questions
 CREATE TABLE if not exists questions
 (
-    Id INT NOT NULL AUTO_INCREMENT,
+    Id VARCHAR(45) NOT NULL,
     question_self VARCHAR(255) NOT NULL,
     question_peer VARCHAR(255) NOT NULL,
-    PRIMARY KEY (Id)
-) engine = InnoDB;
-
-
--- creating a table for storing the answers
-CREATE TABLE if not exists answers
-(
-    Id INT NOT NULL AUTO_INCREMENT,
-    form_id VARCHAR(45) NOT NULL,
-    question_id INT NOT NULL,
-    responder_id INT NOT NULL,
-
-    answer VARCHAR(255) NOT NULL,
-    answer_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (form_id) REFERENCES 360forms(Id),
-    FOREIGN KEY (question_id) REFERENCES questions(Id),
-    FOREIGN KEY (responder_id) REFERENCES users(id),
-
     PRIMARY KEY (Id)
 ) engine = InnoDB;
 

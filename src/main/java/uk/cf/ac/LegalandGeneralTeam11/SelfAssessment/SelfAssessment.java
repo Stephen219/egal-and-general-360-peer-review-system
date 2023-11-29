@@ -19,6 +19,8 @@ public class SelfAssessment {
     private Long id;
     @Column(name = "responder_id")
     private String responder;
+    @Column(name = "form_id")
+    private String formId;
     @Column(name = "one_one")
     private String oneOne;
     @Column(name = "one_two")
@@ -73,16 +75,10 @@ public class SelfAssessment {
     private String superpower;
     @Column(name = "impact")
     private String impact;
-    @Column(name = "firstName")
-    private String firstName;
-    @Column(name = "lastName")
-    private String lastName;
 
 
 
-    public SelfAssessment(String firstName, String lastName, String impact, String superpower) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public SelfAssessment(String impact, String superpower) {
         this.impact = impact;
         this.superpower = superpower;
     }
