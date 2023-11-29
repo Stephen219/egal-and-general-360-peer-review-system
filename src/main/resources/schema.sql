@@ -2,6 +2,7 @@ use legalandgeneral;
 drop table if exists roles;
 drop table if exists users_roles;
 drop table if exists form_requests;
+drop table if exists self_assessment;
 
 
 drop schema if exists legalandgeneral;
@@ -14,37 +15,36 @@ CREATE SCHEMA legalandgeneral;
 use legalandgeneral;
 CREATE SEQUENCE self_assessment_seq START WITH 1;
 CREATE TABLE self_assessment (
-             id BIGINT PRIMARY KEY,
-             oneOne VARCHAR(255),
-             oneTwo VARCHAR(255),
-            oneThree VARCHAR(255),
-            oneFour VARCHAR(255),
-            twoOne VARCHAR(255),
-            twoTwo VARCHAR(255),
-            twoThree VARCHAR(255),
-            twoFour VARCHAR(255),
-            threeOne VARCHAR(255),
-            threeTwo VARCHAR(255),
-            threeThree VARCHAR(255),
-            threeFour VARCHAR(255),
-            fourOne VARCHAR(255),
-            fourTwo VARCHAR(255),
-            fourThree VARCHAR(255),
-            fourFour VARCHAR(255),
-            fiveOne VARCHAR(255),
-            fiveTwo VARCHAR(255),
-            fiveThree VARCHAR(255),
-            fiveFour VARCHAR(255),
-            fiveFive VARCHAR(255),
-            sixOne VARCHAR(255),
-            sixTwo VARCHAR(255),
-            sixThree VARCHAR(255),
-            sixFour VARCHAR(255),
-
-             superpower VARCHAR(255),
-             impact VARCHAR(255),
-             first_name VARCHAR(255),
-             last_name VARCHAR(255)
+            id BIGINT PRIMARY KEY,
+            one_one VARCHAR(255),
+            one_two VARCHAR(255),
+            one_three VARCHAR(255),
+            one_four VARCHAR(255),
+            two_one VARCHAR(255),
+            two_two VARCHAR(255),
+            two_three VARCHAR(255),
+            two_four VARCHAR(255),
+            three_one VARCHAR(255),
+            three_two VARCHAR(255),
+            three_three VARCHAR(255),
+            three_four VARCHAR(255),
+            four_one VARCHAR(255),
+            four_two VARCHAR(255),
+            four_three VARCHAR(255),
+            four_four VARCHAR(255),
+            five_one VARCHAR(255),
+            five_two VARCHAR(255),
+            five_three VARCHAR(255),
+            five_four VARCHAR(255),
+            five_five VARCHAR(255),
+            six_one VARCHAR(255),
+            six_two VARCHAR(255),
+            six_three VARCHAR(255),
+            six_four VARCHAR(255),
+            superpower VARCHAR(255),
+            impact VARCHAR(255),
+            first_name VARCHAR(255),
+            last_name VARCHAR(255)
 );
 
 
