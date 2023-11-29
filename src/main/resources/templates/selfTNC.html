@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legal and General Terms and Conditions</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #eee;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    h1 {
+      color: #0076D6;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 5px;
+    }
+
+    input[type="submit"] {
+      background-color: #E22922;
+      color: #fff;
+      padding: 15px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: block;
+      margin-top: 20px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #C41D1A;
+    }
+
+    .error-message {
+      color: #E22922;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Terms and Conditions for your 360questionnaire</h1>
+
+  <form action="360form.html" method="post" onsubmit="return validateForm()">
+    <label>
+      <input type="checkbox" id="checkbox1" name="checkbox1"> I agree to the first condition
+    </label>
+    <label>
+      <input type="checkbox" id="checkbox2" name="checkbox2"> I agree to the second condition
+    </label>
+    <input type="submit" value="Submit">
+    <p class="error-message" id="error-message"></p>
+  </form>
+
+  <script>
+    function validateForm() {
+      var checkbox1 = document.getElementById("checkbox1");
+      var checkbox2 = document.getElementById("checkbox2");
+      var errorMessage = document.getElementById("error-message");
+
+      if (!checkbox1.checked || !checkbox2.checked) {
+        errorMessage.innerHTML = "You will not be able to go further if you don't agree with our terms and conditions.";
+        return false;
+      } else {
+        errorMessage.innerHTML = "";
+        return true;
+      }
+    }
+  </script>
+</div>
+</body>
+</html>
