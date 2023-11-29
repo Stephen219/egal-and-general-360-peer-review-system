@@ -43,6 +43,8 @@ dependencies {
 	// this is for security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	// jpa
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 
 

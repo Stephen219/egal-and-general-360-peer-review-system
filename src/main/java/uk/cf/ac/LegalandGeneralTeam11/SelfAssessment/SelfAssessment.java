@@ -1,5 +1,9 @@
 package uk.cf.ac.LegalandGeneralTeam11.SelfAssessment;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class SelfAssessment {
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private String oneOne;
     private String oneTwo;
@@ -36,9 +44,6 @@ public class SelfAssessment {
     private String sixFour;
     private String superpower;
     private String impact;
-
-
-    // extrw
     private String firstName;
     private String lastName;
 
@@ -50,5 +55,6 @@ public class SelfAssessment {
         this.impact = impact;
         this.superpower = superpower;
     }
+
 
 }
