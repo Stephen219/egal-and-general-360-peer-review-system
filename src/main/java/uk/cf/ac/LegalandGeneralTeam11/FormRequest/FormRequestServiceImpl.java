@@ -75,4 +75,10 @@ public class FormRequestServiceImpl implements FormRequestService{
         public List<FormRequest> findPendingRequestsByUsername(String username) {
             return formRequestRepository.findPendingRequestsByUsername(username);
         }
+    @Override
+    public List<FormRequest> getAllByStatus( String status){
+        return formRequestRepository.getAllByStatus(status);
+    }
+
+
 }

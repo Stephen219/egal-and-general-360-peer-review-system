@@ -48,6 +48,26 @@ public interface FormRequestRepository {
 
     List<FormRequest> findPendingRequestsByUsername(String username);
 
+    /**
+     * getting a form request by its id
+     * @param formRequestId
+     * @return
+     */
+
+
+    FormRequest findFormRequestById(Long formRequestId);
+
+    /**
+     * updating a form request
+     * @param formRequest
+     */
+
+    void updateFormRequest(FormRequest formRequest);
+    /**
+     * Get a list of all form requests by status.
+     */
+
+    List<FormRequest> getAllByStatus(String status);
 
 
 }

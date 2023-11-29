@@ -59,7 +59,7 @@ from users u
 drop table if exists 360forms;
 CREATE TABLE if not exists 360forms
 (
-    Id INT NOT NULL AUTO_INCREMENT,
+    Id VARCHAR(45) NOT NULL,
     username VARCHAR(45) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     progress_status enum('in progress','completed') not NULL default 'in progress',
@@ -79,7 +79,7 @@ CREATE TABLE if not exists questions
 CREATE TABLE if not exists answers
 (
     Id INT NOT NULL AUTO_INCREMENT,
-    form_id INT NOT NULL,
+    form_id VARCHAR(45) NOT NULL,
     question_id INT NOT NULL,
     responder_id INT NOT NULL,
 
@@ -101,7 +101,7 @@ CREATE TABLE if not exists answers
 CREATE TABLE if not exists form_responders
 (
     Id INT NOT NULL AUTO_INCREMENT,
-    form_id INT NOT NULL,
+    form_id VARCHAR(45) NOT NULL,
     responder_id INT NOT NULL,
     FOREIGN KEY (form_id) REFERENCES 360forms(Id),
     FOREIGN KEY (responder_id) REFERENCES users(id),

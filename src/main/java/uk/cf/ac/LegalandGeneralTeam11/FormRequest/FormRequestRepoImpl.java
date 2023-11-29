@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Repository
 
@@ -120,6 +121,35 @@ public class FormRequestRepoImpl implements FormRequestRepository{
         String sql = "SELECT * FROM form_requests WHERE username = ? AND approval_status = 'PENDING'";
         return jdbcTemplate.query(sql, FormRequestMapper, username);
     }
+
+
+    /**
+     * getting a form request by its id
+     * @param formRequestId
+     * @return
+     */
+    public FormRequest findFormRequestById(Long formRequestId) {
+        String sql = "SELECT * FROM form_requests WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, FormRequestMapper, formRequestId);}
+
+
+    /**
+     *  updating a form request
+     */
+
+    public void updateFormRequest(FormRequest formRequest) {
+        String sql = "UPDATE form_requests SET approval_status = 'APPROVED', updated_at = ? WHERE id = ?";
+
+        jdbcTemplate.update(
+                sql,
+                LocalDateTime.now(),  // updated_at
+                formRequest.getId()  // id
+        );
+    }
+
+
+
+
 
 
 
