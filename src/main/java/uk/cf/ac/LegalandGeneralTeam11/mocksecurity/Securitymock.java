@@ -73,10 +73,10 @@ public class Securitymock {
 
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/login")
                 )
 
-                .logout((l) -> l.permitAll().logoutSuccessUrl("/home"))
+                .logout((l) -> l.permitAll().logoutSuccessUrl("/login"))
 
                 .exceptionHandling(access -> access.accessDeniedPage("/403"));
 
