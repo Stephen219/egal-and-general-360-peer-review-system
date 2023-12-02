@@ -7,12 +7,10 @@ drop table if exists self_assessment;
 
 drop schema if exists legalandgeneral;
 CREATE SCHEMA legalandgeneral;
+use legalandgeneral;
+
 
  -- create a sequence for generating the answer  id
-
-
-
-use legalandgeneral;
 CREATE SEQUENCE self_assessment_seq START WITH 1;
 CREATE TABLE self_assessment (
             id BIGINT PRIMARY KEY,
@@ -47,13 +45,7 @@ CREATE TABLE self_assessment (
             impact VARCHAR(255)
 );
 
-
-# CREATE TABLE  IF NOT EXISTs job_categories
-# (
-#     Id INT NOT NULL AUTO_INCREMENT,
-#     category_name VARCHAR(255) NOT NULL,
-#     PRIMARY KEY (Id)
-# ) engine = InnoDB;
+-- form requests table
 
 Create TABLE IF NOT EXISTS form_requests (
     Id INT NOT NULL AUTO_INCREMENT,
@@ -64,6 +56,8 @@ Create TABLE IF NOT EXISTS form_requests (
     PRIMARY KEY (Id)
 );
 
+-- users and roles for security -----------------------------
+
 drop table if exists users;
 create table if not exists users (
     id int not null auto_increment primary key,
@@ -71,7 +65,6 @@ create table if not exists users (
     password varchar(255) not null,
     category_id int not null default 1,
     enabled boolean not null default true
-        -- FOREIGN KEY (category_id) REFERENCES job_categories(Id)
 )engine=InnoDB;
 
 drop table if exists roles;
@@ -95,27 +88,31 @@ from users u
          inner join roles r on ur.role_id = r.role_id;
 
 
+-- -------------------------------------------------------------
+-- creating a table for storing the forms and questions within them
 
-
-drop table if exists 360forms;
-CREATE TABLE if not exists 360forms
+drop table if exists forms;
+CREATE TABLE if not exists forms
 (
     Id VARCHAR(45) NOT NULL,
-    username VARCHAR(45) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     progress_status enum('in progress','completed') not NULL default 'in progress',
     PRIMARY KEY (Id)
 ) engine = InnoDB;
 
 -- creating a table for storing the questions
+
 CREATE TABLE if not exists questions
 (
     Id VARCHAR(45) NOT NULL,
-    question_self VARCHAR(255) NOT NULL,
-    question_peer VARCHAR(255) NOT NULL,
-    PRIMARY KEY (Id)
+    form_id VARCHAR(45) NOT NULL,
+    question_text VARCHAR(255) NOT NULL,
+    likert BOOLEAN NOT NULL,
+    PRIMARY KEY (Id),
+    FOREIGN KEY (form_id) REFERENCES forms(Id)
 ) engine = InnoDB;
 
+-- -------------------------------------------------------------
 
 
 -- creating a table for storing responders assigned to a form
@@ -127,7 +124,7 @@ CREATE TABLE if not exists form_responders
     Id INT NOT NULL AUTO_INCREMENT,
     form_id VARCHAR(45) NOT NULL,
     responder_id INT NOT NULL,
-    FOREIGN KEY (form_id) REFERENCES 360forms(Id),
+    FOREIGN KEY (form_id) REFERENCES forms(Id),
     FOREIGN KEY (responder_id) REFERENCES users(id),
     PRIMARY KEY (Id)
 ) engine = InnoDB;
