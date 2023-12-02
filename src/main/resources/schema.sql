@@ -89,28 +89,72 @@ from users u
 
 
 -- -------------------------------------------------------------
+
+
+-- creating a table to store reviewers
+
+CREATE TABLE if not exists reviewers
+(
+    Id INT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(45) NOT NULL,
+    PRIMARY KEY (Id)
+) engine = InnoDB;
+
+
 -- creating a table for storing the forms and questions within them
 
 drop table if exists forms;
 CREATE TABLE if not exists forms
 (
-    Id VARCHAR(45) NOT NULL,
+    Id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     progress_status enum('in progress','completed') not NULL default 'in progress',
     PRIMARY KEY (Id)
 ) engine = InnoDB;
 
+
 -- creating a table for storing the questions
 
 CREATE TABLE if not exists questions
 (
-    Id VARCHAR(45) NOT NULL,
-    form_id VARCHAR(45) NOT NULL,
+    Id INT NOT NULL,
+    form_id INT NOT NULL,
     question_text VARCHAR(255) NOT NULL,
     likert BOOLEAN NOT NULL,
     PRIMARY KEY (Id),
     FOREIGN KEY (form_id) REFERENCES forms(Id)
 ) engine = InnoDB;
+
+
+-- table to store submissions
+
+CREATE TABLE submissions (
+   id INT NOT NULL AUTO_INCREMENT,
+   respondentID INT NOT NULL,
+   respondentType VARCHAR(30) NOT NULL,
+   submissionDate DATE,
+   PRIMARY KEY (id),
+   CONSTRAINT respondentCheck
+       CHECK (
+               (respondentType = 'reviewed' AND respondentID IN (SELECT id FROM users))
+               OR
+               (respondentType = 'reviewer' AND respondentID IN (SELECT id FROM reviewers))
+           )
+);
+
+
+-- table to store answers
+
+CREATE TABLE answers (
+     id INT NOT NULL AUTO_INCREMENT,
+     submissionID INT NOT NULL,
+     questionID INT NOT NULL,
+     answer_text VARCHAR(255),
+     PRIMARY KEY (id),
+     FOREIGN KEY (submissionID) REFERENCES submissions(id),
+     FOREIGN KEY (questionID) REFERENCES questions(id)
+);
+
 
 -- -------------------------------------------------------------
 
