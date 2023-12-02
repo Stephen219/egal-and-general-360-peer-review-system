@@ -3,6 +3,8 @@ drop table if exists roles;
 drop table if exists users_roles;
 drop table if exists form_requests;
 drop table if exists self_assessment;
+drop table if exists reviewers;
+drop table if exists answers;
 
 
 drop schema if exists legalandgeneral;
@@ -129,17 +131,11 @@ CREATE TABLE if not exists questions
 -- table to store submissions
 
 CREATE TABLE submissions (
-   id INT NOT NULL AUTO_INCREMENT,
-   respondentID INT NOT NULL,
-   respondentType VARCHAR(30) NOT NULL,
-   submissionDate DATE,
-   PRIMARY KEY (id),
-   CONSTRAINT respondentCheck
-       CHECK (
-               (respondentType = 'reviewed' AND respondentID IN (SELECT id FROM users))
-               OR
-               (respondentType = 'reviewer' AND respondentID IN (SELECT id FROM reviewers))
-           )
+     id INT NOT NULL AUTO_INCREMENT,
+     respondentID INT NOT NULL,
+     respondentType VARCHAR(30) NOT NULL,
+     submissionDate DATE,
+     PRIMARY KEY (id)
 );
 
 
@@ -158,29 +154,22 @@ CREATE TABLE answers (
 
 -- -------------------------------------------------------------
 
+-- Trigger to check respondentID based on respondentType before insertion
+DELIMITER //
 
--- creating a table for storing responders assigned to a form
--- the responders can be stored in a list in the form table but this will make it difficult to query the responders
--- this table will make it easier to query the responders assigned to a form
+CREATE TRIGGER checkRespondentBeforeInsert
+    BEFORE INSERT ON submissions
+    FOR EACH ROW
+BEGIN
+    IF (NEW.respondentType = 'reviewed' AND NEW.respondentID NOT IN (SELECT id FROM users)) OR
+       (NEW.respondentType = 'reviewer' AND NEW.respondentID NOT IN (SELECT id FROM reviewers)) THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Invalid respondentID for the given respondentType';
+    END IF;
+END;
+//
 
-CREATE TABLE if not exists form_responders
-(
-    Id INT NOT NULL AUTO_INCREMENT,
-    form_id VARCHAR(45) NOT NULL,
-    responder_id INT NOT NULL,
-    FOREIGN KEY (form_id) REFERENCES forms(Id),
-    FOREIGN KEY (responder_id) REFERENCES users(id),
-    PRIMARY KEY (Id)
-) engine = InnoDB;
-
-
-CREATE TABLE  IF NOT EXISTs job_categories
-(
-    Id INT NOT NULL AUTO_INCREMENT,
-    category_name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (Id)
-) engine = InnoDB;
-
+DELIMITER ;
 
 
 
