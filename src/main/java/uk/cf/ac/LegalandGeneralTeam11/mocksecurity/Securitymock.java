@@ -28,6 +28,7 @@ public class Securitymock {
             "/",
             "/403",
             "/css/**",
+            "static/**",
             "legal.png"
     };
 

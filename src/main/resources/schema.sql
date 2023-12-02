@@ -155,9 +155,8 @@ CREATE TABLE answers (
 -- -------------------------------------------------------------
 
 -- Trigger to check respondentID based on respondentType before insertion
-DELIMITER //
 
-CREATE TRIGGER checkRespondentBeforeInsert
+/*CREATE TRIGGER checkRespondentBeforeInsert
     BEFORE INSERT ON submissions
     FOR EACH ROW
 BEGIN
@@ -166,10 +165,9 @@ BEGIN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Invalid respondentID for the given respondentType';
     END IF;
-END;
-//
+END;*/
 
-DELIMITER ;
+
 
 
 

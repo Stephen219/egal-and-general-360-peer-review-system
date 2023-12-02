@@ -36,9 +36,9 @@ public class accountController {
         System.out.println(currentPrincipalName);
         String username = currentPrincipalName;
 
-        List<Form> forms = formservice.getFormByUser(username);
+        //List<Form> forms = formservice.getFormByUser(username);
         ModelAndView modelAndView = new ModelAndView("account/dashboard");
-        modelAndView.addObject("forms", forms);
+        //modelAndView.addObject("forms", forms);
 
         return modelAndView;
 

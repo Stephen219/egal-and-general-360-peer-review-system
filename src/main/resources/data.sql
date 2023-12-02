@@ -1,4 +1,4 @@
--- user inserts
+use legalandgeneral;
 insert into users (username, password, enabled)
 values ('admin', '$2a$12$zKMHlbOC7UXOLCdq5ZibC.ANCzcxgpoGbode97Dc2Fi1zakG2fP6O', true);
 insert into users (username, password, enabled)
