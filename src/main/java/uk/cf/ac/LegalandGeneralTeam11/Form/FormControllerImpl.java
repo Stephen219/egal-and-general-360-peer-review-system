@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
-import uk.cf.ac.LegalandGeneralTeam11.SelfAssessment.SelfAssessService;
 import uk.cf.ac.LegalandGeneralTeam11.SelfAssessment.SelfAssessment;
+import uk.cf.ac.LegalandGeneralTeam11.questions.Question;
+import uk.cf.ac.LegalandGeneralTeam11.questions.QuestionServiceInter;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,8 +24,7 @@ public class FormControllerImpl {
     @Autowired
     private FormRequestService FormRequestService;
     @Autowired
-    SelfAssessService selfAssessService;
-
+    private QuestionServiceInter questionServiceInter;
     public FormControllerImpl(FormServiceImpl formServiceImpl) {
         this.formService = formServiceImpl;
     }
@@ -60,14 +60,14 @@ public class FormControllerImpl {
     @GetMapping("/review/{formId}")
     public ModelAndView getForm(@PathVariable String formId) {
         Form form = formService.getFormById(formId);
-        SelfAssessment list = new SelfAssessment("", "" );
-
+        List<Question> questions = questionServiceInter.getAllQuestions();
+        List<Question> textQuestions = questionServiceInter.getTextAreaQuestions();
 
         List<String> assesors = formService.getUsers(); // we will deal  with the group of assesors later
-        ModelAndView modelAndView = new ModelAndView("forms/360form");
-        modelAndView.addObject("reviewForm", list);
+        ModelAndView modelAndView = new ModelAndView("forms/formImpl");
         modelAndView.addObject("form", form);
-        modelAndView.
+        modelAndView.addObject("questions", questions);
+        modelAndView.addObject("textQuestions", textQuestions);
         return modelAndView;
     }
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -84,7 +84,6 @@ public class FormControllerImpl {
         modelAndView.addObject("list", reviewForm);
         reviewForm.setResponder(username);
         reviewForm.setFormId(formId);
-        selfAssessService.saveSelfAssessment(reviewForm);
 
 
         System.out.println(reviewForm);
