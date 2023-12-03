@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>360 Form</title>
@@ -91,7 +92,22 @@
     </head>
 <body>
 <div class="container">
-    <h1>Please Fill Out Your Self Review Questionnaire</h1>
+
+
+    <th:block th:if="${!isOwner}">
+        <label>
+            <h4>Peer Review Questionnaire for <span th:text ="${form.username}"></span> </h4>
+
+        </label>
+    </th:block>
+
+    <th:block th:if="${isOwner}">
+        <label>
+            <h1>Please Fill Out Your Self Review Questionnaire</h1>
+        </label>
+    </th:block>
+
+
 
     <form id="reviewForm" th:action="@{'/review/' + ${form.id}}" method="post">
         <input type="hidden" name="formId" th:value="${form.id}"/>
@@ -101,13 +117,35 @@
             <label>
                 Filler's Email:
                 <input type="email" th:name="email" required>
+                <h2>You are...</h2>
+                <label>
+                    <input type="radio" name="Who" value="option1"> This person's peer / colleague
+                </label>
+                <label>
+                    <input type="radio" name="Who" value="option2"> This person's manager
+                </label>
+                <label>
+                    <input type="radio" name="Who" value="option3"> Within this person's team
+                </label>
+
             </label>
         </th:block>
 
 
         <th:block th:each="question : ${questions}">
-            While working, to what extent do you experience yourself...
+            <th:block th:if="${!isOwner}">
+                <label>
+                    While working with this individual, to what extent do you experience them...
+                </label>
+            </th:block>
+            <th:block th:if="${isOwner}">
+                <label>
+                    While working, to what extent do you experience yourself...
+                </label>
+            </th:block>
             <div>
+
+
                 <h4 th:text="${question.content}"></h4>
                 <label>
                     <input type="radio" th:name="${'responses[' + question.id + '].answer'}" th:value="1" required>
