@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class Question {
     private Long id;
 
-    private String question;
+    private String content;
 
     private String category;
 

@@ -29,7 +29,8 @@ public class Securitymock {
             "/403",
             "/css/**",
             "static/**",
-            "legal.png"
+            "legal.png",
+            "/review/**"
     };
 
     @Autowired
@@ -43,7 +44,7 @@ public class Securitymock {
                         .requestMatchers("/form/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/account/**").hasAnyRole( "USER")
-                        .requestMatchers("/review/**").hasRole("USER")
+                       // .requestMatchers("/review/**").hasRole("USER")
                         .requestMatchers("/self-assessment/**").hasAnyRole( "USER", "ADMIN")
                         .requestMatchers("/accept/**").hasRole("ADMIN")
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/accept/**")).hasRole("ADMIN")
