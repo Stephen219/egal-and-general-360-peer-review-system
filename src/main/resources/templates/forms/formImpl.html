@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>360 Form</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #fff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #eee;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            border: 5px solid #ddd;
+        }
+
+        h1 {
+            color: #0076D6;
+            text-align: center;
+        }
+
+        h2, h3, h4 {
+            margin-top: 20px;
+            color: #0076D6;
+            font-size: 24px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="checkbox"], input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        textarea {
+            width: calc(100% - 20px);
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #E22922;
+            color: #fff;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #C41D1A;
+        }
+
+    </style>
+
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>360 Form</title>
+        <style>
+            /* Your existing styles here */
+        </style>
+    </head>
+<body>
+<div class="container">
+    <h1>Please Fill Out Your Self Review Questionnaire</h1>
+
+    <form id="reviewForm" th:action="@{'/review/' + ${form.id}}" method="post">
+        <input type="hidden" name="formId" th:value="${form.id}"/>
+
+
+        <th:block th:if="${!isOwner}">
+            <label>
+                Filler's Email:
+                <input type="email" th:name="email" required>
+            </label>
+        </th:block>
+
+
+        <th:block th:each="question : ${questions}">
+            While working, to what extent do you experience yourself...
+            <div>
+                <h4 th:text="${question.content}"></h4>
+                <label>
+                    <input type="radio" th:name="${'responses[' + question.id + '].answer'}" th:value="1" required>
+                    Never [1]
+                </label>
+                <label>
+                    <input type="radio" th:name="${'responses[' + question.id + '].answer'}" th:value="2" required>
+                    Rarely [2]
+                </label>
+                <label>
+                    <input type="radio" th:name="${'responses[' + question.id + '].answer'}" th:value="3" required>
+                    Sometimes [3]
+                </label>
+                <label>
+                    <input type="radio" th:name="${'responses[' + question.id + '].answer'}" th:value="4" required>
+                    Often [4]
+                </label>
+                <label>
+                    <input type="radio" th:name="${'responses[' + question.id + '].answer'}" th:value="5" required>
+                    Always [5]
+                </label>
+
+                <br>
+
+
+            </div>
+        </th:block>
+
+
+
+
+        <div th:each="question : ${textQuestions}">
+            <div>
+                <!-- Display question information -->
+                <p>Question ID: <span th:text="${question.id}"></span></p>
+                <p>Question Text: <span th:text="${question.content}"></span></p>
+                <!-- Add other question properties as needed -->
+
+                <!-- You can use this information to render form elements for the questions -->
+                <textarea th:id="${'question_' + question.id}" th:name="${'question_' + question.id}" rows="4" cols="50"
+                          required></textarea>
+            </div>
+        </div>
+
+        <input type="submit" value="Submit">
+    </form>
+</div>
+
+<script>
+    document.getElementById('reviewForm').addEventListener('submit', function (event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Array to store responses
+        var responses = [];
+
+        // Loop through radio buttons and collect responses
+        var radioButtons = document.querySelectorAll('input[type="radio"]:checked');
+        radioButtons.forEach(function (radio) {
+            var questionId = radio.name.replace('responses[', '').replace('].answer', '');
+            var answerValue = radio.value;
+
+            responses.push({
+                questionId: questionId,
+                answer: answerValue,
+            });
+        });
+
+        // Loop through textareas and collect responses
+        var textAreas = document.querySelectorAll('textarea');
+        textAreas.forEach(function (textarea) {
+            var questionId = textarea.name.replace('question_', '');
+            var answerValue = textarea.value;
+
+            responses.push({
+                questionId: questionId,
+                answer: answerValue,
+            });
+        });
+
+        // Now, submit the form with responses as an object
+        var hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'responses';
+        hiddenInput.value = JSON.stringify(responses);
+        document.getElementById('reviewForm').appendChild(hiddenInput);
+
+        // Now, submit the form
+        document.getElementById('reviewForm').submit();
+    });
+</script>
+
+</body>
+</html>
+
+
+
+
