@@ -67,7 +67,7 @@ public class FormControllerImpl {
         ModelAndView modelAndView = new ModelAndView("forms/360form");
         modelAndView.addObject("reviewForm", list);
         modelAndView.addObject("form", form);
-        modelAndView.addObject("assessors", assesors);
+        modelAndView.
         return modelAndView;
     }
     @PreAuthorize("hasRole('ROLE_USER')")
