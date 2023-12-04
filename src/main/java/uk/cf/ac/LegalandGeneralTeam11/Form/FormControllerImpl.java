@@ -35,22 +35,12 @@ public class FormControllerImpl {
         this.formService = formServiceImpl;
     }
 
-//    @GetMapping("/accept{id}")
-//    public String acceptForm(@PathVariable Long id) {
-//        String username = "user";
-//
-//        formService.grantFormAccess(username, formDate);
-//        return "accept";
-//    }
+
 
 
     @GetMapping("/accept/{id}")
     public String acceptForm(@PathVariable Long id) {
-        // Assuming you have a method to retrieve the username associated with the form request
         String username = formService.getUsernameForFormRequest(id);
-        System.out.println(username);
-        System.out.println(id);
-
         FormRequest formRequest = FormRequestService.getFormRequestById(id);
         System.out.println(formRequest);
         formService.updateFormRequest(formRequest);

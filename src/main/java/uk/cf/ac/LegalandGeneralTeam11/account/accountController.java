@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import uk.cf.ac.LegalandGeneralTeam11.Form.Form;
@@ -45,7 +46,7 @@ public class accountController {
 
     }
     @GetMapping("/admin")
-    public ModelAndView home() {
+    public ModelAndView getAdmin(Model model) {
         List<FormRequest> formRequests = formRequestService.getAllByStatus("Pending");
         ModelAndView modelAndView = new ModelAndView("account/adminDashboard");
         modelAndView.addObject("formRequests", formRequests);
