@@ -56,6 +56,7 @@ public class Securitymock {
 
 
 
+
                 .formLogin(form -> form
                         .loginPage("/login")
                         .permitAll()
@@ -80,7 +81,10 @@ public class Securitymock {
 
                 .logout((l) -> l.permitAll().logoutSuccessUrl("/login"))
 
+
                 .exceptionHandling(access -> access.accessDeniedPage("/403"));
+
+
 
         return http.build();
 
