@@ -10,15 +10,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.context.Context;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
 import uk.cf.ac.LegalandGeneralTeam11.answers.Answer;
 import uk.cf.ac.LegalandGeneralTeam11.answers.AnswerServiceInter;
+import uk.cf.ac.LegalandGeneralTeam11.emails.EmailServiceImpl;
 import uk.cf.ac.LegalandGeneralTeam11.questions.Question;
 import uk.cf.ac.LegalandGeneralTeam11.questions.QuestionServiceInter;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 
@@ -31,6 +34,8 @@ public class FormControllerImpl {
     private QuestionServiceInter questionServiceInter;
     @Autowired
     private AnswerServiceInter AnswerServiceInter;
+    @Autowired
+    private EmailServiceImpl emailService;
     public FormControllerImpl(FormServiceImpl formServiceImpl) {
         this.formService = formServiceImpl;
     }
@@ -49,8 +54,43 @@ public class FormControllerImpl {
 
         return "redirect:/admin";
     }
-    // the below method is used o redirect the user to the form page and display the form
-    // the form is displayed using the form id
+
+    @GetMapping("/get_reviewers/{id}")
+    public ModelAndView getReviewers(@PathVariable String id) {
+        Form form = formService.getFormById(id);
+        ModelAndView modelAndView = new ModelAndView("forms/reviewer");
+        modelAndView.addObject("form", form);
+        return modelAndView;
+    }
+
+    @PostMapping("/submit_reviewers/{id}")
+    public ModelAndView submitReviewers(@RequestParam List<String> uniqueEmails, @PathVariable String id) {
+        System.out.println("Submitted Emails: " + uniqueEmails);
+        formService.addFormReviewers(id, uniqueEmails);
+        // TODO: Send email to reviewers
+        for (String email : uniqueEmails) {
+            sendReviewInvitationEmail(email, id);
+        }
+
+
+        System.out.println("reviewrs addd");
+        Form form = formService.getFormById(id);
+        ModelAndView modelAndView = new ModelAndView("redirect:/review/" + id);
+        modelAndView.addObject("form", form);
+        return modelAndView;
+    }
+
+    private void sendReviewInvitationEmail(String to, String formId) {
+        Context context = new Context();
+        context.setVariable("formId", formId);
+        context.setVariable("to", to);
+        context.setVariable("url", "http://localhost:8080/review/" + formId);
+        String name = formService.getFormById(formId).getUsername();
+        context.setVariable("from", "name");
+        emailService.sendSimpleMessage(to, "Review Form Invitation", "account/fillFormEmail", context);
+    }
+
+
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/review/{formId}")
@@ -58,8 +98,6 @@ public class FormControllerImpl {
         Form form = formService.getFormById(formId);
         List<Question> questions = questionServiceInter.getAllQuestions();
         List<Question> textQuestions = questionServiceInter.getTextAreaQuestions();
-
-        List<String> assesors = formService.getUsers(); // we will deal  with the group of assesors later
         ModelAndView modelAndView = new ModelAndView("forms/formImpl");
         modelAndView.addObject("form", form);
         modelAndView.addObject("questions", questions);

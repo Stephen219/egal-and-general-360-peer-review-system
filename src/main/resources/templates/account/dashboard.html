@@ -484,7 +484,7 @@
                         <div class="bg-white p-4 rounded shadow flex flex-col mb-4">
                             <!-- Sender's name -->
                             <h2 class="text-lg font-semibold mb-2" th:text="'Sender: ' + ${request.username}"></h2>
-                            <a th:href="@{'/review/' + ${request.id}}">
+                            <a th:href="@{'/get_reviewers/' + ${request.id}}">
                                 <!-- Display the sender's name -->
                                 <span th:text="'Sender: ' + ${request.username}"></span>
                             </a>
@@ -503,7 +503,6 @@
             </div>
 
             <div>
-                <!-- This is the second half of DASHBOARD -->
                 Additional content for the second half of the dashboard...
             </div>
 

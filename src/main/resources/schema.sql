@@ -66,7 +66,9 @@ from users u
 CREATE TABLE if not exists reviewers
 (
     Id INT NOT NULL AUTO_INCREMENT,
-    username VARCHAR(45) NOT NULL,
+    form_id VARCHAR(45) NOT NULL,
+    email VARCHAR(45) NOT NULL,
+    hasFilledForm BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (Id)
 ) engine = InnoDB;
 

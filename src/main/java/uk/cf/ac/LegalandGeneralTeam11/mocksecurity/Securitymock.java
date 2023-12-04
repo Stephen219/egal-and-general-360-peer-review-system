@@ -48,6 +48,9 @@ public class Securitymock {
                         .requestMatchers("/self-assessment/**").hasAnyRole( "USER", "ADMIN")
                         .requestMatchers("/accept/**").hasRole("ADMIN")
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/accept/**")).hasRole("ADMIN")
+                        .requestMatchers("get_reviewers/**").hasRole("USER")
+                        .requestMatchers("/submit_reviewers/**").hasRole("USER")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/submit_reviewers/**")).hasRole("USER")
 
                         .requestMatchers("/account/**").hasAnyRole( "USER")
                         .requestMatchers("/accept/**").hasAnyRole("ADMIN")

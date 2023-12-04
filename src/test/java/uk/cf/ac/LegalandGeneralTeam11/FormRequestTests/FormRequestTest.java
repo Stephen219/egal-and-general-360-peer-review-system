@@ -64,7 +64,6 @@ public class FormRequestTest {
         String flashMessage = (String) result.getFlashMap().get("flashMessage");
         assertEquals("your form request has been submited!", flashMessage);
 
-// Perform the second request
         result = mockMvc.perform(get("/form/new"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("flashError"))

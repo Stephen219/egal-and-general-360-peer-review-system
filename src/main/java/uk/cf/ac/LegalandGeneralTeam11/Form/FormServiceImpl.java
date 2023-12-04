@@ -53,4 +53,8 @@ public List<Form> getFormByUser(String username) {
         return formRepository.getFormById(id);
     }
 
+    public void addFormReviewers(String FormId, List<String> reviewers) {
+        formRepository.addFormReviewers(FormId, reviewers);
+    }
+
 }
