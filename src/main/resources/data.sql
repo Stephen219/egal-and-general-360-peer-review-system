@@ -1,4 +1,4 @@
--- user inserts
+use legalandgeneral;
 insert into users (username, password, enabled)
 values ('admin', '$2a$12$zKMHlbOC7UXOLCdq5ZibC.ANCzcxgpoGbode97Dc2Fi1zakG2fP6O', true);
 insert into users (username, password, enabled)
@@ -16,87 +16,47 @@ values ('admin', 1);
 insert into users_roles (username, role_id)
 values ('user', 2);
 
--- form inserts
-insert into forms (Id, created_at, progress_status)
-values (1, '2020-01-01', 'in progress');
--- question inserts
-insert into questions (Id, form_id, question_text, likert)
-values (1, 1, 'Building meaningful relationships across teams and projects.', true);
+INSERT INTO questions (question, category) VALUES
+                                               ('Building meaningful relationships across teams and projects.', 'Collaborative'),
+                                               ('Sharing your experiences openly so that people can learn.', 'Collaborative'),
+                                               ('Actively seeking out opportunities to support others in work.', 'Collaborative'),
+                                               ('Being open and approachable.', 'Collaborative');
 
-insert into questions (Id, form_id, question_text, likert)
-values (2, 1, 'Sharing your experiences openly so that people can learn.', true);
+-- Insert questions for the second category
+INSERT INTO questions (question, category) VALUES
+                                               ('Experimenting to learn what works and pivoting when it doesn''t.', 'SecondCategory'),
+                                               ('Accepting and building on others'' ideas and opinions to achieve the best possible outcome.', 'SecondCategory'),
+                                               ('Working for the good of the collective rather than your own priorities.', 'SecondCategory'),
+                                               ('Promoting and discussing how our purpose connects to the greater customer outcomes.', 'SecondCategory');
 
-insert into questions (Id, form_id, question_text, likert)
-values (3, 1, 'Actively seeking out opportunities to support others in work.', true);
+-- Insert questions for the third category
+INSERT INTO questions (question, category) VALUES
+                                               ('Actively asking for feedback and receiving it with curiosity.', 'ThirdCategory'),
+                                               ('Listening openly to really understand.', 'ThirdCategory'),
+                                               ('Taking the time to get to know others.', 'ThirdCategory'),
+                                               ('Having the courage to challenge constructively and respectfully.', 'ThirdCategory');
 
-insert into questions (Id, form_id, question_text, likert)
-values (4, 1, 'As being open and approachable', true);
+-- Insert questions for the fourth category
+INSERT INTO questions (question, category) VALUES
+                                               ('Demonstrating high levels of self-awareness.', 'FourthCategory'),
+                                               ('Creating an environment of trust where you trust others and earn others'' trust in return.', 'FourthCategory'),
+                                               ('Empowering others to get on with their work and helping clear obstacles out of the way.', 'FourthCategory'),
+                                               ('Behaving consistently across different situations.', 'FourthCategory');
 
-insert into questions (Id, form_id, question_text, likert)
-values (5, 1, 'Experimenting to learn what works and pivoting when it doesnt.', true);
+-- Insert questions for the fifth category
+INSERT INTO questions (question, category) VALUES
+                                               ('Ruthlessly prioritizing and communicating it clearly.', 'FifthCategory'),
+                                               ('Talking openly about your mistakes to help others learn.', 'FifthCategory'),
+                                               ('Creating a climate where people feel safe and are encouraged to speak up.', 'FifthCategory'),
+                                               ('Anticipating and responding to change at pace.', 'FifthCategory'),
+                                               ('Driving commercial value that focuses on our customers and shareholders.', 'FifthCategory');
 
-insert into questions (Id, form_id, question_text, likert)
-values (6, 1, 'Accepting and building on others'' ideas and opinions to achieve the best possible outcome.', true);
+-- Insert questions for the sixth category
+INSERT INTO questions (question, category) VALUES
+                                               ('Driving enterprise-wide success.', 'SixthCategory'),
+                                               ('Driving outcomes that start with our customers.', 'SixthCategory'),
+                                               ('Pushing boundaries to create opportunities for future success.', 'SixthCategory'),
+                                               ('Thinking about the future and changes that are needed.', 'SixthCategory');
 
-insert into questions (Id, form_id, question_text, likert)
-values (7, 1, 'Working for the good of the collective rather thank your own priorities.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (8, 1, 'Promoting and discussing how our purpose connects to the greater customer outcomes.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (9, 1, 'Actively asking for feedback and receiving it with curiosity.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (10, 1, 'Listening openly to really understand.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (11, 1, 'Taking the time to get to know others.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (12, 1, 'Having the courage to challenge constructively and respectfully.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (13, 1, 'Demonstrating high levels of self-awareness.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (14, 1, 'Creating an environment of trust where you trust others'' and earn others'' trust in return.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (15, 1, 'Empowering others to get on with their work and helping the clear obstacles out of the way.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (16, 1, 'Behaving consistently across different situations.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (17, 1, 'Ruthlessly prioritising and communicating it clearly.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (18, 1, 'Talking openly about your mistakes to help others learn.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (19, 1, 'Creating a climate where people fell safe and are encouraged to speak up.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (20, 1, 'Anticipating and responding to change at pace.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (21, 1, 'Driving commercial value that focus on our customers and shareholders.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (22, 1, 'Driving enterprise-wide success.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (23, 1, 'Driving outcomes that start with our customers.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (24, 1, 'Pushing boundaries to create opportunities for future success.', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (25, 1, 'Thinking about the future and changes that are needed', true);
-
-insert into questions (Id, form_id, question_text, likert)
-values (26, 1, 'What do you consider to be your superpower?', false);
-
-insert into questions (Id, form_id, question_text, likert)
-values (27, 1, 'What is the one thing you could do to improve your impact?', false);
+insert into questions (question, category) VALUEs('What do you consider to be your superpower? :', 'textarea');
+insert into questions (question, category) VALUEs('What is the one thing you could do to improve your impact? :', 'textarea');

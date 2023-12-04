@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,10 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.BDDMockito.given;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @RunWith(SpringRunner.class)
@@ -44,7 +43,7 @@ public class FormRequestTest {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/form/new"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("flashMessage"))
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/account"))
+                .andExpect(redirectedUrl("/account"))
                 .andReturn() ;
         String flashMessage = (String) result.getFlashMap().get("flashMessage");
         assertEquals("your form request has been submited!", flashMessage);
@@ -59,7 +58,7 @@ public class FormRequestTest {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/form/new"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.flash().attributeExists("flashMessage"))
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/account"))
+                .andExpect(redirectedUrl("/account"))
                 .andReturn();
 
         String flashMessage = (String) result.getFlashMap().get("flashMessage");
@@ -76,4 +75,12 @@ public class FormRequestTest {
 
 
     }
-}
+
+
+    @Test
+    @WithAnonymousUser
+    public void whenAnonymousUserTriesToAccesRestrictedUrl() throws Exception {
+        mockMvc.perform(get("/form/new"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login"));
+    }}

@@ -48,6 +48,15 @@ dependencies {
 
 
 
+	// Selenium WebDriver
+	implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+
+	// ChromeDriver (replace version with the version you need)
+	implementation 'io.github.bonigarcia:webdrivermanager:5.0.3'
+
+
+
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
