@@ -57,18 +57,71 @@
 
 </div>
 
-  <script>
+<!--  <script>-->
 
-    const uniqueEmails = new Set();
+<!--    const uniqueEmails = new Set();-->
 
-    function addEmail() {
+<!--    function addEmail() {-->
 
-      const emailInput = document.getElementById('emailInput');
-      const email = emailInput.value.trim();
+<!--      const emailInput = document.getElementById('emailInput');-->
+<!--      const email = emailInput.value.trim();-->
 
 
-      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+<!--      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {-->
 
+<!--        if (!uniqueEmails.has(email)) {-->
+<!--          const emailList = document.getElementById('emailList');-->
+<!--          const emailItem = document.createElement('li');-->
+<!--          emailItem.className = 'email-item flex items-center justify-between border rounded-md p-2 transition duration-300 hover:bg-gray-100';-->
+<!--          emailItem.innerHTML = `-->
+<!--                        <span>${email}</span>-->
+<!--                        <button type="button" onclick="removeEmail(this)" class="text-red-500 ml-2">Remove</button>-->
+<!--                    `;-->
+
+<!--          emailList.appendChild(emailItem);-->
+<!--          uniqueEmails.add(email);-->
+<!--          emailInput.value = '';-->
+<!--          emailInput.classList.remove('invalid-email');-->
+
+<!--          document.getElementById('errorDiv').innerText = '';-->
+<!--          const submitButton = document.getElementById('submitButton');-->
+<!--          submitButton.disabled = uniqueEmails.size <= 5;-->
+<!--          if (uniqueEmails.size < 5) {-->
+<!--            document.getElementById('errorDiv').innerText = 'Please add more than 5 reviewers.';-->
+<!--          }-->
+<!--        } else {-->
+<!--          document.getElementById('errorDiv').innerText = 'Email already added.';-->
+<!--        }-->
+<!--      } else {-->
+<!--        emailInput.classList.add('invalid-email');-->
+<!--        document.getElementById('errorDiv').innerText = 'Invalid email format.';-->
+<!--      }-->
+<!--      document.getElementById('uniqueEmailsInput').value = Array.from(uniqueEmails).join(',');-->
+<!--    }-->
+
+<!--    function removeEmail(button) {-->
+<!--      const emailItem = button.parentElement;-->
+<!--      const email = emailItem.firstChild.textContent;-->
+<!--      uniqueEmails.delete(email);-->
+<!--      emailItem.remove();-->
+<!--      document.getElementById('errorDiv').innerText = '';-->
+<!--      const submitButton = document.getElementById('submitButton');-->
+<!--      submitButton.disabled = uniqueEmails.size <= 5;-->
+<!--    }-->
+<!--  </script>-->
+
+
+<script>
+  const uniqueEmails = new Set();
+
+  function addEmail() {
+    const emailInput = document.getElementById('emailInput');
+    const email = emailInput.value.trim();
+    const allowedDomains = ['gmail.com', 'outlook.com', 'cardiff.ac.uk'];
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailRegex.test(email)) {
+      const domain = email.split('@')[1];
+      if (allowedDomains.includes(domain)) {
         if (!uniqueEmails.has(email)) {
           const emailList = document.getElementById('emailList');
           const emailItem = document.createElement('li');
@@ -85,8 +138,8 @@
 
           document.getElementById('errorDiv').innerText = '';
           const submitButton = document.getElementById('submitButton');
-          submitButton.disabled = uniqueEmails.size <= 5;
-          if (uniqueEmails.size < 5) {
+          submitButton.disabled = uniqueEmails.size >= 5;
+          if (uniqueEmails.size >= 5) {
             document.getElementById('errorDiv').innerText = 'Please add more than 5 reviewers.';
           }
         } else {
@@ -94,21 +147,27 @@
         }
       } else {
         emailInput.classList.add('invalid-email');
-        document.getElementById('errorDiv').innerText = 'Invalid email format.';
+        document.getElementById('errorDiv').innerText = 'Email domain not allowed.';
       }
-      document.getElementById('uniqueEmailsInput').value = Array.from(uniqueEmails).join(',');
+    } else {
+      emailInput.classList.add('invalid-email');
+      document.getElementById('errorDiv').innerText = 'Invalid email format.';
     }
+    document.getElementById('uniqueEmailsInput').value = Array.from(uniqueEmails).join(',');
+  }
 
-    function removeEmail(button) {
-      const emailItem = button.parentElement;
-      const email = emailItem.firstChild.textContent;
-      uniqueEmails.delete(email);
-      emailItem.remove();
-      document.getElementById('errorDiv').innerText = '';
-      const submitButton = document.getElementById('submitButton');
-      submitButton.disabled = uniqueEmails.size <= 5;
-    }
-  </script>
+  function removeEmail(button) {
+    const emailItem = button.parentElement;
+    const email = emailItem.firstChild.textContent;
+    uniqueEmails.delete(email);
+    emailItem.remove();
+    document.getElementById('errorDiv').innerText = '';
+    const submitButton = document.getElementById('submitButton');
+    submitButton.disabled = uniqueEmails.size >= 5;
+  }
+</script>
+
+
 
 </body>
 </html>

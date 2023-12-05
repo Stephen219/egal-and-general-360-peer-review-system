@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.context.Context;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
@@ -36,11 +37,10 @@ public class FormControllerImpl {
     private AnswerServiceInter AnswerServiceInter;
     @Autowired
     private EmailServiceImpl emailService;
+
     public FormControllerImpl(FormServiceImpl formServiceImpl) {
         this.formService = formServiceImpl;
     }
-
-
 
 
     @GetMapping("/accept/{id}")
@@ -67,7 +67,7 @@ public class FormControllerImpl {
     public ModelAndView submitReviewers(@RequestParam List<String> uniqueEmails, @PathVariable String id) {
         System.out.println("Submitted Emails: " + uniqueEmails);
         formService.addFormReviewers(id, uniqueEmails);
-        // TODO: Send email to reviewers
+        // TODO: Send email to reviewers   done though slow
         for (String email : uniqueEmails) {
             sendReviewInvitationEmail(email, id);
         }
@@ -91,7 +91,6 @@ public class FormControllerImpl {
     }
 
 
-
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/review/{formId}")
     public ModelAndView getForm(@PathVariable String formId) {
@@ -105,6 +104,7 @@ public class FormControllerImpl {
         modelAndView.addObject("isOwner", isOwner(form));
         return modelAndView;
     }
+
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/review/{formId}")
 
@@ -187,6 +187,17 @@ public class FormControllerImpl {
         String username = authentication.getName();
         return form.getUsername().equals(username);
     }
+
+
+    public Boolean checkCanFillForm(String formId, String email, List<String> reviewers) {
+
+        if (reviewers.contains(email) && formService.getIfHasFilledForm(formId, email)) {
+            return true;
+        }
+        return false;
+    }
+
+
 
 
 }

@@ -23,6 +23,8 @@ public interface FormService {
     public Boolean getIfHasFilledForm(String formId, String email);
     public List<String> getReviewersForAForm(String formId);
 
+    public Boolean ifUserHasSelfReviewed(String formId, String email);
+
 
 
 

@@ -13,6 +13,7 @@ public interface FormRepoInterface {
     public void addFormReviewers(String FormId, List<String> reviewers);
 
     public void updateReviewersAfterSubmission(String FormId, String reviewer, String relationship);
+    public Boolean ifUserHasSelfReviewed(String formId, String email);
 
 
 }

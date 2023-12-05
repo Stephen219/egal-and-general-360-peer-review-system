@@ -65,10 +65,14 @@ public List<Form> getFormByUser(String username) {
     }
 
     public Boolean getIfHasFilledForm(String formId, String email) {
-        if (formRepository.getIfHasFilledForm(formId, email)){
+        if (formRepository.getIfHasFilledForm(formId, email) == true){
             return true;
         }
 
         return false;
+    }
+
+    public Boolean ifUserHasSelfReviewed(String formId, String email) {
+        return formRepository.ifUserHasSelfReviewed(formId, email);
     }
 }
