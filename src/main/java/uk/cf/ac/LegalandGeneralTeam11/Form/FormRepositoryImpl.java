@@ -103,5 +103,31 @@ public class FormRepositoryImpl implements FormRepoInterface {
         jdbcTemplate.update(sql, relationship, FormId, reviewer);
     }
 
+    /**
+     * get all reviewers for a form
+     * @param formId the id of the form
+     * @return a list of reviewers
+     */
+    public List<String> getReviewersForAForm(String formId) {
+        String sql = "SELECT email FROM reviewers WHERE form_id = ?";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("email"), formId);
+    }
+
+    public Boolean getIfHasFilledForm(String formId, String email) {
+        String sql = "SELECT hasFilledForm FROM reviewers WHERE form_id = ? AND email = ?";
+        Boolean hasFilledForm = jdbcTemplate.queryForObject(sql, Boolean.class, formId, email);
+
+        return hasFilledForm;
+    }
+    public Boolean ifUserHasSelfReviewed(String formId, String email) {
+        try {
+            String sql = "SELECT COUNT(DISTINCT responder) FROM answers WHERE form_id = ? AND responder = ?";
+            int count = jdbcTemplate.queryForObject(sql, Integer.class, formId, email);
+            return count > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }

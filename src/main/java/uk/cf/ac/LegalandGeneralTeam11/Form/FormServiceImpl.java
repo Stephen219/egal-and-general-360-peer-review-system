@@ -60,4 +60,19 @@ public List<Form> getFormByUser(String username) {
     public void updateReviewersAfterSubmission(String FormId, String reviewer, String relationship) {
         formRepository.updateReviewersAfterSubmission(FormId, reviewer, relationship);
     }
+    public List<String> getReviewersForAForm(String formId) {
+        return formRepository.getReviewersForAForm(formId);
+    }
+
+    public Boolean getIfHasFilledForm(String formId, String email) {
+        if (formRepository.getIfHasFilledForm(formId, email) == true){
+            return true;
+        }
+
+        return false;
+    }
+
+    public Boolean ifUserHasSelfReviewed(String formId, String email) {
+        return formRepository.ifUserHasSelfReviewed(formId, email);
+    }
 }

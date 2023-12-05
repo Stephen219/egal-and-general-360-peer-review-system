@@ -60,3 +60,14 @@ INSERT INTO questions (question, category) VALUES
 
 insert into questions (question, category) VALUEs('What do you consider to be your superpower? :', 'textarea');
 insert into questions (question, category) VALUEs('What is the one thing you could do to improve your impact? :', 'textarea');
+
+
+
+
+insert into reviewers (form_id, email) VALUES ('form1', 'ubbur@hcbdhchhc.com');
+insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfjfdjfdjdfjjkd@gmailcom');
+
+insert into reviewers (form_id, email) VALUES ('form1', 'abushvin@gmail.com');
+insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfjiksasfdjfdjdfjjkd@gmailcom');
+insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfsakuasukjfdjfdjdfjjkd@gmailcom');
+insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfsxuiuisxjfdjfdjdfjjkd@gmailcom');
