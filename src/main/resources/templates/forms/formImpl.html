@@ -189,17 +189,14 @@
             <label>
                 Whats your Email? please provide the email you received the form at.
                 <input type="email" th:name="email" required>
+            </label>
+            <label>
                 <h2>You are...</h2>
-                <label>
-                    <input type="checkbox" name="Who" value="option1"> This person's peer / colleague
-                </label>
-                <label>
-                    <input type="checkbox" name="Who" value="option2"> This person's manager
-                </label>
-                <label>
-                    <input type="checkbox" name="Who" value="option3"> Within this person's team
-                </label>
-
+                <select name="Who" required>
+                    <option value="colleague">This person's peer / colleague</option>
+                    <option value="manager">This person's manager</option>
+                    <option value="team member">Within this person's team</option>
+                </select>
             </label>
         </th:block>
 

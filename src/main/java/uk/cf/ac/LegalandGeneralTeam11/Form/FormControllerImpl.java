@@ -108,9 +108,10 @@ public class FormControllerImpl {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/review/{formId}")
 
-    public String submitReview(@PathVariable String formId,@RequestParam("responses") String responses, @RequestParam(value = "email", required = false) String fillerEmail) {
+    public String submitReview(@PathVariable String formId,@RequestParam("responses") String responses, @RequestParam(value = "email", required = false) String fillerEmail, @RequestParam(value = "Who", required = false) String Relationship) {
         System.out.println(responses);
         System.out.println(fillerEmail);
+        System.out.println(Relationship);
 
 
 
