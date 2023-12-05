@@ -97,7 +97,11 @@ public class FormRepositoryImpl implements FormRepoInterface {
         }
     }
 
-
+    @Override
+    public void updateReviewersAfterSubmission(String FormId, String reviewer, String relationship) {
+        String sql = "UPDATE reviewers SET relationship = ?, hasFilledForm = true WHERE form_id = ? AND email = ?";
+        jdbcTemplate.update(sql, relationship, FormId, reviewer);
+    }
 
 
 }

@@ -57,4 +57,7 @@ public List<Form> getFormByUser(String username) {
         formRepository.addFormReviewers(FormId, reviewers);
     }
 
+    public void updateReviewersAfterSubmission(String FormId, String reviewer, String relationship) {
+        formRepository.updateReviewersAfterSubmission(FormId, reviewer, relationship);
+    }
 }
