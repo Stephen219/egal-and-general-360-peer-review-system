@@ -18,9 +18,7 @@ public interface FormService {
     public Form getFormById(String id);
     public void addFormReviewers(String FormId, List<String> reviewers);
 
-    public List<String> getReviewersForAForm(String formId);
-
-    public Boolean getIfHasFilledForm(String formId, String email);
+    public void updateReviewersAfterSubmission(String FormId, String reviewer, String relationship);
 
 
 

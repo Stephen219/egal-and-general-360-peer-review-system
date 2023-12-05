@@ -97,28 +97,11 @@ public class FormRepositoryImpl implements FormRepoInterface {
         }
     }
 
-
-    /**
-     * get all reviewers for a form
-     * @param formId the id of the form
-     * @return a list of reviewers
-     */
-
-    public List<String> getReviewersForAForm(String formId) {
-        String sql = "SELECT email FROM reviewers WHERE form_id = ?";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("email"), formId);
-
-
+    @Override
+    public void updateReviewersAfterSubmission(String FormId, String reviewer, String relationship) {
+        String sql = "UPDATE reviewers SET relationship = ?, hasFilledForm = true WHERE form_id = ? AND email = ?";
+        jdbcTemplate.update(sql, relationship, FormId, reviewer);
     }
-
-
-
-    public boolean getIfHasFilledForm(String email, String formId) {
-        String sql = "SELECT hasFilledForm FROM reviewers WHERE email = ? AND form_id = ?";
-        Boolean hasFilledForm = jdbcTemplate.queryForObject(sql, Boolean.class, email, formId);
-        return hasFilledForm;}
-
-
 
 
 }

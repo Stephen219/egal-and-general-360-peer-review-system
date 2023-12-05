@@ -57,16 +57,7 @@ public List<Form> getFormByUser(String username) {
         formRepository.addFormReviewers(FormId, reviewers);
     }
 
-    public List<String> getReviewersForAForm(String formId) {
-        return formRepository.getReviewersForAForm(formId);
+    public void updateReviewersAfterSubmission(String FormId, String reviewer, String relationship) {
+        formRepository.updateReviewersAfterSubmission(FormId, reviewer, relationship);
     }
-
-    public Boolean getIfHasFilledForm(String formId, String email) {
-        if (formRepository.getIfHasFilledForm(formId, email)){
-            return true;
-        }
-
-        return false;
-    }
-
 }
