@@ -18,6 +18,8 @@ public interface FormService {
     public Form getFormById(String id);
     public void addFormReviewers(String FormId, List<String> reviewers);
 
+    public void updateReviewersAfterSubmission(String FormId, String reviewer, String relationship);
+
 
 
 
