@@ -107,78 +107,60 @@ public class FormControllerImpl {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/review/{formId}")
-
-    public String submitReview(@PathVariable String formId,@RequestParam("responses") String responses, @RequestParam(value = "email", required = false) String fillerEmail, @RequestParam(value = "Who", required = false) String Relationship) {
-        System.out.println(responses);
-        System.out.println(fillerEmail);
-        System.out.println(Relationship);
-
-
-
-
-
-
-        ObjectMapper objectMapper = new ObjectMapper();
+    public String submitReview(@PathVariable String formId,
+                               @RequestParam("responses") String responses,
+                               @RequestParam(value = "email", required = false) String fillerEmail,
+                               @RequestParam(value = "Who", required = false) String Relationship,
+                               RedirectAttributes redirectAttributes) {
         try {
-            List<Answer> answerList = objectMapper.readValue(responses, new TypeReference<List<Answer>>() {});
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<Answer> answerList = objectMapper.readValue(responses, new TypeReference<List<Answer>>() {
+            });
 
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String username = authentication.getName();
+
+            List<String> reviewers = formService.getReviewersForAForm(formId);
 
             if (fillerEmail != null) {
+
+
+                if (!reviewers.contains(fillerEmail)) {
+                    redirectAttributes.addFlashAttribute("flashError", "You are not allowed to fill this form");
+                    return "redirect:/review/" + formId;
+                }
+
+                if (formService.getIfHasFilledForm(formId, fillerEmail)) {
+                    redirectAttributes.addFlashAttribute("flashError", "You have already filled this form");
+                    return "redirect:/review/" + formId;
+                }
+                formService.updateReviewersAfterSubmission(formId, fillerEmail, Relationship);
                 answerList.forEach(answer -> answer.setUsername(fillerEmail));
+
             } else {
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                String username = authentication.getName();
+                if (formService.ifUserHasSelfReviewed(formId, username)) {
+                    redirectAttributes.addFlashAttribute("flashError", "You have already filled this form");
+                    System.out.println("this code is now working");
+
+                    return "redirect:/review/" + formId;
+                }
                 answerList.forEach(answer -> answer.setUsername(username));
+
             }
-
-
-
-
-
-
-            //75answerList.forEach(answer -> answer.setUsername(username));
-
-            // Set the formId for each answer
             answerList.forEach(answer -> answer.setFormId(formId));
-
-//            answerList.forEach(answer -> answer.setFormId(Long.parseLong(formId)));
-
-            // Save the answers to the database
-            System.out.println(answerList);
             AnswerServiceInter.processAndSaveAnswers(answerList);
-            System.out.println("huuuuuuuuuuuufieggfbvhjvbvbvhbhbbvhjbvhjbf,bfd");
-
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        Form form = formService.getFormById(formId);
-
-        ModelAndView modelAndView = new ModelAndView("redirect:/account");
-        modelAndView.addObject("form", form);
-//        System.out.println(answers);
-
-
-
-
-
-        // Redirect to a success page or another appropriate view
+        catch (JsonProcessingException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("flashError", "An error occurred while processing the form");
+            return "redirect:/review/" + formId;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("flashError", "An error occurred while processing the form");
+            return "redirect:/review/" + formId;
+        }
         return "redirect:/account";
-
-
-
     }
 
 
