@@ -86,7 +86,7 @@ public class FormControllerImpl {
         context.setVariable("to", to);
         context.setVariable("url", "http://localhost:8080/review/" + formId);
         String name = formService.getFormById(formId).getUsername();
-        context.setVariable("from", "name");
+        context.setVariable("name", name);
         emailService.sendSimpleMessage(to, "Review Form Invitation", "account/fillFormEmail", context);
     }
 
