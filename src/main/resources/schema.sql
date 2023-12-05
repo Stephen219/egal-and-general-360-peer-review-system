@@ -69,6 +69,7 @@ CREATE TABLE if not exists reviewers
     form_id VARCHAR(45) NOT NULL,
     email VARCHAR(45) NOT NULL,
     hasFilledForm BOOLEAN NOT NULL DEFAULT FALSE,
+    relationship VARCHAR(45)  DEFAULT null,
     PRIMARY KEY (Id)
 ) engine = InnoDB;
 
