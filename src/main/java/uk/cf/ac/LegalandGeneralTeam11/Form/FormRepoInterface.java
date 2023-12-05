@@ -10,6 +10,7 @@ public interface FormRepoInterface {
     public List<String> getUsers();
 
     public Form getFormById(String id);
+    public void addFormReviewers(String FormId, List<String> reviewers);
 
 
 }

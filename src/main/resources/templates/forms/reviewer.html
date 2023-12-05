@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/main.css}"/>
+  <title>Reviewers Form</title>
+  <style>
+    .email-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .email-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #ccc;
+      padding: 8px;
+      margin-bottom: 8px;
+    }
+
+    .invalid-email {
+      border: 1px solid #e53e3e;
+    }
+
+    .error-message {
+      color: #e53e3e;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+
+<div class="bg-white p-8 rounded shadow-md max-w-md">
+  <h2 class="text-3xl font-semibold mb-6 text-center">Choose Reviewers</h2>
+
+  <form id="reviewersForm" th:action="@{'/submit_reviewers/'+${form.id}}" method="post" class="space-y-4">
+    <input type="hidden" name="id" th:value="${form.id}" />
+    <input type="hidden" id="uniqueEmailsInput" name="uniqueEmails" />
+
+    <div class="flex items-center space-x-2">
+      <label for="emailInput" class="mr-2">Email:</label>
+      <input type="email" id="emailInput" name="emails" class="p-2 border rounded-md transition duration-300 focus:border-blue-500" required>
+      <button type="button" onclick="addEmail()" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md transition duration-300 hover:bg-blue-600">Add</button>
+    </div>
+    <div id="errorDiv" class="text-red-500"></div>
+
+    <ul id="emailList" class="list-none space-y-2"></ul>
+
+
+
+    <button type="submit" id="submitButton" class="w-full mt-4 px-4 py-2 bg-green-500 text-white rounded-md transition duration-300 hover:bg-green-600" disabled>Submit</button>
+  </form>
+
+</div>
+
+  <script>
+
+    const uniqueEmails = new Set();
+
+    function addEmail() {
+
+      const emailInput = document.getElementById('emailInput');
+      const email = emailInput.value.trim();
+
+
+      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+        if (!uniqueEmails.has(email)) {
+          const emailList = document.getElementById('emailList');
+          const emailItem = document.createElement('li');
+          emailItem.className = 'email-item flex items-center justify-between border rounded-md p-2 transition duration-300 hover:bg-gray-100';
+          emailItem.innerHTML = `
+                        <span>${email}</span>
+                        <button type="button" onclick="removeEmail(this)" class="text-red-500 ml-2">Remove</button>
+                    `;
+
+          emailList.appendChild(emailItem);
+          uniqueEmails.add(email);
+          emailInput.value = '';
+          emailInput.classList.remove('invalid-email');
+
+          document.getElementById('errorDiv').innerText = '';
+          const submitButton = document.getElementById('submitButton');
+          submitButton.disabled = uniqueEmails.size <= 5;
+          if (uniqueEmails.size < 5) {
+            document.getElementById('errorDiv').innerText = 'Please add more than 5 reviewers.';
+          }
+        } else {
+          document.getElementById('errorDiv').innerText = 'Email already added.';
+        }
+      } else {
+        emailInput.classList.add('invalid-email');
+        document.getElementById('errorDiv').innerText = 'Invalid email format.';
+      }
+      document.getElementById('uniqueEmailsInput').value = Array.from(uniqueEmails).join(',');
+    }
+
+    function removeEmail(button) {
+      const emailItem = button.parentElement;
+      const email = emailItem.firstChild.textContent;
+      uniqueEmails.delete(email);
+      emailItem.remove();
+      document.getElementById('errorDiv').innerText = '';
+      const submitButton = document.getElementById('submitButton');
+      submitButton.disabled = uniqueEmails.size <= 5;
+    }
+  </script>
+
+</body>
+</html>
+
+
+

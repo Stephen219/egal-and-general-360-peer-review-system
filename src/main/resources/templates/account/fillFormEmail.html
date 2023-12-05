@@ -1,0 +1,49 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8"/>-->
+<!--  <title>Review Form Invitation</title>-->
+<!--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">-->
+<!--</head>-->
+<!--<body class="bg-gray-100 p-8 font-sans">-->
+
+<!--<div class="max-w-md mx-auto bg-white p-8 rounded shadow-md">-->
+
+<!--  <p class="text-lg font-semibold mb-4">Hello,</p>-->
+
+<!--  <p class="mb-4">You have been invited to fill out a review form. Click the link below to access the form:</p>-->
+
+<!--  <a th:href="'http://localhost:8080/review/' + ${formId}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Fill out the form</a>-->
+
+<!--  <p class="mt-4">Thank you!</p>-->
+
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Review Form Invitation</title>
+  <link rel="stylesheet" th:href="@{css/main.css}"/>
+</head>
+<body class="bg-gray-100 p-8 font-sans">
+
+<div class="max-w-md mx-auto bg-white p-8 rounded shadow-md">
+
+  <p class="text-lg font-semibold mb-4" th:text="'Hello, ' + ${to} + ','"></p>
+
+  <p class="mb-4" th:text="'You have been invited by ' + ${name} + ' to fill out a review form. Click the link below to access the form:'"></p>
+
+  <a th:href="'http://localhost:8080/review/' + ${formId}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Fill out the form</a>
+
+  <p class="mt-4">Thank you!</p>
+
+</div>
+
+</body>
+</html>
+

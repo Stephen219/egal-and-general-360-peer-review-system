@@ -84,6 +84,20 @@ public class FormRepositoryImpl implements FormRepoInterface {
     }
 
 
+    /**
+     * add reviewers to a form
+     * @param FormId the id of the form
+     * @param reviewers the reviewers
+     */
+
+    public void addFormReviewers(String FormId, List<String> reviewers) {
+        String sql = "INSERT INTO reviewers (form_id, email) VALUES (?, ?)";
+        for (String reviewer : reviewers) {
+            jdbcTemplate.update(sql, FormId, reviewer);
+        }
+    }
+
+
 
 
 }

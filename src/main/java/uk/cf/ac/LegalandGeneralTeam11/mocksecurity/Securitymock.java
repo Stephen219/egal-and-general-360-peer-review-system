@@ -1,6 +1,7 @@
 package uk.cf.ac.LegalandGeneralTeam11.mocksecurity;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 
 import javax.sql.DataSource;
@@ -39,8 +41,14 @@ public class Securitymock {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+
                 .authorizeHttpRequests(request -> request
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+
+
+
                         .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
+                        .requestMatchers("css/**").permitAll()
                         .requestMatchers("/form/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/account/**").hasAnyRole( "USER")
@@ -48,11 +56,15 @@ public class Securitymock {
                         .requestMatchers("/self-assessment/**").hasAnyRole( "USER", "ADMIN")
                         .requestMatchers("/accept/**").hasRole("ADMIN")
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/accept/**")).hasRole("ADMIN")
+                        .requestMatchers("get_reviewers/**").hasRole("USER")
+                        .requestMatchers("/submit_reviewers/**").hasRole("USER")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/submit_reviewers/**")).hasRole("USER")
 
                         .requestMatchers("/account/**").hasAnyRole( "USER")
                         .requestMatchers("/accept/**").hasAnyRole("ADMIN")
                         .anyRequest().hasRole("ADMIN")
                 )
+
 
 
 
@@ -106,6 +118,10 @@ public class Securitymock {
 
         return provider;
     }
+
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
+//    }
 
     @Bean
     UserDetailsService userDetailsService() {

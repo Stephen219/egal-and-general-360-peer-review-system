@@ -44,7 +44,6 @@ public class FormRequestController {
 
         return new ModelAndView("redirect:/account");
 
-
     }
 
 }
