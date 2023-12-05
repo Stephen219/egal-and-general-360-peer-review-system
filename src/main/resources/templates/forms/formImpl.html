@@ -2,8 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
-    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{css/main.css}"/>
     <title>360 Form</title>
+
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -73,30 +77,99 @@
             margin-right: auto;
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .blocking-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000; /* Ensure it appears above everything else */
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        /* Checkbox styles */
+        .checkbox-container {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         input[type="submit"]:hover {
             background-color: #C41D1A;
         }
-
     </style>
-
-
-
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>360 Form</title>
-        <style>
-            /* Your existing styles here */
-        </style>
-    </head>
+</head>
 <body>
+<div id="blockingModal" class="blocking-modal">
+    <div class="modal-content p-8 bg-white rounded">
+
+        <h2 class="text-2xl font-bold mb-4">Terms and Conditions</h2>
+        <p class="mb-4">before continuing agree to the terms and conditions which  includes anonimity of answers.</p>
+        <div class="flex items-center checkbox-container items-baseline">
+            <input type="checkbox" id="agreeCheckbox" value=""
+                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            <label for="agreeCheckbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with
+                the <a href="#" class="text-blue-600 dark:text-blue-500 hover:underline" target="_blank">terms and
+                    conditions </a>(will open in a new tab).</label>
+        </div>
+
+        <button onclick="continueWithAgreement()"
+                class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Continue
+        </button>
+    </div>
+</div>
+
+
+<script>
+
+
+</script>
+
 <div class="container">
 
 
     <th:block th:if="${!isOwner}">
         <label>
-            <h4>Peer Review Questionnaire for <span th:text ="${form.username}"></span> </h4>
+            <h4>Peer Review Questionnaire for <span th:text="${form.username}"></span></h4>
 
         </label>
     </th:block>
@@ -108,14 +181,13 @@
     </th:block>
 
 
-
     <form id="reviewForm" th:action="@{'/review/' + ${form.id}}" method="post">
         <input type="hidden" name="formId" th:value="${form.id}"/>
 
 
         <th:block th:if="${!isOwner}">
             <label>
-                Filler's Email:
+                Whats your Email? please provide the email you received the form at.
                 <input type="email" th:name="email" required>
                 <h2>You are...</h2>
                 <label>
@@ -175,16 +247,12 @@
         </th:block>
 
 
-
-
         <div th:each="question : ${textQuestions}">
             <div>
                 <!-- Display question information -->
                 <p>Question ID: <span th:text="${question.id}"></span></p>
                 <p>Question Text: <span th:text="${question.content}"></span></p>
-                <!-- Add other question properties as needed -->
 
-                <!-- You can use this information to render form elements for the questions -->
                 <textarea th:id="${'question_' + question.id}" th:name="${'question_' + question.id}" rows="4" cols="50"
                           required></textarea>
             </div>
@@ -194,12 +262,14 @@
     </form>
 </div>
 
+
 <script>
+    // TODO: Transfer this to a separate JS file
     document.getElementById('reviewForm').addEventListener('submit', function (event) {
-        // Prevent the default form submission
+
         event.preventDefault();
 
-        // Array to store responses
+
         var responses = [];
 
         // Loop through radio buttons and collect responses
@@ -236,6 +306,36 @@
         // Now, submit the form
         document.getElementById('reviewForm').submit();
     });
+
+    function openBlockingModalWithDelay() {
+        setTimeout(function () {
+            openBlockingModal();
+        }, 8000);
+    }
+
+    function openBlockingModal() {
+        document.getElementById('blockingModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Disable scrolling on the body
+    }
+
+
+    function continueWithAgreement() {
+        var agreeCheckbox = document.getElementById('agreeCheckbox');
+        if (agreeCheckbox.checked) {
+            closeBlockingModal();
+        } else {
+            alert('Please agree to the terms and conditions.');
+        }
+    }
+
+
+    function closeBlockingModal() {
+        document.getElementById('blockingModal').style.display = 'none';
+        document.body.style.overflow = 'auto'; // Enable scrolling on the body
+    }
+
+
+    window.onload = openBlockingModalWithDelay;
 </script>
 
 </body>

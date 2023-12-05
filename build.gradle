@@ -65,6 +65,20 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+
+
+	task copyTailwindCss(type: Copy) {
+		from "src/main/resources/static/css"
+		into "build/resources/main/static/css"
+	}
+
+	bootRun.dependsOn(copyTailwindCss)
+
+
+
+
+
 }
 
 tasks.named('bootBuildImage') {

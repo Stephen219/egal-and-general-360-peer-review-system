@@ -1,254 +1,11 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">-->
-<!--  <title>Reviewers Form</title>-->
-<!--  <style>-->
-
-<!--    .email-list {-->
-<!--      list-style: none;-->
-<!--      padding: 0;-->
-<!--    }-->
-
-<!--    .email-item {-->
-<!--      display: flex;-->
-<!--      align-items: center;-->
-<!--      justify-content: space-between;-->
-<!--      border: 1px solid #ccc;-->
-<!--      padding: 8px;-->
-<!--      margin-bottom: 8px;-->
-<!--    }-->
-
-<!--    .invalid-email {-->
-<!--      border: 1px solid #e53e3e;-->
-<!--    }-->
-<!--  </style>-->
-<!--</head>-->
-<!--<body class="bg-gray-100 p-8">-->
-
-<!--<div class="container mx-auto bg-white p-8 rounded shadow-md max-w-md">-->
-<!--  <h2 class="text-3xl font-semibold mb-6">Choose Reviewers</h2>-->
-
-
-<!--  <form id="reviewersForm" class="space-y-4" th:action="@{'/submit_reviewers/' + ${form.id}}">-->
-<!--    <input type="hidden" name="id" th:value="${form.id}" />-->
-
-<!--    <div class="flex">-->
-<!--      <input type="email" id="emailInput" class="flex-1 p-2 border rounded-md transition duration-300 focus:border-blue-500" required>-->
-<!--      <button type="button" onclick="addEmail()" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md transition duration-300 hover:bg-blue-600">Add</button>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; List to display chosen emails &ndash;&gt;-->
-<!--    <ul id="emailList" class="email-list space-y-2">-->
-<!--      &lt;!&ndash; Emails will be added here dynamically &ndash;&gt;-->
-<!--    </ul>-->
-
-<!--    &lt;!&ndash; Submit button &ndash;&gt;-->
-<!--    <button type="submit" class="w-full px-4 py-2 bg-green-500 text-white rounded-md transition duration-300 hover:bg-green-600">Submit</button>-->
-<!--  </form>-->
-<!--</div>-->
-
-<!--<script>-->
-<!--  function addEmail() {-->
-<!--    // Get the email input value-->
-<!--    const emailInput = document.getElementById('emailInput');-->
-<!--    const email = emailInput.value.trim();-->
-
-<!--    // Check if the input is a valid email-->
-<!--    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {-->
-<!--      // Create a new list item to display the email-->
-<!--      const emailList = document.getElementById('emailList');-->
-<!--      const emailItem = document.createElement('li');-->
-<!--      emailItem.className = 'email-item flex items-center justify-between border rounded-md p-2 transition duration-300 hover:bg-gray-100';-->
-<!--      emailItem.innerHTML = `-->
-<!--                <span>${email}</span>-->
-<!--                <button type="button" onclick="removeEmail(this)" class="text-red-500 ml-2">Remove</button>-->
-<!--            `;-->
-
-<!--      // Append the list item to the email list-->
-<!--      emailList.appendChild(emailItem);-->
-
-<!--      // Clear the input-->
-<!--      emailInput.value = '';-->
-
-<!--      // Remove red border on input after a valid email is added-->
-<!--      emailInput.classList.remove('invalid-email');-->
-<!--    } else {-->
-<!--      // Add red border to input on invalid email-->
-<!--      emailInput.classList.add('invalid-email');-->
-<!--    }-->
-<!--  }-->
-
-<!--  function removeEmail(button) {-->
-<!--    // Remove the email item when the "Remove" button is clicked-->
-<!--    const emailItem = button.parentElement;-->
-<!--    emailItem.remove();-->
-<!--  }-->
-
-<!--  // Handle form submission (You can add your own logic here)-->
-<!--  document.getElementById('reviewersForm').addEventListener('submit', function (event) {-->
-<!--    event.preventDefault();-->
-
-<!--    // Get the list of chosen emails-->
-<!--    const emailList = document.getElementById('emailList');-->
-<!--    const emails = Array.from(emailList.children).map(item => item.firstChild.textContent);-->
-
-<!--    // You can now use the 'emails' array as needed, for example, submit it to the server.-->
-<!--    console.log('Chosen emails:', emails);-->
-<!--  });-->
-<!--</script>-->
-
-<!--</body>-->
-<!--</html>-->
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--  <meta charset="UTF-8">-->
-<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">-->
-<!--  <title>Reviewers Form</title>-->
-<!--  <style>-->
-<!--    .email-list {-->
-<!--      list-style: none;-->
-<!--      padding: 0;-->
-<!--    }-->
-
-<!--    .email-item {-->
-<!--      display: flex;-->
-<!--      align-items: center;-->
-<!--      justify-content: space-between;-->
-<!--      border: 1px solid #ccc;-->
-<!--      padding: 8px;-->
-<!--      margin-bottom: 8px;-->
-<!--    }-->
-
-<!--    .invalid-email {-->
-<!--      border: 1px solid #e53e3e;-->
-<!--    }-->
-
-<!--    .error-message {-->
-<!--      color: #e53e3e;-->
-<!--      margin-top: 4px;-->
-<!--    }-->
-<!--  </style>-->
-<!--</head>-->
-<!--<body class="bg-gray-100 p-8">-->
-
-<!--<div class="container mx-auto bg-white p-8 rounded shadow-md max-w-md">-->
-<!--  <h2 class="text-3xl font-semibold mb-6">Choose Reviewers</h2>-->
-
-<!--  <form id="reviewersForm" class="space-y-4" th:action="@{'/submit_reviewers/' + ${form.id}}">-->
-<!--    <input type="hidden" name="id" th:value="${form.id}" />-->
-
-<!--    <div class="flex">-->
-<!--      <input type="email" id="emailInput" class="flex-1 p-2 border rounded-md transition duration-300 focus:border-blue-500" required>-->
-<!--      <button type="button" onclick="addEmail()" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md transition duration-300 hover:bg-blue-600">Add</button>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; List to display chosen emails &ndash;&gt;-->
-<!--    <ul id="emailList" class="email-list space-y-2">-->
-<!--      &lt;!&ndash; Emails will be added here dynamically &ndash;&gt;-->
-<!--    </ul>-->
-
-<!--    &lt;!&ndash; Error message for duplicate email &ndash;&gt;-->
-<!--    <p id="duplicateErrorMessage" class="error-message"></p>-->
-
-<!--    &lt;!&ndash; Error message for less than 5 reviewers &ndash;&gt;-->
-<!--    <p id="errorMessage" class="error-message"></p>-->
-
-<!--    &lt;!&ndash; Submit button &ndash;&gt;-->
-<!--    <button type="submit" class="w-full px-4 py-2 bg-green-500 text-white rounded-md transition duration-300 hover:bg-green-600">Submit</button>-->
-<!--  </form>-->
-<!--</div>-->
-
-<!--<script>-->
-<!--  function addEmail() {-->
-<!--    // Get the email input value-->
-<!--    const emailInput = document.getElementById('emailInput');-->
-<!--    const email = emailInput.value.trim();-->
-
-<!--    // Check if the input is a valid email-->
-<!--    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {-->
-<!--      // Check if the email already exists in the list-->
-<!--      const emailList = document.getElementById('emailList');-->
-<!--      const duplicateEmail = Array.from(emailList.children).find(item => item.firstChild.textContent === email);-->
-
-<!--      if (!duplicateEmail) {-->
-<!--        // Create a new list item to display the email-->
-<!--        const emailItem = document.createElement('li');-->
-<!--        emailItem.className = 'email-item flex items-center justify-between border rounded-md p-2 transition duration-300 hover:bg-gray-100';-->
-<!--        emailItem.innerHTML = `-->
-<!--                    <span>${email}</span>-->
-<!--                    <button type="button" onclick="removeEmail(this)" class="text-red-500 ml-2">Remove</button>-->
-<!--                `;-->
-
-<!--        // Append the list item to the email list-->
-<!--        emailList.appendChild(emailItem);-->
-
-<!--        // Clear the input-->
-<!--        emailInput.value = '';-->
-
-<!--        // Remove red border on input after a valid email is added-->
-<!--        emailInput.classList.remove('invalid-email');-->
-
-<!--        // Remove error messages-->
-<!--        document.getElementById('errorMessage').innerText = '';-->
-<!--        document.getElementById('duplicateErrorMessage').innerText = '';-->
-<!--      } else {-->
-<!--        // Display error message for duplicate email-->
-<!--        document.getElementById('duplicateErrorMessage').innerText = 'Email already added.';-->
-<!--      }-->
-<!--    } else {-->
-<!--      // Add red border to input on invalid email-->
-<!--      emailInput.classList.add('invalid-email');-->
-
-<!--      // Remove error messages-->
-<!--      document.getElementById('duplicateErrorMessage').innerText = '';-->
-<!--      document.getElementById('errorMessage').innerText = '';-->
-<!--    }-->
-<!--  }-->
-
-<!--  function removeEmail(button) {-->
-<!--    // Remove the email item when the "Remove" button is clicked-->
-<!--    const emailItem = button.parentElement;-->
-<!--    emailItem.remove();-->
-
-<!--    // Remove error messages-->
-<!--    document.getElementById('duplicateErrorMessage').innerText = '';-->
-<!--    document.getElementById('errorMessage').innerText = '';-->
-<!--  }-->
-
-<!--  // Handle form submission-->
-<!--  document.getElementById('reviewersForm').addEventListener('submit', function (event) {-->
-<!--    // Get the list of chosen emails-->
-<!--    const emailList = document.getElementById('emailList');-->
-<!--    const emails = Array.from(emailList.children).map(item => item.firstChild.textContent);-->
-
-<!--    // Check if the number of reviewers is less than 5-->
-<!--    if (emails.length < 5) {-->
-<!--      document.getElementById('errorMessage').innerText = 'Reviewers cannot be less than 5.';-->
-<!--      event.preventDefault(); // Prevent form submission-->
-<!--    } else {-->
-<!--      // You can now use the 'emails' array as needed, for example, submit it to the server.-->
-<!--      console.log('Chosen emails:', emails);-->
-<!--    }-->
-<!--  });-->
-<!--</script>-->
-
-<!--</body>-->
-<!--</html>-->
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="">
 <head>
-  <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <link rel="stylesheet" th:href="@{/css/main.css}"/>
   <title>Reviewers Form</title>
   <style>
     .email-list {
@@ -275,32 +32,30 @@
     }
   </style>
 </head>
-<body class="bg-gray-100 p-8">
+<body class="bg-gray-100 flex items-center justify-center h-screen">
 
-<div class="container mx-auto bg-white p-8 rounded shadow-md max-w-md">
-  <h2 class="text-3xl font-semibold mb-6">Choose Reviewers</h2>
+<div class="bg-white p-8 rounded shadow-md max-w-md">
+  <h2 class="text-3xl font-semibold mb-6 text-center">Choose Reviewers</h2>
 
-  <form id="reviewersForm" th:action="@{'/submit_reviewers/'+${form.id}}" method="post">
+  <form id="reviewersForm" th:action="@{'/submit_reviewers/'+${form.id}}" method="post" class="space-y-4">
     <input type="hidden" name="id" th:value="${form.id}" />
     <input type="hidden" id="uniqueEmailsInput" name="uniqueEmails" />
 
-
-    <ul id="emailList" class="email-list space-y-2">
-
-    </ul>
-
-
-    <div id="errorDiv" class="error-message"></div>
-
     <div class="flex items-center space-x-2">
-      <label for="emailInput">Email:</label>
+      <label for="emailInput" class="mr-2">Email:</label>
       <input type="email" id="emailInput" name="emails" class="p-2 border rounded-md transition duration-300 focus:border-blue-500" required>
       <button type="button" onclick="addEmail()" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md transition duration-300 hover:bg-blue-600">Add</button>
     </div>
+    <div id="errorDiv" class="text-red-500"></div>
+
+    <ul id="emailList" class="list-none space-y-2"></ul>
 
 
-    <button type="submit" id="submitButton" class="w-full px-4 py-2 bg-green-500 text-white rounded-md transition duration-300 hover:bg-green-600" disabled>Submit</button>
+
+    <button type="submit" id="submitButton" class="w-full mt-4 px-4 py-2 bg-green-500 text-white rounded-md transition duration-300 hover:bg-green-600" disabled>Submit</button>
   </form>
+
+</div>
 
   <script>
 

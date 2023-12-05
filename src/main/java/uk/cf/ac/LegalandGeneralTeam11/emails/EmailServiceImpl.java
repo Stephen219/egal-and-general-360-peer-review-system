@@ -27,7 +27,7 @@ public class EmailServiceImpl implements EmailService {
             String to, String subject, String text) {
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("noreply@baeldung.com");
+        message.setFrom("noreply@Landg.com");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
@@ -37,11 +37,8 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendMessageWithAttachment(
             String to, String subject, String text, String pathToAttachment) throws MessagingException {
-
         MimeMessage message = emailSender.createMimeMessage();
-
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
         helper.setFrom("noreply@landG.com");
         helper.setTo(to);
         helper.setSubject(subject);
@@ -63,15 +60,12 @@ public class EmailServiceImpl implements EmailService {
             helper.setFrom("noreply@landG.com");
             helper.setTo(to);
             helper.setSubject(subject);
-
-            // Process Thymeleaf template
             String emailContent = mailSenderConfig.processTemplate(templateName, context);
 
             helper.setText(emailContent, true);
 
             emailSender.send(message);
         } catch (MessagingException e) {
-            // Handle exceptions
             e.printStackTrace();
         }
     }
