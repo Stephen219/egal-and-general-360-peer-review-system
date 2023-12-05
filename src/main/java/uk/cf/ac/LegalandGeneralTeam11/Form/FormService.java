@@ -20,6 +20,9 @@ public interface FormService {
 
     public void updateReviewersAfterSubmission(String FormId, String reviewer, String relationship);
 
+    public Boolean getIfHasFilledForm(String formId, String email);
+    public List<String> getReviewersForAForm(String formId);
+
 
 
 
