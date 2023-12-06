@@ -25,6 +25,10 @@ public interface FormService {
 
     public Boolean ifUserHasSelfReviewed(String formId, String email);
 
+    public List<Form> getAllForms();
+    public List<Form> getFormsByStatus(String status);
+
+
 
 
 

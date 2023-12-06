@@ -69,4 +69,12 @@ public List<Form> getFormByUser(String username) {
     public Boolean ifUserHasSelfReviewed(String formId, String email) {
         return formRepository.ifUserHasSelfReviewed(formId, email);
     }
+
+    public List<Form> getAllForms() {
+        return formRepository.getAllForms();
+    }
+
+    public List<Form> getFormsByStatus(String status) {
+        return  formRepository.getFormsByStatus(status);
+    }
 }

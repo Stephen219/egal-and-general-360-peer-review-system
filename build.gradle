@@ -68,13 +68,9 @@ dependencies {
 
 
 
-	/*task copyTailwindCss(type: Copy) {
-		from "src/main/resources/static/css"
-		into "build/resources/main/static/css"
-	}
 
-	bootRun.dependsOn(copyTailwindCss)
-*/
+
+
 
 
 

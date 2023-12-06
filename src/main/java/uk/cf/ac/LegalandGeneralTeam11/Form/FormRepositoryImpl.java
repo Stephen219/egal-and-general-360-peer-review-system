@@ -130,4 +130,14 @@ public class FormRepositoryImpl implements FormRepoInterface {
         }
     }
 
+    public List<Form> getAllForms() {
+        String sql = "SELECT * FROM 360forms";
+        return jdbcTemplate.query(sql, FormMapper);
+    }
+
+    public List<Form> getFormsByStatus(String status) {
+        String sql = "SELECT * FROM 360forms WHERE progress_status = ?";
+        return  jdbcTemplate.query(sql, FormMapper, status);
+    }
+
 }
