@@ -25,14 +25,8 @@ public class FormServiceImpl implements FormService {
 
     }
     public String getUsernameForFormRequest(Long formRequestId) {
-        // Assuming you have a method to retrieve the form request entity by ID
         FormRequest formRequest = FormRequestRepository.findFormRequestById(formRequestId);
-
-
-        // Assuming the form request entity has a user association, adjust this according to your data model
         String username = formRequest.getUsername();
-
-        // Assuming the User entity has a method to get the username, adjust this according to your data model
         return username;
     }
 
