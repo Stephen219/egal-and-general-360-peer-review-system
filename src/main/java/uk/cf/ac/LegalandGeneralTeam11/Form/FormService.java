@@ -30,6 +30,8 @@ public interface FormService {
 
     public Long getTheNumberOfResponsesForAform(String formId);
 
+    public List<Form> getFormsAssignedToUser(String email);
+
 
 
 

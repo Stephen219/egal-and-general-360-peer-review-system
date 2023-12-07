@@ -2,10 +2,12 @@ package uk.cf.ac.LegalandGeneralTeam11.Form;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 @Repository
@@ -144,5 +146,19 @@ public class FormRepositoryImpl implements FormRepoInterface {
         String sql = "SELECT COUNT(DISTINCT responder) FROM answers WHERE form_id = ?";
         return jdbcTemplate.queryForObject(sql, Long.class, formId);
     }
+
+    public List<Form> getFormsAssignedToUser(String email) {
+        String sql = "SELECT f.* FROM 360forms f JOIN reviewers r ON f.id = r.form_id WHERE r.email = ?";
+
+        try {
+            return jdbcTemplate.query(sql, preparedStatement -> {
+                preparedStatement.setString(1, email);
+            }, FormMapper);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
 
 }
