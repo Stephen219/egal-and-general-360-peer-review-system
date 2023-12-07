@@ -1,5 +1,9 @@
 package uk.cf.ac.LegalandGeneralTeam11.Graphs;
 
-public interface GraphRepo {
+import java.util.List;
+import java.util.Map;
 
+public interface GraphRepo {
+    public Float getAverageScore(String formid, String category);
+    public List<Map<String, Object>> getCategoryAverages(String formid);
 }

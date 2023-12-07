@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.context.Context;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
+import uk.cf.ac.LegalandGeneralTeam11.Graphs.GraphService;
 import uk.cf.ac.LegalandGeneralTeam11.answers.Answer;
 import uk.cf.ac.LegalandGeneralTeam11.answers.AnswerServiceInter;
 import uk.cf.ac.LegalandGeneralTeam11.emails.EmailServiceImpl;
@@ -38,6 +39,9 @@ public class FormControllerImpl {
     @Autowired
     private EmailServiceImpl emailService;
 
+    @Autowired
+    GraphService graphservic;
+
     public FormControllerImpl(FormServiceImpl formServiceImpl) {
         this.formService = formServiceImpl;
     }
@@ -58,6 +62,13 @@ public class FormControllerImpl {
     @GetMapping("/get_reviewers/{id}")
     public ModelAndView getReviewers(@PathVariable String id) {
         Form form = formService.getFormById(id);
+
+
+
+
+        System.out.print(graphservic.getCategoryAverages(id));
+
+
         ModelAndView modelAndView = new ModelAndView("forms/reviewer");
         modelAndView.addObject("form", form);
         return modelAndView;

@@ -47,6 +47,22 @@ public class accountController {
         System.out.println(currentPrincipalName);
         String username = currentPrincipalName;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         List<Form> forms = formservice.getFormByUser(username);
         Map<String, Long> responderCounts = new HashMap<>();
         for (Form form : forms) {
