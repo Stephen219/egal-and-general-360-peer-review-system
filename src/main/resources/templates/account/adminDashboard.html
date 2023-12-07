@@ -637,7 +637,7 @@
 
 
                 <div class="bg-gray-100 py-5 px-4 flex flex-col space-y-2 cursor-pointer rounded-md hover:bg-gray-150 hover:smooth-hover">
-                    <h2 class="text-lg font-light text-center">Recent Forms</h2>
+                    <h2 class="text-lg font-light text-center">reviews on progress</h2>
                     <div th:if="${#lists.isEmpty(inProgressForms)}" class=" text-center">
                         <p class="text-2xlg font-light">There are no ongoing reviews.</p>
                         <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" width="200.64422" height="200.27925"
@@ -762,8 +762,6 @@
                                        th:class="${request.progressStatus == 'in progress' ? 'text-orange-500' : 'text-green-500'}"></p>
                                 </div>
                             </div>
-
-
 
                         </div>
 

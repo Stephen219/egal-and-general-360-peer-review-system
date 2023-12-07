@@ -18,6 +18,7 @@ public interface FormRepoInterface {
     public List<Form> getAllForms();
     public List<Form> getFormsByStatus(String status);
 
+    public Long getTheNumberOfResponsesForAform(String formId);
 
 
 }

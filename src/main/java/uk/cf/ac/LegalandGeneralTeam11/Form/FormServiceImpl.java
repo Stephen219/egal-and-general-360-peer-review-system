@@ -77,4 +77,8 @@ public List<Form> getFormByUser(String username) {
     public List<Form> getFormsByStatus(String status) {
         return  formRepository.getFormsByStatus(status);
     }
+
+    public Long getTheNumberOfResponsesForAform(String formId) {
+        return formRepository.getTheNumberOfResponsesForAform(formId);
+    }
 }

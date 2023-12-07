@@ -28,6 +28,8 @@ public interface FormService {
     public List<Form> getAllForms();
     public List<Form> getFormsByStatus(String status);
 
+    public Long getTheNumberOfResponsesForAform(String formId);
+
 
 
 

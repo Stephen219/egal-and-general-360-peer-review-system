@@ -18,7 +18,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -46,8 +48,17 @@ public class accountController {
         String username = currentPrincipalName;
 
         List<Form> forms = formservice.getFormByUser(username);
+        Map<String, Long> responderCounts = new HashMap<>();
+        for (Form form : forms) {
+            long responderCount = formservice.getTheNumberOfResponsesForAform(form.getId());
+            responderCounts.put(form.getId(), responderCount);
+        }
+
+
+
         ModelAndView modelAndView = new ModelAndView("account/dashboard");
         modelAndView.addObject("forms", forms);
+        modelAndView.addObject("responderCounts", responderCounts);
 
         return modelAndView;
 

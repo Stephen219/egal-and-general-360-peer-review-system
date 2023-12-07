@@ -140,4 +140,9 @@ public class FormRepositoryImpl implements FormRepoInterface {
         return  jdbcTemplate.query(sql, FormMapper, status);
     }
 
+    public Long getTheNumberOfResponsesForAform(String formId) {
+        String sql = "SELECT COUNT(DISTINCT responder) FROM answers WHERE form_id = ?";
+        return jdbcTemplate.queryForObject(sql, Long.class, formId);
+    }
+
 }
