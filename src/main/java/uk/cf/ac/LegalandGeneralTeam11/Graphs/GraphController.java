@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,18 +24,10 @@ public class GraphController{
 
 
     @GetMapping("/account/averages/{id}")
-    public ResponseEntity<List<Map<String, Object>>> getCategoryAverages(@PathVariable String id) {
-        //returns a list of category averages
-        List<Map<String, Object>> categoryAverages =graphservice.getCategoryAverages(id);
-
-        if (categoryAverages.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(categoryAverages, HttpStatus.OK);
-        }
+    public String getCategoryAverages(@PathVariable String id, Model model) {
+        List<Map<String, Object>> categoryAverages = graphservice.getCategoryAverages(id);
+        model.addAttribute("categoryAverages", categoryAverages);
+        return "account/graphs";
     }
-//        ModelAndView modelAndView = new ModelAndView("account/graphs", "graphs", graphservice.getCategoryAverages(formid));
-//        modelAndView.addObject("form", form);
-//        return modelAndView;
-     }
+}
 
