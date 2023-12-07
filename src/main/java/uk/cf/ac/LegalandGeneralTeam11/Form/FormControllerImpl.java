@@ -51,7 +51,6 @@ public class FormControllerImpl {
         formService.updateFormRequest(formRequest);
         LocalDate formDate = LocalDate.now();
         formService.grantFormAccess(username, formDate);
-
         return "redirect:/admin";
     }
 
