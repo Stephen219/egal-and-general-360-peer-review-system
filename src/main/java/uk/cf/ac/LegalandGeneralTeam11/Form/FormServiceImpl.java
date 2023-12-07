@@ -25,14 +25,8 @@ public class FormServiceImpl implements FormService {
 
     }
     public String getUsernameForFormRequest(Long formRequestId) {
-        // Assuming you have a method to retrieve the form request entity by ID
         FormRequest formRequest = FormRequestRepository.findFormRequestById(formRequestId);
-
-
-        // Assuming the form request entity has a user association, adjust this according to your data model
         String username = formRequest.getUsername();
-
-        // Assuming the User entity has a method to get the username, adjust this according to your data model
         return username;
     }
 
@@ -74,5 +68,22 @@ public List<Form> getFormByUser(String username) {
 
     public Boolean ifUserHasSelfReviewed(String formId, String email) {
         return formRepository.ifUserHasSelfReviewed(formId, email);
+    }
+
+    public List<Form> getAllForms() {
+        return formRepository.getAllForms();
+    }
+
+    public List<Form> getFormsByStatus(String status) {
+        return  formRepository.getFormsByStatus(status);
+    }
+
+    public Long getTheNumberOfResponsesForAform(String formId) {
+        return formRepository.getTheNumberOfResponsesForAform(formId);
+    }
+    // TODO: implement this method so as the user can see the forms assigned to them this is after doing the user object
+
+    public List<Form> getFormsAssignedToUser(String email) {
+        return formRepository.getFormsAssignedToUser(email);
     }
 }

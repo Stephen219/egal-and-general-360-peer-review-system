@@ -15,5 +15,12 @@ public interface FormRepoInterface {
     public void updateReviewersAfterSubmission(String FormId, String reviewer, String relationship);
     public Boolean ifUserHasSelfReviewed(String formId, String email);
 
+    public List<Form> getAllForms();
+    public List<Form> getFormsByStatus(String status);
+
+    public Long getTheNumberOfResponsesForAform(String formId);
+
+    public List<Form> getFormsAssignedToUser(String email);
+
 
 }
