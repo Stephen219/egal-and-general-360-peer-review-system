@@ -92,7 +92,9 @@ CREATE TABLE if not exists 360forms
 ) engine = InnoDB;
 
 INSERT into 360forms (Id, username) VALUES ('form1', 'user');
-INSERT into 360forms (Id, username) VALUES ('form2', 'user');
+INSERT into 360forms (Id, username) VALUES ('form2', 'tom');
+INSERT into 360forms (Id, username, created_at) VALUES ('form3', 'jerry', '2020-10-10 10:10:10');
+INSERT into 360forms (Id, username, created_at) VALUES ('form456789', 'kendi', '2021-10-10 10:10:10');
 
 CREATE TABLE if not exists questions
 (
