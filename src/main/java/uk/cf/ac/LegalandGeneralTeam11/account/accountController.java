@@ -58,17 +58,8 @@ public class accountController {
         List<FormRequest> formRequests = formRequestService.getAllByStatus("Pending");
         List<Form> allForms = formservice.getAllForms();
         List<Form> inProgressForms = formservice.getFormsByStatus("In Progress");
-//        List<String> adjustedDates = inProgressForms.stream()
-//                .map(form -> {
-//                    LocalDateTime localDateTime = form.getFormDate().atStartOfDay();
-//                    Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
-//                    LocalDateTime adjustedDateTime = localDateTime.plusWeeks(2);
-//                    return adjustedDateTime.toString(); // You can use a formatter for a different format
-//                })
-//                .collect(Collectors.toList());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
 
-        // Loop through the forms and perform date manipulation
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
         List<String> adjustedDates = inProgressForms.stream()
                 .map(form -> {
                     LocalDateTime localDateTime = form.getFormDate().atStartOfDay();
@@ -77,8 +68,6 @@ public class accountController {
                     return adjustedDateTime.format(formatter);
                 })
                 .collect(Collectors.toList());
-
-
 
 
         ModelAndView modelAndView = new ModelAndView("account/adminDashboard");
