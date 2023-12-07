@@ -463,11 +463,9 @@
                     <button onclick="redirectToForm()" class="bg-green-500 text-white px-4 py-2 rounded-md">Yes</button>
                     <button onclick="cancelFormRequest()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md">Cancel</button>
                 </div>
-                <div class="bg-gray-900/30 py-8 px-4 flex flex-col space-y-2 cursor-pointer rounded-md hover:bg-gray-900/40 hover:smooth-hover">
+                <div class="bg-gray-100 py-8 px-4 flex flex-col space-y-2 cursor-pointer rounded-md hover:bg-gray-100 hover:smooth-hover">
                     <div th:if="${#lists.isEmpty(forms)}" class=" text-center">
-                        <p>There are no recent requests.</p>
-
-
+                        <p>There are no recent forms</p>
                     </div>
                     <div th:each="request, iStat : ${forms}" th:if="${iStat.index} &lt; 3" class="bg-white p-4 rounded shadow flex flex-col mb-4">
                         <a th:href="@{'/get_reviewers/' + ${request.id}}">
@@ -505,6 +503,12 @@
 
 
                 </div>
+
+
+
+
+
+
 
 
             </div>
