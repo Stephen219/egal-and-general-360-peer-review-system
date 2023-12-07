@@ -35,20 +35,8 @@ public class GraphRepoImpl implements GraphRepo{
         return jdbcTemplate.queryForObject(sql, new Object[]{formid}, String.class);
     }
     public List<Map<String, Object>> getCategoryAverages(String formid) {
-        String sql ="SELECT\n" +
-                "    q.category,\n" +
-                "    AVG(a.answer) AS average\n" +
-                "FROM\n" +
-                "    questions q\n" +
-                "        JOIN\n" +
-                "    answers a ON q.id = a.question_id where q.category <> 'textarea'\n" +
-                "GROUP BY\n" +
-                "    q.category";
-//                "SELECT q.category, AVG(a.answer) AS average " +
-//                "FROM questions q " +
-//                "JOIN answers a ON q.id = a.question_id " +
-//                "WHERE q.category <> 'textarea'" +
-//                "GROUP BY q.category";
+        String sql ="SELECT q.category, AVG(a.answer) AS average FROM questions q JOIN answers a ON q.id = a.question_id WHERE q.category <> 'textarea' GROUP BY q.category";
+
         return jdbcTemplate.queryForList(sql);
     }
 }
