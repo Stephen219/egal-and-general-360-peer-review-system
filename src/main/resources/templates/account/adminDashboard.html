@@ -756,7 +756,6 @@
                             </div>
                             <div class="flex flex-col justify-between">
                                 <p class="text-lg font-semibold mb-2 text-right" th:text="'Due: ' + ${adjustedDates[iStat.index]}"></p>
-                                <p class="text-lg font-semibold mb-2 text-right" th:text="'Due: ' + ${adjustedDates[iStat.index]}"></p>
                                 <div class="flex flex-col items-end">
                                     <p th:text="${request.progressStatus}" class="mb-2"
                                        th:class="${request.progressStatus == 'in progress' ? 'text-orange-500' : 'text-green-500'}"></p>
