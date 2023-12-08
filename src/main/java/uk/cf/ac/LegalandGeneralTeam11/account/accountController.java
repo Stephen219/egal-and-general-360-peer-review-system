@@ -69,7 +69,6 @@ public class accountController {
         List<FormRequest> formRequests = formRequestService.getAllByStatus("Pending");
         List<Form> allForms = formservice.getAllForms();
         List<Form> inProgressForms = formservice.getFormsByStatus("In Progress");
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
         List<String> adjustedDates = inProgressForms.stream()
                 .map(form -> {
@@ -79,8 +78,6 @@ public class accountController {
                     return adjustedDateTime.format(formatter);
                 })
                 .collect(Collectors.toList());
-
-
         ModelAndView modelAndView = new ModelAndView("account/adminDashboard");
         modelAndView.addObject("allForms", allForms);
         modelAndView.addObject("inProgressForms", inProgressForms);

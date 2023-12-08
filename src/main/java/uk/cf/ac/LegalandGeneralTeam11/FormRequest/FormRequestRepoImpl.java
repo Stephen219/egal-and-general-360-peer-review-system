@@ -142,8 +142,8 @@ public class FormRequestRepoImpl implements FormRequestRepository{
 
         jdbcTemplate.update(
                 sql,
-                LocalDateTime.now(),  // updated_at
-                formRequest.getId()  // id
+                LocalDateTime.now(),
+                formRequest.getId()
         );
     }
 

@@ -77,11 +77,23 @@ public List<Form> getFormByUser(String username) {
     public List<Form> getFormsByStatus(String status) {
         return  formRepository.getFormsByStatus(status);
     }
+    /**
+     * get the number of responses for a form
+     * @param formId the id of the form
+     * @return the number of responses
+     */
 
     public Long getTheNumberOfResponsesForAform(String formId) {
         return formRepository.getTheNumberOfResponsesForAform(formId);
     }
     // TODO: implement this method so as the user can see the forms assigned to them this is after doing the user object
+
+
+    /**
+     * get all forms assigned to a user
+     * @param email the email of the user
+     * @return a list of forms
+     */
 
     public List<Form> getFormsAssignedToUser(String email) {
         return formRepository.getFormsAssignedToUser(email);
