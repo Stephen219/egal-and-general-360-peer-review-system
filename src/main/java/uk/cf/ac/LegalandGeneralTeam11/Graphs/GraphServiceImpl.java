@@ -20,4 +20,8 @@ public class GraphServiceImpl implements GraphService{
     public List<Map<String, Object>> getCategoryAverages(String formid){
         return graphRepo.getCategoryAverages(formid);
     }
+
+    public Map<String, List<String>> getFormTextAnswer(String formid){
+        return graphRepo.getFormTextAnswer(formid);
+    }
 }

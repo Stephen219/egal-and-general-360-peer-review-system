@@ -26,8 +26,12 @@ public class GraphController{
     @GetMapping("/account/averages/{id}")
     public String getCategoryAverages(@PathVariable String id, Model model) {
         List<Map<String, Object>> categoryAverages = graphservice.getCategoryAverages(id);
+        Map<String, List<String>> formTextAnswer = graphservice.getFormTextAnswer(id);
+        System.out.println(formTextAnswer);
+        model.addAttribute("formTextAnswer", formTextAnswer);
         model.addAttribute("categoryAverages", categoryAverages);
         return "account/graphs";
     }
+
 }
 

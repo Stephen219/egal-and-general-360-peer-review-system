@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,5 +45,34 @@ public class GraphRepoImpl implements GraphRepo{
 
         return jdbcTemplate.queryForList(sql, formid); // Passing 'formid' as a parameter
     }
+    public Map<String, List<String>> getFormTextAnswer(String formid) {
+        String sql = "SELECT q.question, a.answer " +
+                "FROM questions q " +
+                "JOIN answers a ON q.id = a.question_id " +
+                "WHERE q.category = 'textarea' AND a.form_id = ?";
+
+        List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql, formid);
+
+        Map<String, List<String>> textAnswersMap = new HashMap<>();
+
+        for (Map<String, Object> row : resultList) {
+            String question = (String) row.get("question");
+            String answer = (String) row.get("answer");
+
+            // Check if the question is already in the map
+            if (textAnswersMap.containsKey(question)) {
+                // If the question exists, add the answer to its list
+                textAnswersMap.get(question).add(answer);
+            } else {
+                // If the question doesn't exist, create a new list with the answer
+                List<String> answersList = new ArrayList<>();
+                answersList.add(answer);
+                textAnswersMap.put(question, answersList);
+            }
+        }
+
+        return textAnswersMap;
+    }
+
 }
 
