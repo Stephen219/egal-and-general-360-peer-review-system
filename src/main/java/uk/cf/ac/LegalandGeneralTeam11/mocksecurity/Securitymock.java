@@ -32,7 +32,8 @@ public class Securitymock {
             "/css/**",
             "static/**",
             "legal.png",
-            "/review/**"
+            "/review/**",
+            "favicon-32x32.png"
     };
 
     @Autowired
