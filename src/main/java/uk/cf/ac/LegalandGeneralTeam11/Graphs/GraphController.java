@@ -38,34 +38,9 @@ public class GraphController{
             System.out.println(map.get("category"));
             System.out.println(map.get("average"));
         });
-
         model.addAttribute("formTextAnswer", formTextAnswer);
         model.addAttribute("categoryAverages", categoryAverages);
         return "account/graphs";
-    }
-
-
-
-
-
-
-    private Map<String, List<Double>> convertToHighchartsFormat(List<Map<String, Object>> chartData) {
-        // Map to store the organized data for Highcharts
-        Map<String, List<Double>> seriesData = new HashMap<>();
-
-        // Iterate through the chartData
-        for (Map<String, Object> data : chartData) {
-            // Extract values from the current data
-            String category = (String) data.get("category");
-            String relationship = (String) data.get("relationship");
-            Double average = (Double) data.get("average");
-
-            // If the relationship is not present in the seriesData map, create a new entry
-            // Otherwise, add the average to the existing list
-            seriesData.computeIfAbsent(relationship, k -> new ArrayList<>()).add(average);
-        }
-
-        return seriesData;
     }
 
 
