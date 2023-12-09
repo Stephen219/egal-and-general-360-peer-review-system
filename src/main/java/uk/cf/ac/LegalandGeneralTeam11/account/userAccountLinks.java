@@ -1,6 +1,8 @@
 package uk.cf.ac.LegalandGeneralTeam11.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,37 @@ public class userAccountLinks {
         this.formRequestService = formRequestService;
         this.graphService = graphService;
     }
+
+    /**
+     *  This method returns the average score of all forms for each category for a a given user
+     *  It is used to populate the graph on the dashboard page
+     *   it outputs the data in the endpoint /account/averages/ where it is later fetched by the javascript
+     *   idally, this should be done by binding the data to the model and inline javascript acces it but this tampers with the js already written
+     * @return
+     */
+
+    @GetMapping("/account/averages/")
+    public ResponseEntity<List<Map<String, Object>>> getCategoryAverages() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<Map<String, Object>> categoryAverages = graphService.getAverageAnswersForUser(username);
+        System.out.println(categoryAverages);
+        System.out.println(categoryAverages);
+        Map<String, Float> averageMap = new HashMap<>();
+        categoryAverages.forEach((map) -> {
+            averageMap.put((String) map.get("formid"), (Float) map.get("average"));
+        });
+        System.out.println(averageMap);
+
+        if (categoryAverages.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(categoryAverages, HttpStatus.OK);
+        }
+    }
+
+
+
+
 
     @GetMapping("/account/my_forms")
     public ModelAndView getAllUserForms( @RequestParam(name = "sortBy", required = false) String sortBy) {
@@ -83,6 +116,51 @@ public class userAccountLinks {
             responderCounts.put(form.getId(), responderCount);
         }
         return responderCounts;
+    }
+
+
+
+
+
+    @GetMapping("/account")
+    public ModelAndView getAccount() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        String username = currentPrincipalName;
+        List<Form> forms = formService.getFormByUser(username);
+
+        System.out.println( graphService.getAverageAnswersForUser(username));
+
+
+        List<Map<String, Object>> averages = graphService.getAverageAnswersForUser(username);
+        System.out.println(averages);
+        System.out.println(averages);
+        Map<String, Float> averageMap = new HashMap<>();
+        averages.forEach((map) -> {
+            averageMap.put((String) map.get("formid"), (Float) map.get("average"));
+        });
+        System.out.println(averageMap);
+
+
+
+
+
+
+
+        Map<String, Long> responderCounts = new HashMap<>();
+        for (Form form : forms) {
+            long responderCount = formService.getTheNumberOfResponsesForAform(form.getId());
+            responderCounts.put(form.getId(), responderCount);
+        }
+
+        ModelAndView modelAndView = new ModelAndView("account/dashboard");
+        modelAndView.addObject("forms", forms);
+        modelAndView.addObject("responderCounts", responderCounts);
+        modelAndView.addObject("chartData", averageMap);
+
+        return modelAndView;
+
+
     }
 
 }
