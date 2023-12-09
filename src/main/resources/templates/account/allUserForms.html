@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{css/main.css}"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>all_forms</title>
+</head>
+<body>
+
+
+
+<main class="flex flex-col w-full max-h-screen px-6 py-8 space-y-8 overflow-y-auto sm:py-16 justify-items-center lg:p-9">
+
+
+  <div class="flex flex-col justify-between items-end w-full space-y-4 sm:space-y-0 sm:flex-row">
+    <h1 class="text-2xl font-bold text-center md:text-center">All forms</h1>
+
+    <div class="flex flex-wrap items-end justify-end gap-3 space-x-4">
+
+      <select class="h-10 px-4 border rounded w-max border-dark-300" id="filter" value="sortBy" name="sortBy"
+              onchange="changeSort(event)">
+        <option value="">Sort by</option>
+        <option value="statuss" button class="bg-dark-100" onclick="changeSort(' statuss')">
+          Status
+        </option>
+        <option value="earliest" button class="bg-dark-100" onclick="changeSort(' statuss')">
+          date
+        </option>
+      </select>
+      <a class="flex items-center h-9 px-3 space-x-1 border rounded sm:h-12 focus-ring border-dark"
+         href="/todo">
+        <span class="text-sm sm:text-base">Request review</span>
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 11.0001H16.6667M11.3333 16.3334V5.66675" stroke="#2C2C2C" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="bg-gray-100 py-8 px-4 flex flex-col space-y-2 cursor-pointer rounded-md hover:bg-gray-100 hover:smooth-hover">
+    <div th:if="${#lists.isEmpty(forms)}" class=" text-center">
+      <p>There are no recent forms</p>
+    </div>
+
+
+
+    <div th:each="request, iStat : ${forms}" class="bg-white p-4 rounded shadow flex flex-col mb-4">
+      <a th:href="@{'/account/averages/' + ${request.id}}">
+        <div class="bg-white p-4 rounded shadow flex flex-row justify-between items-start">
+
+          <div class="flex flex-col">
+            <h2 class="text-lg font-semibold mb-2" th:text="${request.username}"></h2>
+            <p class="text-gray-500 mb-2" th:text="'Sent: ' + ${request.formDate}"></p>
+          </div>
+          <div class="flex flex-col justify-between">
+            <p class="text-md font-light mb-2 text-right" th:text="'Due: ' + ${adjustedDates[iStat.index]}"></p>
+            <p class="text-md font-light mb-2" th:text="'Total Responders: ' + ${responderCounts[request.id]}"></p>
+
+            <div class="flex flex-col items-end">
+              <p th:text="${request.progressStatus}" class="mb-2"
+                 th:class="${request.progressStatus == 'in progress' ? 'text-orange-500' : 'text-green-500'}"></p>
+            </div>
+          </div>
+
+
+        </div>
+
+
+      </a>
+
+    </div>
+
+  </div>
+
+</main>
+
+</div>
+
+</div>
+</main>
+
+<script>
+  function changeSort(event) {
+    const newSort = event.target.value;
+    if (!newSort) {
+      window.location.href = "/account/my_forms";
+    } else {
+      window.location.href = "/account/my_forms?sortBy=" + newSort;
+    }
+  }
+</script>
+
+
+
+
+
+
+</body>
+</html>

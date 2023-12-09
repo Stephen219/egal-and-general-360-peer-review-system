@@ -44,9 +44,6 @@ public class Securitymock {
 
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-
-
-
                         .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
                         .requestMatchers("css/**").permitAll()
                         .requestMatchers("/form/**").hasAnyRole("USER", "ADMIN")

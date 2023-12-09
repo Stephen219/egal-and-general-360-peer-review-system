@@ -8,7 +8,10 @@
 </head>
 <body>
 <h1>Your Graphs</h1>
+<body>
 <div id="container" style="width: 100%; height: 400px;"></div>
+<div id="chartContainer" style="width: 100%; height: 400px;"></div>
+</body>
 <h1>Questions and Answers</h1>
 <div th:each="entry : ${formTextAnswer}">
     <h3 th:text="${entry.key}"></h3>
@@ -24,24 +27,24 @@
     if (data !== 'default_value_if_empty') {
         Highcharts.chart('container', {
             chart: {
-                type: 'bar'
+                type: 'column'
             },
             title: {
-                text: 'Likert Averages and Keywords'
+                text: 'average score per category'
             },
             xAxis: {
                 categories: data.map(item => item.category),
                 title: {
-                    text: 'Terms'
+                    text: 'Categories'
                 }
             },
             yAxis: {
                 title: {
-                    text: 'Likert Average'
+                    text: ' Average score'
                 }
             },
             series: [{
-                name: 'Likert Average',
+                name: 'Average',
                 data: data.map(item => item.average)
             }],
             tooltip: {
@@ -53,6 +56,63 @@
             }
         });
     }
+
+
+
+
+
+
+</script>
+
+
+
+
+<script th:inline="javascript">
+    // Retrieve the data from the model
+    var dataList = /*[[${chartData}]]*/ [];
+
+    // Prepare the series data
+    var seriesData = [];
+    var categories = [];
+
+    dataList.forEach(function(item) {
+        if (!categories.includes(item.category)) {
+            categories.push(item.category);
+        }
+
+        var seriesIndex = seriesData.findIndex(function(seriesItem) {
+            return seriesItem.name === item.relationship;
+        });
+
+        if (seriesIndex === -1) {
+            seriesData.push({
+                name: item.relationship,
+                data: [item.average]
+            });
+        } else {
+            seriesData[seriesIndex].data.push(item.average);
+        }
+    });
+
+    // Create the chart
+    Highcharts.chart('chartContainer', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Averages by Category and Relationship'
+        },
+        xAxis: {
+            categories: categories
+        },
+        yAxis: {
+            title: {
+                text: 'Average'
+            }
+        },
+        series: seriesData
+    });
 </script>
 </body>
 </html>
+

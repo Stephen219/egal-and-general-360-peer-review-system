@@ -24,4 +24,9 @@ public class GraphServiceImpl implements GraphService{
     public Map<String, List<String>> getFormTextAnswer(String formid){
         return graphRepo.getFormTextAnswer(formid);
     }
+
+
+    public List<Map<String, Object>> getChartData(String formId){
+        return graphRepo.getChartData(formId);
+    }
 }

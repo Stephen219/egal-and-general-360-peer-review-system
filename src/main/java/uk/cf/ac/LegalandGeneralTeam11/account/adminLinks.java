@@ -31,12 +31,12 @@ public class adminLinks {
         this.formRequestService = formRequestService;
     }
 
-    @GetMapping("/all_forms")
+    @GetMapping("admin/all_forms")
     public ModelAndView getAllForms(@RequestParam(name = "sortBy", required = false) String sortBy) {
         System.out.println(sortBy);
         System.out.println("hello we are here gettinjf the " + sortBy + " forms");
         ModelAndView modelAndView = new ModelAndView("account/allForms");
-        List<Form> forms = getSortedForms(sortBy);
+        List<Form> forms = getSortedForms(sortBy, formService.getAllForms());
         Map<String, Long> responderCounts = new HashMap<>();
         for (Form form : forms) {
             long responderCount = formService.getTheNumberOfResponsesForAform(form.getId());
@@ -63,8 +63,8 @@ public class adminLinks {
      * @param sortBy the parameter to sort the forms by
      * @return a list of sorted forms
      */
-    private List<Form> getSortedForms(String sortBy) {
-        List<Form> forms = formService.getAllForms();
+     List<Form> getSortedForms(String sortBy, List<Form> forms) {
+
         if (sortBy == null) {
             sortBy = "atoz";
         }

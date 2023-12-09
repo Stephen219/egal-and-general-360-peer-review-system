@@ -73,6 +73,28 @@ public class GraphRepoImpl implements GraphRepo{
 
         return textAnswersMap;
     }
+    /**
+     * Gets the data for the chart which displays the average score for each category for a given team. this is the graph with 4 bars
+     * @param formId The id of the form
+     * @return The data for the chart
+     */
+
+    public List<Map<String, Object>> getChartData(String formId) {
+        String sql = "SELECT q.category, r.relationship, AVG(a.answer) AS average " +
+                "FROM answers a " +
+                "JOIN questions q ON a.question_id = q.id " +
+                "JOIN reviewers r ON a.responder = r.email " +
+                "WHERE a.form_id = ? AND q.category <> 'textArea' " +
+                "GROUP BY q.category, r.relationship";
+
+        return jdbcTemplate.queryForList(sql, formId);
+    }
+
+
+
+
+
+
 
 }
 
