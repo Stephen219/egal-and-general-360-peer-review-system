@@ -10,6 +10,8 @@ import uk.cf.ac.LegalandGeneralTeam11.Form.Form;
 import uk.cf.ac.LegalandGeneralTeam11.Form.FormServiceImpl;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
+import uk.cf.ac.LegalandGeneralTeam11.Graphs.Graph;
+import uk.cf.ac.LegalandGeneralTeam11.Graphs.GraphServiceImpl;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -26,6 +28,8 @@ public class adminLinks {
 
 
     FormServiceImpl formService;
+
+    GraphServiceImpl graphService;
 
     @Autowired
     public adminLinks(FormRequestService formRequestService, FormServiceImpl formservice) {
