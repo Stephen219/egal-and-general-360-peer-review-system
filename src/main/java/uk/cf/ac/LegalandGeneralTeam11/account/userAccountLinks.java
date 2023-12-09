@@ -142,11 +142,6 @@ public class userAccountLinks {
         System.out.println(averageMap);
 
 
-
-
-
-
-
         Map<String, Long> responderCounts = new HashMap<>();
         for (Form form : forms) {
             long responderCount = formService.getTheNumberOfResponsesForAform(form.getId());

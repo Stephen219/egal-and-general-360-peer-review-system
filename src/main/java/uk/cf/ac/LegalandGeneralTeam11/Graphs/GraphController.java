@@ -36,7 +36,7 @@ public class GraphController{
         });
         model.addAttribute("formTextAnswer", formTextAnswer);
         model.addAttribute("categoryAverages", categoryAverages);
-        return "userGraphs";
+        return "account/userGraphs";
     }
 
 
