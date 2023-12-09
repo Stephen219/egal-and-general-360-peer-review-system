@@ -42,6 +42,7 @@ public class adminLinks {
             long responderCount = formService.getTheNumberOfResponsesForAform(form.getId());
             responderCounts.put(form.getId(), responderCount);
         }
+        //TODO: refactor this to a method it is all in the user account links
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
         List<String> adjustedDates = forms.stream()
                 .map(form -> {
@@ -59,7 +60,8 @@ public class adminLinks {
     }
 
     /**
-     * This method sorts the forms based on the sortBy parameter
+     * This method sorts the forms based on the sortBy parameter passed in the url query but if the sortBy parameter is null, it sorts the forms by the date
+     * can be moved to a service class
      * @param sortBy the parameter to sort the forms by
      * @return a list of sorted forms
      */

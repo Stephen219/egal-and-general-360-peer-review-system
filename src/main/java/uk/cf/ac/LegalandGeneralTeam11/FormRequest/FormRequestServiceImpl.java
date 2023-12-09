@@ -13,6 +13,7 @@ public class FormRequestServiceImpl implements FormRequestService{
      * Constructor for FormRequestServiceImpl
      * @param aFormRequestRepository
      */
+    @Autowired
 
     public FormRequestServiceImpl(FormRequestRepository aFormRequestRepository) {
             this.formRequestRepository = aFormRequestRepository;

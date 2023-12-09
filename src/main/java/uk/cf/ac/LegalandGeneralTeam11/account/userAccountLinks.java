@@ -43,7 +43,6 @@ public class userAccountLinks {
         String currentPrincipalName = authentication.getName();
         List<String> adjustedDates = adjustDates(formService.getFormByUser(currentPrincipalName));
         Map<String, Long> responderCounts = countResponders(formService.getFormByUser(currentPrincipalName));
-
         modelAndView.addObject("forms", formService.getFormByUser(currentPrincipalName));
         modelAndView.addObject("adjustedDates", adjustedDates);
         modelAndView.addObject("responderCounts", responderCounts);
@@ -51,7 +50,14 @@ public class userAccountLinks {
     }
 
 
-
+    /**
+     * this is the method that gets the thymeleaf deadline for each form.
+     * ideally, it would be done in the db by introducing a new column of deadline or using thymeleaf dates
+     * but for now, this is the solution
+     *
+     * @param forms the list of forms
+     * @return
+     */
     public  List<String> adjustDates(List<Form> forms) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
         return forms.stream()
@@ -64,6 +70,12 @@ public class userAccountLinks {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * this is the method that counts the `number of responders for a form
+     * @param forms
+     * @return
+     */
+
     public Map<String, Long> countResponders(List<Form> forms) {
         Map<String, Long> responderCounts = new HashMap<>();
         for (Form form : forms) {
@@ -72,12 +84,5 @@ public class userAccountLinks {
         }
         return responderCounts;
     }
-
-
-
-
-
-
-
 
 }

@@ -44,33 +44,13 @@ public class accountController {
     public ModelAndView getAccount() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        System.out.println(currentPrincipalName);
         String username = currentPrincipalName;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         List<Form> forms = formservice.getFormByUser(username);
         Map<String, Long> responderCounts = new HashMap<>();
         for (Form form : forms) {
             long responderCount = formservice.getTheNumberOfResponsesForAform(form.getId());
             responderCounts.put(form.getId(), responderCount);
         }
-
-
 
         ModelAndView modelAndView = new ModelAndView("account/dashboard");
         modelAndView.addObject("forms", forms);
