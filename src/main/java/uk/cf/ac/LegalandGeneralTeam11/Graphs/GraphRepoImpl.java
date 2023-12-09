@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class GraphRepoImpl implements GraphRepo{
+public class GraphRepoImpl implements GraphRepo {
 
     JdbcTemplate jdbcTemplate;
+
     @Autowired
     public GraphRepoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -20,7 +21,8 @@ public class GraphRepoImpl implements GraphRepo{
 
     /**
      * Gets the average score for a specific category
-     * @param formid The id of the form
+     *
+     * @param formid   The id of the form
      * @param category The category of the form
      * @return The average score for a specific category
      */
@@ -29,13 +31,15 @@ public class GraphRepoImpl implements GraphRepo{
                 "FROM answers " +
                 "JOIN questions ON answers.question_id = questions.Id " +
                 "JOIN 360forms ON answers.form_id = 360forms.Id " +
-                "WHERE answers.form_id = ? AND questions.category <> textarea AND questions.category = ?";
+                "WHERE answers.form_id = ? AND questions.category <> 'textarea' AND questions.category = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{formid, category}, Float.class);
     }
+
     public String getFormCategory(String formid) {
         String sql = "SELECT category FROM questions WHERE form_id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{formid}, String.class);
     }
+
     public List<Map<String, Object>> getCategoryAverages(String formid) {
         String sql = "SELECT q.category, AVG(a.answer) AS average " +
                 "FROM questions q " +
@@ -45,6 +49,7 @@ public class GraphRepoImpl implements GraphRepo{
 
         return jdbcTemplate.queryForList(sql, formid); // Passing 'formid' as a parameter
     }
+
     public Map<String, List<String>> getFormTextAnswer(String formid) {
         String sql = "SELECT q.question, a.answer " +
                 "FROM questions q " +
@@ -73,8 +78,10 @@ public class GraphRepoImpl implements GraphRepo{
 
         return textAnswersMap;
     }
+
     /**
      * Gets the data for the chart which displays the average score for each category for a given team. this is the graph with 4 bars
+     *
      * @param formId The id of the form
      * @return The data for the chart
      */
@@ -90,6 +97,17 @@ public class GraphRepoImpl implements GraphRepo{
         return jdbcTemplate.queryForList(sql, formId);
     }
 
+
+    public List<Map<String, Object>> getAverageAnswersForUser(String username) {
+        String sql = "SELECT q.category, AVG(a.answer) AS average_answer " +
+                "FROM answers a " +
+                "JOIN questions q ON a.question_id = q.id " +
+                "JOIN 360forms f ON a.form_id = f.Id " +
+                "WHERE f.username = ? " +
+                "GROUP BY q.category";
+
+        return jdbcTemplate.queryForList(sql, username);
+    }
 
 
 
