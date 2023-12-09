@@ -1,10 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{css/main.css}"/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/favicon-32x32.png}" />
+
+    <title>Form results</title>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css"
+          integrity="sha512-W/zrbCncQnky/EzL+/AYwTtosvrM+YG/V6piQLSe2HuKS6cmbw89kjYkp3tWFn1dkWV7L1ruvJyKbLz73Vlgfg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/svg-with-js.min.css"
+          integrity="sha512-4oP5WpLD1feGamTDxyKyYjJj9a15AlPfKOt78LpGmZ+XfrUcuC7hjHVTuzhJhO4pPvi3RHL6CI2Tyjdoik3AnA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Left Section for Collapsable responder buttons -->
+        <div class="col-md-6">
+            <p class="d-inline-flex gap-1">
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Link with href
+                </a>
+            <!-- Collapsible Text -->
+            <div class="collapse mt-3" id="collapseText">
+                <div class="card card-body">
+                    This text is shown when the collapse button is pressed.
+                </div>
+            </div>
+        </div>
 
+        <!-- Right Section for graphs -->
+        <div class="col-md-6 placeholder-content">
+            <h2>Main Content Area</h2>
+            <p>This is an empty placeholder for the main content area.</p>
+            <div id="container" style="width: 100%; height: 400px;"></div>
+            <h1>Questions and Answers</h1>
+            <div th:each="entry : ${graphText}">
+                <h3 th:text="${entry.key}"></h3>
+                <ul>
+                    <li th:each="answer : ${entry.value}" th:text="${answer}"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
+<script th:inline="javascript">
+    /*[[${categoryAverages}]]*/;
+    var data = /*[[${categoryAverages}]]*/; 'default_value_if_empty';
+
+    // Create the chart if data is available
+    if (data !== 'default_value_if_empty') {
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'average score per category'
+        },
+        xAxis: {
+            categories: data.map(item => item.category),
+            title: {
+                text: 'Categories'
+            }
+        },
+        yAxis: {
+            title: {
+                text: ' Average score'
+            }
+        },
+        series: [{
+            name: 'Average',
+            data: data.map(item => item.average)
+        }],
+        tooltip: {
+            formatter: function() {
+                const point = this.point;
+                const keyword = data[point.index].keyword;
+                return `Term: ${point.category}<br>Average: ${point.y}<br>Keyword: ${keyword}`;
+            }
+        }
+    });
+}
+</script>
 </html>

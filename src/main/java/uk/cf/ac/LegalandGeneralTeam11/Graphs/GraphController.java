@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import uk.cf.ac.LegalandGeneralTeam11.Form.FormService;
 
 import java.util.ArrayList;
@@ -37,8 +39,17 @@ public class GraphController{
         model.addAttribute("formTextAnswer", formTextAnswer);
         model.addAttribute("categoryAverages", categoryAverages);
         return "account/userGraphs";
-    }
 
+
+    }
+    @GetMapping("admin/results/{id}")
+    public String getResults(@PathVariable String id, Model model) {
+        List<Map<String, Object>> graphInt = graphservice.getCategoryAverages(id);
+        Map<String, List<String>> graphString = graphservice.getFormTextAnswer(id);
+        model.addAttribute("graph", graphInt);
+        model.addAttribute("graphText", graphString);
+        return "account/seeAllResults";
+    }
 
 }
 

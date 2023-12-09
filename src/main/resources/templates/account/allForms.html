@@ -48,7 +48,7 @@
             <p>There are no recent forms</p>
         </div>
         <div th:each="request, iStat : ${forms}" class="bg-white p-4 rounded shadow flex flex-col mb-4">
-            <a th:href="@{'/get_reviewers/' + ${request.id}}">
+            <a th:href="@{'/admin/results/' + ${request.id}}">
                 <div class="bg-white p-4 rounded shadow flex flex-row justify-between items-start">
 
                     <div class="flex flex-col">
