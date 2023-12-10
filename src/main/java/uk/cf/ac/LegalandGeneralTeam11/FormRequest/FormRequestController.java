@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -45,5 +46,15 @@ public class FormRequestController {
         return new ModelAndView("redirect:/account");
 
     }
+
+
+
+    @GetMapping("/reject/{id}")
+    public String rejectForm(@PathVariable Long id) {
+        FormRequest formRequest = formRequestService.getFormRequestById(id);
+        formRequestService.rejectFormRequest(formRequest);
+        return "redirect:/admin";
+    }
+
 
 }

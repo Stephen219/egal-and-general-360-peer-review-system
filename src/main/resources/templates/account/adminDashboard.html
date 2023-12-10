@@ -8,20 +8,25 @@
           rel="stylesheet"/>
     <link rel="stylesheet" th:href="@{css/main.css}"/>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/favicon-32x32.png}" />
-
-<title>Legal and General</title>
+    <div th:replace="~{fragments/testfile :: meta-fragments}"></div>
 
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css"
-          integrity="sha512-W/zrbCncQnky/EzL+/AYwTtosvrM+YG/V6piQLSe2HuKS6cmbw89kjYkp3tWFn1dkWV7L1ruvJyKbLz73Vlgfg=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/svg-with-js.min.css"
-          integrity="sha512-4oP5WpLD1feGamTDxyKyYjJj9a15AlPfKOt78LpGmZ+XfrUcuC7hjHVTuzhJhO4pPvi3RHL6CI2Tyjdoik3AnA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+
+
+    <title>Legal and General</title>
+
+
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>-->
+
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css"-->
+<!--          integrity="sha512-W/zrbCncQnky/EzL+/AYwTtosvrM+YG/V6piQLSe2HuKS6cmbw89kjYkp3tWFn1dkWV7L1ruvJyKbLz73Vlgfg=="-->
+<!--          crossorigin="anonymous" referrerpolicy="no-referrer"/>-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/svg-with-js.min.css"-->
+<!--          integrity="sha512-4oP5WpLD1feGamTDxyKyYjJj9a15AlPfKOt78LpGmZ+XfrUcuC7hjHVTuzhJhO4pPvi3RHL6CI2Tyjdoik3AnA=="-->
+<!--          crossorigin="anonymous" referrerpolicy="no-referrer"/>-->
+<!--    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>-->
 </head>
 
 <body>
@@ -33,15 +38,14 @@
             <div class="text-white round-md">
                 <div class="flex bg-gray-800">
                     <div class="flex py-3 px-2 items-center">
-                        <img  th:src="@{legal.png}" alt="logo" class="h-auto w-3/4  ml-7">
+                        <img  th:src="@{legal_and_general.png}" alt="logo" class="h-auto w-5/6">
 
 
                     </div>
                 </div>
-                <div class="flex flex-col items-center space-y-3">
-                    <img alt="user profile picture"
-                         src="https://th.bing.com/th/id/OIP.eGHa3HgHxIlTHmcvKNDs7AHaGe?rs=1&pid=ImgDetMain"
-                         class="w-auto h-20 rounded-full mt-3"/>
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-full mt-2 bg-gradient-to-br from-orange-200 to-orange-900"></div>
+
                     <span class="text-xl font-semibold capitalize">John member</span>
                 </div>
                 <div class="flex flex-col space-y-16">
@@ -227,15 +231,17 @@
             <div class="text-white round-md">
                 <div class="flex bg-gray-800">
                     <div class="flex py-3 px-2 items-center">
-                        <img  th:src="@{legal.png}" alt="logo" class="h-auto w-3/4  ml-7">
+                        <img  th:src="@{legal_and_general.png}" alt="logo" class="h-auto w-5/6">
 
 
                     </div>
                 </div>
-                <div class="flex flex-col items-center space-y-3">
-                    <img alt="user profile picture"
-                         src="https://th.bing.com/th/id/OIP.eGHa3HgHxIlTHmcvKNDs7AHaGe?rs=1&pid=ImgDetMain"
-                         class="w-auto h-20 rounded-full mt-3"/>
+                <div class="flex flex-col items-center space-y-2">
+                    <div class="w-20 h-20 rounded-full mt-1 bg-orange-500"></div>
+
+                    <!--                    <img alt="user profile picture"-->
+<!--                         src="https://th.bing.com/th/id/OIP.eGHa3HgHxIlTHmcvKNDs7AHaGe?rs=1&pid=ImgDetMain"-->
+<!--                         class="w-auto h-20 rounded-full mt-3"/>-->
                     <span class="text-xl font-semibold capitalize">John member</span>
                 </div>
                 <div class="flex flex-col space-y-16">
@@ -627,7 +633,7 @@
                             <p class="text-gray-500 mb-2 self-end" th:text="'Date Sent: ' + ${request.requestDate}"></p>
                             <div class="flex justify-end items-end flex-grow">
                                 <a th:href="@{'/accept/' + ${request.id}}" class="bg-green-500 text-white px-4 py-2 rounded mr-2">Accept</a>
-                                <button class="bg-red-500 text-white px-4 py-2 rounded">Decline</button>
+                                <a th:href="@{'/reject/' + ${request.id}}" class="bg-red-500 text-white px-4 py-2 rounded mr-2">Decline</a>
                             </div>
                         </div>
                     </div>

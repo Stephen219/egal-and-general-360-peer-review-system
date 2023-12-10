@@ -81,5 +81,9 @@ public class FormRequestServiceImpl implements FormRequestService{
         return formRequestRepository.getAllByStatus(status);
     }
 
+    public void rejectFormRequest(FormRequest formRequest){
+        formRequestRepository.rejectFormRequest(formRequest);
+    }
+
 
 }

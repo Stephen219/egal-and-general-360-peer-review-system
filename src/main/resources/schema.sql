@@ -124,4 +124,17 @@ create table if not exists answers
 )engine=InnoDB;
 
 
+ -- creating table domains
+ CREATE TABLE if not exists domains
+(
+    Id INT NOT NULL AUTO_INCREMENT,
+    domain VARCHAR(255) NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    PRIMARY KEY (Id)) engine = InnoDB;
+
+
+
+
+
+
 

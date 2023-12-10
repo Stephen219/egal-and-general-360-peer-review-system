@@ -147,6 +147,16 @@ public class FormRequestRepoImpl implements FormRequestRepository{
         );
     }
 
+    public void rejectFormRequest(FormRequest formRequest) {
+        String sql = "UPDATE form_requests SET approval_status = 'REJECTED', updated_at = ? WHERE id = ?";
+
+        jdbcTemplate.update(
+                sql,
+                LocalDateTime.now(),
+                formRequest.getId()
+        );
+    }
+
 
 
 

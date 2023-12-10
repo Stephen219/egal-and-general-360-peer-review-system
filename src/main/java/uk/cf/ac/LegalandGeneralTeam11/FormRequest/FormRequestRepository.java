@@ -69,5 +69,7 @@ public interface FormRequestRepository {
 
     List<FormRequest> getAllByStatus(String status);
 
+    public void rejectFormRequest(FormRequest formRequest);
+
 
 }
