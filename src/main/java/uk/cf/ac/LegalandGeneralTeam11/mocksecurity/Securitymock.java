@@ -32,7 +32,8 @@ public class Securitymock {
             "/css/**",
             "static/**",
             "legal.png",
-            "/review/**"
+            "/review/**",
+            "/domain"
     };
 
     @Autowired
