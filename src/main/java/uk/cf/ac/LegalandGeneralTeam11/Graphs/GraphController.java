@@ -30,7 +30,7 @@ public class GraphController{
 
         List<Map<String, Object>> chartData = graphservice.getChartData(id);
         model.addAttribute("chartData", chartData);
-        System.out.println("we are here geting the chart dsta");
+        System.out.println("we are here getting the chart data");
         System.out.println(chartData);
         chartData.forEach((map) -> {
             System.out.println(map.get("category"));
@@ -46,8 +46,8 @@ public class GraphController{
     public String getResults(@PathVariable String id, Model model) {
         List<Map<String, Object>> graphInt = graphservice.getCategoryAverages(id);
         Map<String, List<String>> graphString = graphservice.getFormTextAnswer(id);
-        model.addAttribute("graph", graphInt);
-        model.addAttribute("graphText", graphString);
+        model.addAttribute("NumberAnswer", graphInt);
+        model.addAttribute("TextAnswer", graphString);
         return "account/seeAllResults";
     }
 
