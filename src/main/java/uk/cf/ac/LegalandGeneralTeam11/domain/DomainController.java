@@ -11,18 +11,17 @@ import java.util.List;
 
 @Controller
 public class DomainController {
-
-    private final DomainService domainService;
-
     @Autowired
-    public DomainController(DomainService domainService) {
-        this.domainService = domainService;
-    }
+    private DomainService domainService;
 
-    @GetMapping("/domains")
-    public List<Domain> getDomains() {
-        System.out.println(domainService.getAllDomains());
-        return domainService.getAllDomains();
+
+    @GetMapping("/domain")
+    public ModelAndView getMenu() {
+        ModelAndView modelAndView = new ModelAndView("account/domainEditor");
+        List<Domain> Domains = domainService.getAllDomains();
+        modelAndView.addObject("Domains", Domains);
+        System.out.println(Domains);
+        return modelAndView;
     }
 }
 

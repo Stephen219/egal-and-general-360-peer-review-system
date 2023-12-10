@@ -32,7 +32,7 @@ public class DomainRepoImpl implements DomainRepo{
 
 
     public List<Domain> getAllDomains() {
-        String sql = "SELECT domain_name FROM domains WHERE enabled = true";
+        String sql = "SELECT * FROM domains";
         return jdbcTemplate.query(sql, domainMapper);
     }
 

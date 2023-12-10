@@ -2,9 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Our menu</title>
+
 </head>
 <body>
 
+
+
+
+<div  class="container">
+
+
+
+    <table  class="table table-bordered">
+        <thead>
+        <tr>
+
+            <th>Name</th>
+            <th>Price</th>
+
+        </thead>
+        <tbody>
+        <tr th:each="domain, iStat : ${Domains}">
+            <td th:text="${domain.domain}"></td>
+
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
