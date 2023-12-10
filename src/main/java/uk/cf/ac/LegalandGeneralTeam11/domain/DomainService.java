@@ -6,6 +6,7 @@ public interface DomainService {
 
         public void addDomain(Domain domain);
         public void updateDomain(Domain domain);
-        public void disableDomain(Long Id);
+        public void deleteDomain(Long Id);
         public List<Domain> getAllDomains();
+        public Domain getDomainById(Long id);
 }

@@ -19,8 +19,8 @@ public class DomainServiceImpl implements DomainService{
         domainRepoImpl.updateDomain(domain);
     }
 
-    public void disableDomain(Long Id) {
-        domainRepoImpl.disableDomain(Id);
+    public void deleteDomain(Long Id) {
+        domainRepoImpl.deleteDomain(Id);
     }
 
     public List<Domain> getAllDomains() {
@@ -29,5 +29,8 @@ public class DomainServiceImpl implements DomainService{
             domains = Collections.emptyList(); // Return an empty list if null
         }
         return domains;
+    }
+    public Domain getDomainById(Long id) {
+        return domainRepoImpl.getDomainById(id);
     }
 }

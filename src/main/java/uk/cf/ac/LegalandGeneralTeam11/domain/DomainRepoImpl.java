@@ -37,7 +37,7 @@ public class DomainRepoImpl implements DomainRepo{
     }
 
     public void  addDomain(Domain domain) {
-        String sql = "INSERT INTO domains (domain, enabled) VALUES (?, ?)";
+        String sql = "INSERT INTO domains (domain_name, enabled) VALUES (?, ?)";
         jdbcTemplate.update(sql, domain.getDomain(),domain.getEnabled());
     }
     public void updateDomain(Domain domain) {
@@ -45,9 +45,13 @@ public class DomainRepoImpl implements DomainRepo{
         jdbcTemplate.update(sql, domain.getDomain(), domain.getEnabled(),domain.getId());
     }
 
-    public void disableDomain(Long id) {
-        String sql = "UPDATE domains SET enabled = false WHERE id = ?";
+    public void deleteDomain(Long id) {
+        String sql = "DELETE FROM domains WHERE id = ?";
         jdbcTemplate.update(sql, id);
+    }
+    public Domain getDomainById(Long id) {
+        String sql = "SELECT * FROM domains WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, domainMapper, id);
     }
 
 }
