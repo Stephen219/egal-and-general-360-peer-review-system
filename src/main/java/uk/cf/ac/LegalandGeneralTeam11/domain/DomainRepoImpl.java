@@ -41,7 +41,7 @@ public class DomainRepoImpl implements DomainRepo{
         jdbcTemplate.update(sql, domain.getDomain(),domain.getEnabled());
     }
     public void updateDomain(Domain domain) {
-        String sql = "UPDATE domains SET domain = ?, enabled = ? WHERE id = ?";
+        String sql = "UPDATE domains SET domain_name = ?, enabled = ? WHERE id = ?";
         jdbcTemplate.update(sql, domain.getDomain(), domain.getEnabled(),domain.getId());
     }
 

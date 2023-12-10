@@ -51,6 +51,7 @@ public class Securitymock {
                         .requestMatchers("css/**").permitAll()
                         .requestMatchers("/form/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/domain/**").hasRole("ADMIN")
                         .requestMatchers("/account/**").hasAnyRole( "USER")
                        // .requestMatchers("/review/**").hasRole("USER")
                         .requestMatchers("/self-assessment/**").hasAnyRole( "USER", "ADMIN")
@@ -60,7 +61,7 @@ public class Securitymock {
                         .requestMatchers("/submit_reviewers/**").hasRole("USER")
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/submit_reviewers/**")).hasRole("USER")
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/domain/**")).hasRole("ADMIN")
-                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/addDomain/**")).hasRole("ADMIN")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/addDomain/**")).hasRole("ADMIN")
 
                         .requestMatchers("/account/**").hasAnyRole( "USER")
                         .requestMatchers("/accept/**").hasAnyRole("ADMIN")
