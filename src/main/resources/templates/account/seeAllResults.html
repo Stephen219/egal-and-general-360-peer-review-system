@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
-<<<<<<< HEAD
     <div th:replace="~{fragments/testfile :: meta-fragments}"></div>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -31,11 +30,10 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-=======
     <meta charset="UTF-8">
     <title>Data Display</title>
     <!-- Include Highcharts -->
->>>>>>> 4ac919881088551a538f21e91419ff9d3fa083f7
+
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -143,4 +141,34 @@
     });
 }
 </script>
+
+<script th:inline="javascript">
+    // Access the relationshipCounts model attribute
+    var relationshipCounts = /*[[${relationshipCounts}]]*/ [];
+
+    // Convert the data to the format expected by Highcharts
+    var seriesData = relationshipCounts.map(function(item) {
+        return { name: item.relationship, y: item.count };
+    });
+
+    // Define the colors
+    var colors = ['#0076D6', '#028844', '#FFD500', '#E22922', '#0076D6', '#028844'];
+
+    // Create the chart
+    Highcharts.chart('container', {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'Relationships'
+        },
+        colors: colors, // Set the colors
+        series: [{
+            name: 'Relationship',
+            data: seriesData
+        }]
+    });
+</script>
+
+
 </html>

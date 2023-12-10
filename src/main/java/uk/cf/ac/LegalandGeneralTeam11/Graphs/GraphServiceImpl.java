@@ -40,4 +40,10 @@ public class GraphServiceImpl implements GraphService{
     public List<Map<String, Object>> getAverageAnswersForUser(String username){
         return graphRepo.getAverageAnswersForUser(username);
     }
+
+
+    public List<Map<String, Object>> getRelationshipCounts(){
+        return graphRepo.getRelationshipCounts();
+    }
+
 }

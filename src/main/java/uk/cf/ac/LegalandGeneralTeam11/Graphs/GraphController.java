@@ -36,6 +36,16 @@ public class GraphController{
             System.out.println(map.get("category"));
             System.out.println(map.get("average"));
         });
+
+        List<Map<String, Object>> relationshipCounts = graphservice.getRelationshipCounts();
+        model.addAttribute("relationshipCounts", relationshipCounts);
+        System.out.println(relationshipCounts);
+        relationshipCounts.forEach((map) -> {
+            System.out.println(map.get("relationship"));
+            System.out.println(map.get("count"));
+        });
+
+
         model.addAttribute("formTextAnswer", formTextAnswer);
         model.addAttribute("categoryAverages", categoryAverages);
         return "account/userGraphs";

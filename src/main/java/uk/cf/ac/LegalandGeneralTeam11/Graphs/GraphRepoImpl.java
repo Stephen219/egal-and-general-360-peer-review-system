@@ -110,6 +110,20 @@ public class GraphRepoImpl implements GraphRepo {
     }
 
 
+    // geting the number of respone=der per cartegory
+
+
+    public List<Map<String, Object>> getRelationshipCounts() {
+        String sql = "SELECT r.relationship, COUNT(DISTINCT r.email) as count " +
+                "FROM answers a " +
+                "JOIN reviewers r ON a.form_id = r.form_id " +
+                "WHERE a.form_id = 'form1' AND r.hasFilledForm = true " +
+                "GROUP BY r.relationship";
+
+        return jdbcTemplate.queryForList(sql);
+    }
+
+
 
 
 
