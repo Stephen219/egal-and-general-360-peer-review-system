@@ -5,6 +5,7 @@ drop table if exists form_requests;
 drop table if exists self_assessment;
 drop table if exists reviewers;
 drop table if exists answers;
+drop table if exists domains;
 
 
 drop schema if exists legalandgeneral;
@@ -119,6 +120,13 @@ create table if not exists answers
     foreign key (question_id) references questions(Id)
 
 )engine=InnoDB;
+
+CREATE TABLE if not exists domains
+(
+    id INT NOT NULL AUTO_INCREMENT,
+    domain_name VARCHAR(255) NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    PRIMARY KEY (Id)) engine = InnoDB;
 
 
 
