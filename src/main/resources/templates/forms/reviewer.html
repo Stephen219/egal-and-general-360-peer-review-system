@@ -1,174 +1,368 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta name="_csrf" th:content="${_csrf.token}" />
-  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!--    <script src="https://cdn.tailwindcss.com"></script>-->
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" th:href="@{/css/main.css}"/>
-  <title>Reviewers Form</title>
-  <style>
-    .email-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .email-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border: 1px solid #ccc;
-      padding: 8px;
-      margin-bottom: 8px;
-    }
-
-    .invalid-email {
-      border: 1px solid #e53e3e;
-    }
-
-    .error-message {
-      color: #e53e3e;
-      margin-top: 4px;
-    }
-  </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <title>Reviewers Form</title>
+    </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
+<style>
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        max-width: 800px;
+        margin: auto;
+        margin-top: 50px;
+    }
 
-<div class="bg-white p-8 rounded shadow-md max-w-md">
-  <h2 class="text-3xl font-semibold mb-6 text-center">Choose Reviewers</h2>
+    #emailList {
+        max-height: 300px;
+        width: 300px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 10px;
+    }
 
-  <form id="reviewersForm" th:action="@{'/submit_reviewers/'+${form.id}}" method="post" class="space-y-4">
-    <input type="hidden" name="id" th:value="${form.id}" />
-    <input type="hidden" id="uniqueEmailsInput" name="uniqueEmails" />
+    .center-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+    #form {
+        width: 100%;
+        max-width: 25rem; /* Adjust the max-width as needed */
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        padding: 1.25rem; /* Adjust the padding as needed */
+        border-radius: 0.5rem; /* Adjust the border-radius as needed */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adjust the box-shadow as needed */
+        margin: 1.5rem; /* Adjust the margin as needed */
+    }
 
-    <div class="flex items-center space-x-2">
-      <label for="emailInput" class="mr-2">Email:</label>
-      <input type="email" id="emailInput" name="emails" class="p-2 border rounded-md transition duration-300 focus:border-blue-500" required>
-      <button type="button" onclick="addEmail()" class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md transition duration-300 hover:bg-blue-600">Add</button>
+    body {
+        background-color: rgb(142, 202, 251);
+    }
+
+
+
+
+
+
+    body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .loading-spinner {
+        display: none;
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        margin-top: -25px;
+        margin-left: -25px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /*.loading-spinner {*/
+    /*    display: none;*/
+    /*    text-align: center;*/
+    /*}*/
+
+    .dot {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin: 0 4px;
+        border-radius: 50%;
+        background-color: transparent;
+        animation: spin 1s infinite linear;
+    }
+
+    .red {
+        background-color: red;
+    }
+
+    .yellow {
+        background-color: yellow;
+        animation-delay: 0.25s;
+    }
+
+    .blue {
+        background-color: blue;
+        animation-delay: 0.5s;
+    }
+
+    .green {
+        background-color: green;
+        animation-delay: 0.75s;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+
+    /* Add this CSS for styling */
+    .loading-spinner {
+        display: none;
+        text-align: center;
+    }
+
+    .dot {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin: 0 4px;
+        border-radius: 50%;
+        background-color: transparent;
+        animation: spin 1s infinite linear;
+    }
+
+    .red {
+        background-color: red;
+    }
+
+    .yellow {
+        background-color: yellow;
+        animation-delay: 0.25s;
+    }
+
+    .blue {
+        background-color: blue;
+        animation-delay: 0.5s;
+    }
+
+    .green {
+        background-color: green;
+        animation-delay: 0.75s;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+
+
+
+
+
+
+</style>
+</head>
+<body>
+
+
+<div class="h-screen bg-indigo-200 flex justify-center items-center space-x-4">
+<!--    <div class="loading-spinner" id="loadingSpinner"></div>-->
+    <!-- Add this HTML for the loading spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="dot red"></div>
+        <div class="dot yellow"></div>
+        <div class="dot blue"></div>
+        <div class="dot green"></div>
     </div>
-    <div id="errorDiv" class="text-red-500"></div>
-
-    <ul id="emailList" class="list-none space-y-2"></ul>
 
 
 
-    <button type="submit" id="submitButton" class="w-full mt-4 px-4 py-2 bg-green-500 text-white rounded-md transition duration-300 hover:bg-green-600" disabled>Submit</button>
-  </form>
+    <form id="form" class="w-full max-w-sm bg-white flex flex-col py-5 px-8 rounded-lg shadow-lg m-6 " th:action="@{'/submit_reviewers/' + ${form.id}}" method="post">
 
+        <h1 class="text-2xl font-bold text-center mb-4">Add Reviewers</h1>
+        ensure that you include your manage.
+
+
+        <input type="hidden" name="id" th:value="${form.id}"/>
+        <input type="hidden" id="uniqueEmailsInput" name="uniqueEmails"/>
+
+        <div class="flex items-center space-x-2">
+            <label for="emailInput" class="mr-2">Email:</label>
+            <input type="email" id="emailInput" name="emails"
+                   class="p-2 border rounded-md transition duration-300 focus:border-blue-500" required>
+            <button type="button" onclick="addEmail()"
+                    class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md transition duration-300 hover:bg-blue-600">
+                Add
+            </button>
+        </div>
+        <div id="errorDiv" class="text-red-500"></div>
+
+        <div class="flex justify-between items-center my-4 text-center center-button">
+            <button type="submit" id="submitButton"
+                    class="px-4 py-2 bg-green-500 text-white rounded-md transition duration-300 hover:bg-green-600"
+                    disabled>Submit
+            </button>
+        </div>
+        <h1 class="text-2xl font-bold text-center mb-4">Allowed Domains</h1>
+        <div class="flex justify-center">
+
+         <ul class="list-none font-light text-gray-400" id="uli">
+            <li th:each="domain : ${allowedDomains}" th:if="${not #strings.isEmpty(domain)}" class="domain-item ">
+                <p th:text="${domain}"></p>
+            </li>
+        </ul></div>
+
+
+
+
+    </form>
+    <ul id="emailList" class="list-none space-y-2">
+
+    </ul>
 </div>
 
-<!--  <script>-->
 
-<!--    const uniqueEmails = new Set();-->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var allowedDomains = /*[[${allowedDomains}]]*/ [];
 
-<!--    function addEmail() {-->
+    const uniqueEmails = new Set();
 
-<!--      const emailInput = document.getElementById('emailInput');-->
-<!--      const email = emailInput.value.trim();-->
+    function addEmail() {
+        const emailInput = document.getElementById('emailInput');
+        const email = emailInput.value.trim();
+        console.log(allowedDomains);
 
+        //const allowedDomains = ['gmail.com', 'outlook.com', 'cardiff.ac.uk'];
 
-<!--      if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {-->
+        //const allowedDomains = ['gmail.com', 'outlook.com', 'cardiff.ac.uk'];
 
-<!--        if (!uniqueEmails.has(email)) {-->
-<!--          const emailList = document.getElementById('emailList');-->
-<!--          const emailItem = document.createElement('li');-->
-<!--          emailItem.className = 'email-item flex items-center justify-between border rounded-md p-2 transition duration-300 hover:bg-gray-100';-->
-<!--          emailItem.innerHTML = `-->
-<!--                        <span>${email}</span>-->
-<!--                        <button type="button" onclick="removeEmail(this)" class="text-red-500 ml-2">Remove</button>-->
-<!--                    `;-->
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailRegex.test(email)) {
+            const domain = email.split('@')[1];
+            if (allowedDomains.includes(domain)) {
+                if (!uniqueEmails.has(email)) {
+                    const emailList = document.getElementById('emailList');
+                    const emailItem = document.createElement('li');
+                    emailItem.className = 'email-item flex items-center justify-between border rounded-md p-2 transition duration-300 hover:bg-gray-100';
 
-<!--          emailList.appendChild(emailItem);-->
-<!--          uniqueEmails.add(email);-->
-<!--          emailInput.value = '';-->
-<!--          emailInput.classList.remove('invalid-email');-->
+                    const span = document.createElement('span');
+                    span.textContent = email;
 
-<!--          document.getElementById('errorDiv').innerText = '';-->
-<!--          const submitButton = document.getElementById('submitButton');-->
-<!--          submitButton.disabled = uniqueEmails.size <= 5;-->
-<!--          if (uniqueEmails.size < 5) {-->
-<!--            document.getElementById('errorDiv').innerText = 'Please add more than 5 reviewers.';-->
-<!--          }-->
-<!--        } else {-->
-<!--          document.getElementById('errorDiv').innerText = 'Email already added.';-->
-<!--        }-->
-<!--      } else {-->
-<!--        emailInput.classList.add('invalid-email');-->
-<!--        document.getElementById('errorDiv').innerText = 'Invalid email format.';-->
-<!--      }-->
-<!--      document.getElementById('uniqueEmailsInput').value = Array.from(uniqueEmails).join(',');-->
-<!--    }-->
+                    const removeButton = document.createElement('button');
+                    removeButton.type = 'button';
+                    removeButton.textContent = 'Remove';
+                    removeButton.className = 'text-red-500 ml-2';
+                    removeButton.onclick = function () {
+                        removeEmail(email);
+                    };
 
-<!--    function removeEmail(button) {-->
-<!--      const emailItem = button.parentElement;-->
-<!--      const email = emailItem.firstChild.textContent;-->
-<!--      uniqueEmails.delete(email);-->
-<!--      emailItem.remove();-->
-<!--      document.getElementById('errorDiv').innerText = '';-->
-<!--      const submitButton = document.getElementById('submitButton');-->
-<!--      submitButton.disabled = uniqueEmails.size <= 5;-->
-<!--    }-->
-<!--  </script>-->
+                    emailItem.appendChild(span);
+                    emailItem.appendChild(removeButton);
 
+                    emailList.appendChild(emailItem);
+                    uniqueEmails.add(email);
+                    emailInput.value = '';
+                    emailInput.classList.remove('invalid-email');
 
-<script>
-  const uniqueEmails = new Set();
+                    document.getElementById('errorDiv').innerText = '';
+                    updateSubmitButtonState();
+                    if (uniqueEmails.size >= 5) {
+                        emailInput.removeAttribute('required');
+                    }
 
-  function addEmail() {
-    const emailInput = document.getElementById('emailInput');
-    const email = emailInput.value.trim();
-    const allowedDomains = ['gmail.com', 'outlook.com', 'cardiff.ac.uk'];
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailRegex.test(email)) {
-      const domain = email.split('@')[1];
-      if (allowedDomains.includes(domain)) {
-        if (!uniqueEmails.has(email)) {
-          const emailList = document.getElementById('emailList');
-          const emailItem = document.createElement('li');
-          emailItem.className = 'email-item flex items-center justify-between border rounded-md p-2 transition duration-300 hover:bg-gray-100';
-          emailItem.innerHTML = `
-                        <span>${email}</span>
-                        <button type="button" onclick="removeEmail(this)" class="text-red-500 ml-2">Remove</button>
-                    `;
-
-          emailList.appendChild(emailItem);
-          uniqueEmails.add(email);
-          emailInput.value = '';
-          emailInput.classList.remove('invalid-email');
-
-          document.getElementById('errorDiv').innerText = '';
-          const submitButton = document.getElementById('submitButton');
-          submitButton.disabled = uniqueEmails.size >= 5;
-          if (uniqueEmails.size >= 5) {
-            document.getElementById('errorDiv').innerText = 'Please add more than 5 reviewers.';
-          }
+                } else {
+                    document.getElementById('errorDiv').innerText = 'Email already added.';
+                }
+            } else {
+                emailInput.classList.add('invalid-email');
+                document.getElementById('errorDiv').innerText = 'Email domain not allowed.';
+            }
         } else {
-          document.getElementById('errorDiv').innerText = 'Email already added.';
+            emailInput.classList.add('invalid-email');
+            document.getElementById('errorDiv').innerText = 'Invalid email format.';
         }
-      } else {
-        emailInput.classList.add('invalid-email');
-        document.getElementById('errorDiv').innerText = 'Email domain not allowed.';
-      }
-    } else {
-      emailInput.classList.add('invalid-email');
-      document.getElementById('errorDiv').innerText = 'Invalid email format.';
+        document.getElementById('uniqueEmailsInput').value = Array.from(uniqueEmails).join(',');
     }
-    document.getElementById('uniqueEmailsInput').value = Array.from(uniqueEmails).join(',');
-  }
 
-  function removeEmail(button) {
-    const emailItem = button.parentElement;
-    const email = emailItem.firstChild.textContent;
-    uniqueEmails.delete(email);
-    emailItem.remove();
-    document.getElementById('errorDiv').innerText = '';
-    const submitButton = document.getElementById('submitButton');
-    submitButton.disabled = uniqueEmails.size >= 5;
-  }
+    function removeEmail(email) {
+        uniqueEmails.delete(email);
+        updateEmailList();
+        document.getElementById('errorDiv').innerText = '';
+        updateSubmitButtonState();
+    }
+
+    function updateEmailList() {
+        const emailList = document.getElementById('emailList');
+        emailList.innerHTML = ''; // Clear the existing list
+
+        uniqueEmails.forEach((email) => {
+            const emailItem = document.createElement('li');
+            emailItem.className = 'email-item flex items-center justify-between border rounded-md p-2 transition duration-300 hover:bg-gray-100';
+
+            const span = document.createElement('span');
+            span.textContent = email;
+
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.textContent = 'Remove';
+            removeButton.className = 'text-red-500 ml-2';
+            removeButton.onclick = function () {
+                removeEmail(email);
+            };
+
+            emailItem.appendChild(span);
+            emailItem.appendChild(removeButton);
+
+            emailList.appendChild(emailItem);
+        });
+    }
+
+    function updateSubmitButtonState() {
+        const submitButton = document.getElementById('submitButton');
+        submitButton.disabled = uniqueEmails.size >= 5;
+        if (uniqueEmails.size >= 5) {
+            document.getElementById('errorDiv').innerText = 'Please add more than 5 reviewers.';
+        }
+    }
+
+
+
+    document.getElementById('form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        showLoadingSpinner();
+
+
+        setTimeout(function() {
+
+            hideLoadingSpinner();
+
+
+            var formId = /*[[${form.id}]]*/;
+            window.location.href = '/review/' + formId;
+        }, 10000);
+    });
+
+    function showLoadingSpinner() {
+        document.getElementById('loadingSpinner').style.display = 'block';
+    }
+
+    function hideLoadingSpinner() {
+        document.getElementById('loadingSpinner').style.display = 'none';
+    }
+
+    /*]]>*/
 </script>
-
-
-
 </body>
 </html>
 

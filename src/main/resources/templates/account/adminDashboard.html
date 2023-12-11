@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"/>
     <link rel="stylesheet" th:href="@{css/main.css}"/>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
 
 <title>Legal and General</title>
 
@@ -465,7 +465,17 @@
         <main class="flex flex-col justify-around p-4">
 
 
-            <div class="mb-5 sm:mb-0 mt-3 grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+            <style>
+                #stat {
+                    display: grid;
+                    grid-template-columns: repeat(5, 1fr);
+                    gap: 1rem;
+                }
+
+            </style>
+
+
+            <div id="stat" class="mb-5 sm:mb-0 mt-3 grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                 <div class="flex flex-col justify-center px-4 py-4 bg-white border border-gray-300 rounded">
                     <div>
 
@@ -512,7 +522,7 @@
 
 
 
-            <div class="mb-4 sm:mb-0 mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
+            <div class="mb-4 sm:mb-0 mt-4 grid gap-4 grid-cols-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
                 <div class="bg-gray-100 py-5 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-150 hover:smooth-hover">
                     <div th:if="${#lists.isEmpty(formRequests)}" class=" text-center">
                         <p class="text-2xlg font-light">There are no recent requests.</p>
