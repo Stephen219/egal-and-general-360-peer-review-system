@@ -129,18 +129,12 @@ public class userAccountLinks {
         String username = currentPrincipalName;
         List<Form> forms = formService.getFormByUser(username);
 
-        System.out.println( graphService.getAverageAnswersForUser(username));
-
 
         List<Map<String, Object>> averages = graphService.getAverageAnswersForUser(username);
-        System.out.println(averages);
-        System.out.println(averages);
         Map<String, Float> averageMap = new HashMap<>();
         averages.forEach((map) -> {
             averageMap.put((String) map.get("formid"), (Float) map.get("average"));
         });
-        System.out.println(averageMap);
-
 
         Map<String, Long> responderCounts = new HashMap<>();
         for (Form form : forms) {
@@ -152,6 +146,7 @@ public class userAccountLinks {
         modelAndView.addObject("forms", forms);
         modelAndView.addObject("responderCounts", responderCounts);
         modelAndView.addObject("chartData", averageMap);
+        System.out.println(averageMap);
 
         return modelAndView;
 

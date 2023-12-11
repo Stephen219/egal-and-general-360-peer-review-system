@@ -24,16 +24,14 @@
             <div class="text-white round-md">
                 <div class="flex bg-gray-800">
                     <div class="flex py-3 px-2 items-center">
-
-                        <img  th:src="@{legal.png}" alt="logo" class="h-auto w-1/2 rounded-3xl ml-7">
+                        <img  th:src="@{legal_and_general.png}" alt="logo" class="h-auto w-5/6">
 
 
                     </div>
                 </div>
-                <div class="flex flex-col items-center space-y-3">
-                    <img alt="user profile picture"
-                         src="https://th.bing.com/th/id/OIP.eGHa3HgHxIlTHmcvKNDs7AHaGe?rs=1&pid=ImgDetMain"
-                         class="w-auto h-28 rounded-full mt-3" />
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-full mt-2 bg-gradient-to-br from-orange-200 to-orange-900"></div>
+
                     <span class="text-xl font-semibold capitalize">John member</span>
                 </div>
                 <div class="flex flex-col space-y-16">
@@ -194,15 +192,14 @@
             <div class="text-white round-md">
                 <div class="flex bg-gray-800">
                     <div class="flex py-3 px-2 items-center">
-                        <img th:src="@{~/legal.png}" alt="logso" class="h-auto w-1/2 rounded-3xl ml-7"/>
+                        <img  th:src="@{legal_and_general.png}" alt="logo" class="h-auto w-5/6">
 
 
                     </div>
                 </div>
-                <div class="flex flex-col items-center space-y-3">
-                    <img alt="user profile picture"
-                         src="https://th.bing.com/th/id/OIP.eGHa3HgHxIlTHmcvKNDs7AHaGe?rs=1&pid=ImgDetMain"
-                         class="w-auto h-28 rounded-full mt-3" />
+                <div class="flex flex-col items-center">
+                    <div class="w-20 h-20 rounded-full mt-2 bg-gradient-to-br from-orange-200 to-orange-900"></div>
+
                     <span class="text-xl font-semibold capitalize">John member</span>
                 </div>
                 <div class="flex flex-col space-y-16">
@@ -518,7 +515,7 @@
                     <div th:if="${#lists.isEmpty(forms)}" class=" text-center">
                         <p>There are no recent forms</p>
                     </div>
-                    <div id="chartContainer" class="bg-white p-4 rounded-md shadow flex mb-4 h-3/4">
+                    <div id="chartContainer" class="bg-white p-4 rounded-md shadow flex mb-4">
                     </div>
 
 
