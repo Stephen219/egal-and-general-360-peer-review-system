@@ -11,6 +11,8 @@
     <title>Your Graphs</title>
     <!-- Include Highcharts -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
 </head>
 
 <body>
@@ -31,16 +33,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <h5>Questions and Answers</h5>
-            <div th:each="entry : ${formTextAnswer}">
-                <h6 th:text="${entry.key}"></h6>
-                <ul>
-                    <li th:each="answer : ${entry.value}" th:text="${answer}"></li>
-                </ul>
-            </div>
-        </div>
-        <div id="piechart" class="col-md-6">
+        <div class="col-md-4" id="wordCloud" style="width: 100%; height: 400px;"></div>
+        <div class="col-md-4" id="wordCloudImpact" style="width: 100%; height: 400px;"></div>
+        <div id="piechart" class="col-md-4" style="width: 100%; height: 400px;">
             <!-- Placeholder for the fourth quadrant -->
         </div>
     </div>
@@ -180,7 +175,54 @@
         }]
     });
 </script>
+<script>
+    var wordData = [
+        { name: 'Apple', weight: 1 },
+        { name: 'Banana', weight: 2 },
+        { name: 'Orange', weight: 1 },
+        { name: 'Grapes', weight: 3 },
+        { name: 'Mango', weight: 1 }
+    ];
 
+    Highcharts.chart('wordCloud', {
+        chart: {
+            type: 'wordcloud',
+            height: '75%'
+        },
+        title: {
+            text: 'your superpowers'
+        },
+        series: [{
+            type: 'wordcloud',
+            data: wordData,
+            name: 'Words'
+        }]
+    });
+</script>
+<script>
+    var wordData = [
+        { name: 'Apple', weight: 1 },
+        { name: 'Banana', weight: 2 },
+        { name: 'Orange', weight: 1 },
+        { name: 'Grapes', weight: 3 },
+        { name: 'Mango', weight: 1 }
+    ];
+
+    Highcharts.chart('wordCloudImpact', {
+        chart: {
+            type: 'wordcloud',
+            height: '75%'
+        },
+        title: {
+            text: 'your impacts'
+        },
+        series: [{
+            type: 'wordcloud',
+            data: wordData,
+            name: 'Words'
+        }]
+    });
+</script>
 </body>
 </html>
 
