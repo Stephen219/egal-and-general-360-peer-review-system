@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add User</title>
+</head>
+<body>
+<h2>Add User</h2>
+<form action="/api/users/add" method="post" th:object="${user}">
+  <!-- Input fields for user information -->
+  <label for="email">Email:</label>
+  <input type="text" id="email" name="email" th:field="*{email}" required>
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" th:field="*{password}" required>
+
+  <button type="submit">Add User</button>
+</form>
+</body>
+</html>
