@@ -11,6 +11,20 @@
     <title>Your Graphs</title>
     <!-- Include Highcharts -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
+
+
+
+
+
+    <!-- Add these script tags at the end of your body section -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+    <!-- Add this script tag at the end of your body section -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+
+
+
 </head>
 
 <body>
@@ -39,6 +53,9 @@
                     <li th:each="answer : ${entry.value}" th:text="${answer}"></li>
                 </ul>
             </div>
+            <!-- Add this button where you want it on your page -->
+            <button onclick="exportToPDF()">Export to PDF</button>
+
         </div>
         <div id="piechart" class="col-md-6">
             <!-- Placeholder for the fourth quadrant -->
@@ -180,6 +197,82 @@
         }]
     });
 </script>
+
+
+
+
+
+
+
+<!-- Add this script after your existing scripts -->
+<script th:inline="javascript">
+    function exportToPDF() {
+        // Capture the charts as images
+        var containerElement = document.getElementById('container');
+        var chartContainerElement = document.getElementById('chartContainer');
+        var piechartElement = document.getElementById('piechart');
+
+        // Array to store promises for each chart
+        var promises = [];
+
+        if (containerElement) {
+            promises.push(html2canvas(containerElement).then(function (canvas) {
+                return { id: 'container', image: canvas.toDataURL('image/png') };
+            }));
+        }
+
+        if (chartContainerElement) {
+            promises.push(html2canvas(chartContainerElement).then(function (canvas) {
+                return { id: 'chartContainer', image: canvas.toDataURL('image/png') };
+            }));
+        }
+
+        if (piechartElement) {
+            promises.push(html2canvas(piechartElement).then(function (canvas) {
+                return { id: 'piechart', image: canvas.toDataURL('image/png') };
+            }));
+        }
+
+        // Wait for all promises to resolve
+        Promise.all(promises).then(function (chartImages) {
+            // Define your content with the captured images
+            var content = [
+                { text: 'Your Graphs', style: 'header' },
+                { image: chartImages[0].image, width: 400 }, // Adjust the width as needed
+                { image: chartImages[1].image, width: 400 }, // Adjust the width as needed
+                { image: chartImages[2].image, width: 400 },
+                { text: 'This is a sample content', style: 'body' }
+            ];
+
+            // Define styles (optional)
+            var styles = {
+                header: {
+                    fontSize: 18,
+                    bold: true,
+                    margin: [0, 0, 0, 10]
+                },
+                body: {
+                    fontSize: 12,
+                    margin: [0, 0, 0, 10]
+                }
+            };
+
+            // Create the PDF document
+            var docDefinition = {
+                content: content,
+                styles: styles
+            };
+
+            // Generate and download the PDF
+            pdfMake.createPdf(docDefinition).download('exported.pdf');
+        });
+    }
+</script>
+
+
+
+
+
 
 </body>
 </html>

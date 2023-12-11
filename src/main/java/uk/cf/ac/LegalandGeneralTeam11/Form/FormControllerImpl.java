@@ -98,7 +98,6 @@ public class FormControllerImpl {
         for (String email : uniqueEmails) {
             sendReviewInvitationEmail(email, id);
         }
-
         Form form = formService.getFormById(id);
         ModelAndView modelAndView = new ModelAndView("redirect:/review/" + id);
         modelAndView.addObject("form", form);
@@ -141,7 +140,6 @@ public class FormControllerImpl {
             ObjectMapper objectMapper = new ObjectMapper();
             List<Answer> answerList = objectMapper.readValue(responses, new TypeReference<List<Answer>>() {
             });
-
 
             List<String> reviewers = formService.getReviewersForAForm(formId);
 
