@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.context.Context;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
+import uk.cf.ac.LegalandGeneralTeam11.Graphs.GraphService;
 import uk.cf.ac.LegalandGeneralTeam11.answers.Answer;
 import uk.cf.ac.LegalandGeneralTeam11.answers.AnswerServiceInter;
 import uk.cf.ac.LegalandGeneralTeam11.domain.Domain;
@@ -41,22 +42,29 @@ public class FormControllerImpl {
     private AnswerServiceInter AnswerServiceInter;
 
     private EmailServiceImpl emailService;
-    @Autowired
-
-    public FormControllerImpl(FormServiceImpl formServiceImpl, FormRequestService formRequestService, QuestionServiceInter questionServiceInter, AnswerServiceInter answerServiceInter, EmailServiceImpl emailService) {
-
     GraphService graphservic;
     @Autowired
     DomainService domainService;
 
-    public FormControllerImpl(FormServiceImpl formServiceImpl) {
+    @Autowired
 
+    public FormControllerImpl(FormServiceImpl formServiceImpl, FormRequestService formRequestService, QuestionServiceInter questionServiceInter, AnswerServiceInter answerServiceInter, EmailServiceImpl emailService) {
         this.formService = formServiceImpl;
         this.FormRequestService = formRequestService;
         this.questionServiceInter = questionServiceInter;
         this.AnswerServiceInter = answerServiceInter;
         this.emailService = emailService;
     }
+
+
+//    public FormControllerImpl(FormServiceImpl formServiceImpl) {
+////
+////        this.formService = formServiceImpl;
+////        this.FormRequestService = formRequestService;
+////        this.questionServiceInter = questionServiceInter;
+////        this.AnswerServiceInter = answerServiceInter;
+////        this.emailService = emailService;
+////    }
 
 
     @GetMapping("/accept/{id}")
@@ -74,8 +82,7 @@ public class FormControllerImpl {
     @GetMapping("/get_reviewers/{id}")
     public ModelAndView getReviewers(@PathVariable String id) {
         Form form = formService.getFormById(id);
-<<<<<<< src/main/java/uk/cf/ac/LegalandGeneralTeam11/Form/FormControllerImpl.java
-=======
+
         List<Domain> domains = domainService.getAllDomains();
         List<String> allowedDomains = domains.stream()
                 .filter(Domain::getEnabled)
@@ -85,8 +92,6 @@ public class FormControllerImpl {
 
         System.out.println("allowed domains: " + allowedDomains);
 
-
->>>>>>> src/main/java/uk/cf/ac/LegalandGeneralTeam11/Form/FormControllerImpl.java
         ModelAndView modelAndView = new ModelAndView("forms/reviewer");
         modelAndView.addObject("form", form);
         modelAndView.addObject("allowedDomains", allowedDomains);

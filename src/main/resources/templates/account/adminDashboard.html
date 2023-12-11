@@ -472,14 +472,14 @@
         <main class="flex flex-col justify-around p-4">
 
 
-            <style>
-                #stat {
-                    display: grid;
-                    grid-template-columns: repeat(5, 1fr);
-                    gap: 1rem;
-                }
+<!--            <style>-->
+<!--                #stat {-->
+<!--                    display: grid;-->
+<!--                    grid-template-columns: repeat(5, 1fr);-->
+<!--                    gap: 1rem;-->
+<!--                }-->
 
-            </style>
+<!--            </style>-->
 
 
             <div id="stat" class="mb-5 sm:mb-0 mt-3 grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
@@ -529,7 +529,7 @@
 
 
 
-            <div class="mb-4 sm:mb-0 mt-4 grid gap-4 grid-cols-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
+            <div class="mb-4 sm:mb-0 mt-4 grid gap-4  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
                 <div class="bg-gray-100 py-5 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-150 hover:smooth-hover">
                     <div th:if="${#lists.isEmpty(formRequests)}" class=" text-center">
                         <p class="text-2xlg font-light">There are no recent requests.</p>
