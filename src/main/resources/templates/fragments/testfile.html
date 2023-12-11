@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org">
+<head>
+    <div th:fragment="meta-fragments">
+        <link rel="apple-touch-icon" sizes="180x180" th:href="@{/icons/apple-touch-icon.png}"/>
+        <link rel="icon" type="image/png" sizes="32x32" th:href="@{/icons/favicon-32x32.png}"/>
+        <link rel="icon" type="image/png" sizes="16x16" th:href="@{/icons/favicon-16x16.png}"/>
+        <link rel="manifest" th:href="@{/icons/site.webmanifest}"/>
+        <link rel="mask-icon" th:href="@{/icons/safari-pinned-tab.svg}" color="#5bbad5"/>
+        <link rel="stylesheet" th:href="@{/css/main.css}">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css"
+                  integrity="sha512-W/zrbCncQnky/EzL+/AYwTtosvrM+YG/V6piQLSe2HuKS6cmbw89kjYkp3tWFn1dkWV7L1ruvJyKbLz73Vlgfg=="
+                  crossorigin="anonymous" referrerpolicy="no-referrer"/>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/svg-with-js.min.css"
+                  integrity="sha512-4oP5WpLD1feGamTDxyKyYjJj9a15AlPfKOt78LpGmZ+XfrUcuC7hjHVTuzhJhO4pPvi3RHL6CI2Tyjdoik3AnA=="
+                  crossorigin="anonymous" referrerpolicy="no-referrer"/>
+            <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    </div>
+</head>
+<body>
+<p class="font-bold text-green-500 text-lg">hello l&g user</p>
+<div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
+    <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">Welcome to the test home page!</div>
+        <p class="text-gray-700 text-base">
+            This is a test home page.
+        </p>
+        <div class="flex items-center mt-1">
+            <a></a>
+            <button class="h-5 w-5 rounded-full bg-blue-600 border-2 border-blue-200 mr-2 focus:outline-none"></button>
+            <button class="h-5 w-5 rounded-full bg-teal-600 mr-2 focus:outline-none"></button>
+            <button class="h-5 w-5 rounded-full bg-pink-600 mr-2 focus:outline-none"></button>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

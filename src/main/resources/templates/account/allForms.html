@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <div th:replace="~{fragments/testfile :: meta-fragments}"></div>
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{css/main.css}"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -48,7 +49,7 @@
             <p>There are no recent forms</p>
         </div>
         <div th:each="request, iStat : ${forms}" class="bg-white p-4 rounded shadow flex flex-col mb-4">
-            <a th:href="@{'/get_reviewers/' + ${request.id}}">
+            <a th:href="@{'/admin/results/' + ${request.id}}">
                 <div class="bg-white p-4 rounded shadow flex flex-row justify-between items-start">
 
                     <div class="flex flex-col">
@@ -88,9 +89,9 @@
         const newSort = event.target.value;
         console.log("New Sorting Parameter: " + newSort);
         if (!newSort) {
-            window.location.href = "/all_forms";
+            window.location.href = "/admin/all_forms";
         } else {
-            window.location.href = "/all_forms?sortBy=" + newSort;
+            window.location.href = "/admin/all_forms?sortBy=" + newSort;
         }
     }
 </script>

@@ -52,4 +52,7 @@ public interface FormRequestService {
 
     public List<FormRequest> getAllByStatus(String status);
 
+
+    public void rejectFormRequest(FormRequest formRequest);
+
 }

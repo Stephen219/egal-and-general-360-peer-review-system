@@ -24,4 +24,26 @@ public class GraphServiceImpl implements GraphService{
     public Map<String, List<String>> getFormTextAnswer(String formid){
         return graphRepo.getFormTextAnswer(formid);
     }
+
+    /**
+     * This method returns the data for the chart which has the average score for each category grouped by the relationship
+     *   for now , it does not include self
+     * @param formId
+     * @return
+     */
+
+
+    public List<Map<String, Object>> getChartData(String formId){
+        return graphRepo.getChartData(formId);
+    }
+
+    public List<Map<String, Object>> getAverageAnswersForUser(String username){
+        return graphRepo.getAverageAnswersForUser(username);
+    }
+
+
+    public List<Map<String, Object>> getRelationshipCounts(){
+        return graphRepo.getRelationshipCounts();
+    }
+
 }

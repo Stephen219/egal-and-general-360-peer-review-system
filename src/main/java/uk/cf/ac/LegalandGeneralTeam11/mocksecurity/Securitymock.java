@@ -32,7 +32,11 @@ public class Securitymock {
             "/css/**",
             "static/**",
             "legal.png",
-            "/review/**"
+            "legal_and_general.png",
+            "/review/**",
+            "favicon-32x32.png",
+            "/icons/**",
+            "/home"
     };
 
     @Autowired
@@ -44,9 +48,6 @@ public class Securitymock {
 
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-
-
-
                         .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
                         .requestMatchers("css/**").permitAll()
                         .requestMatchers("/form/**").hasAnyRole("USER", "ADMIN")

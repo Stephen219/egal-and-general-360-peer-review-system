@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <link rel="stylesheet" th:href="@{css/main.css}"/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Your Graphs</title>
+    <!-- Include Highcharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h1 class="">Your Graphs</h1>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="container" style="width: 100%; height: 400px;"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="chartContainer" style="width: 100%; height: 400px;"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Questions and Answers</h5>
+            <div th:each="entry : ${formTextAnswer}">
+                <h6 th:text="${entry.key}"></h6>
+                <ul>
+                    <li th:each="answer : ${entry.value}" th:text="${answer}"></li>
+                </ul>
+            </div>
+        </div>
+        <div id="piechart" class="col-md-6">
+            <!-- Placeholder for the fourth quadrant -->
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
+<script th:inline="javascript">
+    var data = /*[[${categoryAverages}]]*/; 'default_value_if_empty';
+    var colors = ['#0076D6', '#028844', '#FFD500', '#E22922', '#0076D6', '#028844'];
+
+    // Create the chart if data is available
+    if (data !== 'default_value_if_empty') {
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Average Score per Category'
+            },
+            xAxis: {
+                categories: data.map(item => item.category),
+                title: {
+                    text: 'Categories'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Average Score'
+                }
+            },
+            series: [{
+                name: 'Average',
+                data: data.map(item => ({
+                    y: item.average
+                }))
+            }],
+            tooltip: {
+                formatter: function() {
+                    const point = this.point;
+                    const keyword = data[point.index].keyword;
+                    return `Term: ${point.category}<br>Average: ${point.y}<br>Keyword: ${keyword}`;
+                }
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0,
+                    colorByPoint: true,
+                    colors: colors
+                }
+            }
+        });
+    }
+
+
+
+
+
+
+</script>
+
+
+
+
+<script th:inline="javascript">
+    // Retrieve the data from the model
+    var dataList = /*[[${chartData}]]*/ [];
+    var colors = ['#0076D6', '#028844', '#FFD500', '#E22922', '#0076D6', '#028844'];
+    // Prepare the series data
+    var seriesData = [];
+    var categories = [];
+
+    dataList.forEach(function(item) {
+        if (!categories.includes(item.category)) {
+            categories.push(item.category);
+        }
+
+        var seriesIndex = seriesData.findIndex(function(seriesItem) {
+            return seriesItem.name === item.relationship;
+        });
+
+        if (seriesIndex === -1) {
+            seriesData.push({
+                name: item.relationship,
+                data: [item.average],
+                color: colors[seriesData.length % colors.length]
+            });
+        } else {
+            seriesData[seriesIndex].data.push(item.average);
+        }
+    });
+
+    // Create the chart
+    Highcharts.chart('chartContainer', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Averages by Category and Relationship'
+        },
+        xAxis: {
+            categories: categories
+        },
+        yAxis: {
+            title: {
+                text: 'Average'
+            }
+        },
+        series: seriesData
+    });
+</script>
+
+
+
+<script th:inline="javascript">
+
+    var relationshipCounts = /*[[${relationshipCounts}]]*/ [];
+
+    var seriesData = relationshipCounts.map(function(item) {
+        return { name: item.relationship, y: item.count };
+    });
+
+    var colors = ['#0076D6', '#028844', '#FFD500', '#E22922', '#0076D6', '#028844'];
+
+    Highcharts.chart('piechart', {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'Ratio of reviewers'
+        },
+        colors: colors,
+        series: [{
+            name: 'Relationship',
+            data: seriesData
+        }]
+    });
+</script>
+
+</body>
+</html>
+

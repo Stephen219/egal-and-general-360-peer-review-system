@@ -14,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.context.Context;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
-import uk.cf.ac.LegalandGeneralTeam11.Graphs.GraphService;
 import uk.cf.ac.LegalandGeneralTeam11.answers.Answer;
 import uk.cf.ac.LegalandGeneralTeam11.answers.AnswerServiceInter;
 import uk.cf.ac.LegalandGeneralTeam11.domain.Domain;
@@ -25,30 +24,38 @@ import uk.cf.ac.LegalandGeneralTeam11.questions.QuestionServiceInter;
 
 import java.time.LocalDate;
 import java.util.List;
+
 import java.util.Map;
 import java.util.stream.Collectors;
+
 
 @Controller
 
 public class FormControllerImpl {
-    @Autowired
     private FormService formService;
-    @Autowired
-    private FormRequestService FormRequestService;
-    @Autowired
-    private QuestionServiceInter questionServiceInter;
-    @Autowired
-    private AnswerServiceInter AnswerServiceInter;
-    @Autowired
-    private EmailServiceImpl emailService;
 
+    private FormRequestService FormRequestService;
+
+    private QuestionServiceInter questionServiceInter;
+
+    private AnswerServiceInter AnswerServiceInter;
+
+    private EmailServiceImpl emailService;
     @Autowired
+
+    public FormControllerImpl(FormServiceImpl formServiceImpl, FormRequestService formRequestService, QuestionServiceInter questionServiceInter, AnswerServiceInter answerServiceInter, EmailServiceImpl emailService) {
+
     GraphService graphservic;
     @Autowired
     DomainService domainService;
 
     public FormControllerImpl(FormServiceImpl formServiceImpl) {
+
         this.formService = formServiceImpl;
+        this.FormRequestService = formRequestService;
+        this.questionServiceInter = questionServiceInter;
+        this.AnswerServiceInter = answerServiceInter;
+        this.emailService = emailService;
     }
 
 
@@ -63,9 +70,12 @@ public class FormControllerImpl {
         return "redirect:/admin";
     }
 
+
     @GetMapping("/get_reviewers/{id}")
     public ModelAndView getReviewers(@PathVariable String id) {
         Form form = formService.getFormById(id);
+<<<<<<< src/main/java/uk/cf/ac/LegalandGeneralTeam11/Form/FormControllerImpl.java
+=======
         List<Domain> domains = domainService.getAllDomains();
         List<String> allowedDomains = domains.stream()
                 .filter(Domain::getEnabled)
@@ -76,6 +86,7 @@ public class FormControllerImpl {
         System.out.println("allowed domains: " + allowedDomains);
 
 
+>>>>>>> src/main/java/uk/cf/ac/LegalandGeneralTeam11/Form/FormControllerImpl.java
         ModelAndView modelAndView = new ModelAndView("forms/reviewer");
         modelAndView.addObject("form", form);
         modelAndView.addObject("allowedDomains", allowedDomains);
@@ -86,13 +97,12 @@ public class FormControllerImpl {
     public ModelAndView submitReviewers(@RequestParam List<String> uniqueEmails, @PathVariable String id) {
         System.out.println("Submitted Emails: " + uniqueEmails);
         formService.addFormReviewers(id, uniqueEmails);
-        // TODO: Send email to reviewers   done though slow
+        // TODO: enable the user to see his own results easily, their email also needs to be added to the list of reviewers
+
         for (String email : uniqueEmails) {
             sendReviewInvitationEmail(email, id);
         }
 
-
-        System.out.println("reviewrs addd");
         Form form = formService.getFormById(id);
         ModelAndView modelAndView = new ModelAndView("redirect:/review/" + id);
         modelAndView.addObject("form", form);

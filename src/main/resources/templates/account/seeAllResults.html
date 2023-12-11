@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <div th:replace="~{fragments/testfile :: meta-fragments}"></div>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{css/main.css}"/>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/templates/favicon-32x32.png}" />
+
+    <title>Form results</title>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css"
+          integrity="sha512-W/zrbCncQnky/EzL+/AYwTtosvrM+YG/V6piQLSe2HuKS6cmbw89kjYkp3tWFn1dkWV7L1ruvJyKbLz73Vlgfg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/svg-with-js.min.css"
+          integrity="sha512-4oP5WpLD1feGamTDxyKyYjJj9a15AlPfKOt78LpGmZ+XfrUcuC7hjHVTuzhJhO4pPvi3RHL6CI2Tyjdoik3AnA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Data Display</title>
+    <!-- Include Highcharts -->
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h1 class="">Data Display for [todo]</h1>
+        </div>
+    </div>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Left Section for Collapse Buttons -->
+        <div class="col-md-3 mt-10">
+            <button class="btn btn-primary mt-3" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
+                Responder 1
+            </button>
+            <!-- Add more collapse buttons here -->
+
+            <!-- Collapsible Content -->
+            <div class="collapse mt-3" id="collapseExample1">
+                <div class="card card-body">
+                    responder answers go here
+                </div>
+            </div>
+            <!-- Add more collapsible content here -->
+        </div>
+
+        <!-- Section in the middle -->
+        <div class="col-md-6 mt-10">
+            <div id="container" style="height: 400px; border: 1px solid #ccc;"></div>
+        </div>
+
+        <!-- Right Section for Questions and Answers -->
+        <div class="col-md-3 mt-10">
+            <div class="row">
+                <div class="col-md-12" style="height: 200px;">
+                    <h5>Questions and Answers</h5>
+                    <div th:each="entry : ${TextAnswer}">
+                        <h6 th:text="${entry.key}"></h6>
+                        <ul>
+                            <li th:each="answer : ${entry.value}" th:text="${answer}"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+
+
+
+<script th:inline="javascript">
+
+    var data = /*[[${NumberAnswer}]]*/; 'default_value_if_empty';
+    var colors = ['#0076D6', '#028844', '#FFD500', '#E22922', '#0076D6', '#028844'];
+
+    // Create the chart if data is available
+    if (data !== 'default_value_if_empty') {
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'average score per category'
+        },
+        xAxis: {
+            categories: data.map(item => item.category),
+            title: {
+                text: 'Categories'
+            }
+        },
+        yAxis: {
+            title: {
+                text: ' Average score'
+            }
+        },
+        series: [{
+            name: 'Average',
+            data: data.map(item => item.average)
+        }],
+        plotOptions: {
+            column: {
+                colorByPoint: true,
+                colors: colors
+            }
+        },
+        tooltip: {
+            formatter: function() {
+                const point = this.point;
+                const keyword = data[point.index].keyword;
+                return `Term: ${point.category}<br>Average: ${point.y}<br>Keyword: ${keyword}`;
+            }
+        }
+    });
+}
+</script>
+
+<script th:inline="javascript">
+    // Access the relationshipCounts model attribute
+    var relationshipCounts = /*[[${relationshipCounts}]]*/ [];
+
+    // Convert the data to the format expected by Highcharts
+    var seriesData = relationshipCounts.map(function(item) {
+        return { name: item.relationship, y: item.count };
+    });
+
+    // Define the colors
+    var colors = ['#0076D6', '#028844', '#FFD500', '#E22922', '#0076D6', '#028844'];
+
+    // Create the chart
+    Highcharts.chart('container', {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'Relationships'
+        },
+        colors: colors, // Set the colors
+        series: [{
+            name: 'Relationship',
+            data: seriesData
+        }]
+    });
+</script>
+
+
+</html>

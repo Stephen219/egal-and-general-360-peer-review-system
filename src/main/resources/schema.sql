@@ -93,7 +93,10 @@ CREATE TABLE if not exists 360forms
 ) engine = InnoDB;
 
 INSERT into 360forms (Id, username) VALUES ('form1', 'user');
-INSERT into 360forms (Id, username) VALUES ('form2', 'tom');
+INSERT into 360forms (Id, username) VALUES ('form789', 'user');
+INSERT into 360forms (Id, username) VALUES ('form567', 'user');
+INSERT into 360forms (Id, username) VALUES ('formt67', 'user');
+INSERT into 360forms (Id, username) VALUES ('form244', 'tom');
 INSERT into 360forms (Id, username, created_at) VALUES ('form3', 'jerry', '2020-10-10 10:10:10');
 INSERT into 360forms (Id, username, created_at) VALUES ('form456789', 'kendi', '2021-10-10 10:10:10');
 
@@ -127,6 +130,19 @@ CREATE TABLE if not exists domains
     domain_name VARCHAR(255) NOT NULL,
     enabled BOOLEAN NOT NULL DEFAULT TRUE,
     PRIMARY KEY (Id)) engine = InnoDB;
+
+
+ -- creating table domains
+ CREATE TABLE if not exists domains
+(
+    Id INT NOT NULL AUTO_INCREMENT,
+    domain VARCHAR(255) NOT NULL,
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    PRIMARY KEY (Id)) engine = InnoDB;
+
+
+
+
 
 
 

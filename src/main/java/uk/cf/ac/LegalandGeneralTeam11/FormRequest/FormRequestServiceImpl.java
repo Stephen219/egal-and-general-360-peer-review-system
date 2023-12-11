@@ -13,6 +13,7 @@ public class FormRequestServiceImpl implements FormRequestService{
      * Constructor for FormRequestServiceImpl
      * @param aFormRequestRepository
      */
+    @Autowired
 
     public FormRequestServiceImpl(FormRequestRepository aFormRequestRepository) {
             this.formRequestRepository = aFormRequestRepository;
@@ -78,6 +79,10 @@ public class FormRequestServiceImpl implements FormRequestService{
     @Override
     public List<FormRequest> getAllByStatus( String status){
         return formRequestRepository.getAllByStatus(status);
+    }
+
+    public void rejectFormRequest(FormRequest formRequest){
+        formRequestRepository.rejectFormRequest(formRequest);
     }
 
 
