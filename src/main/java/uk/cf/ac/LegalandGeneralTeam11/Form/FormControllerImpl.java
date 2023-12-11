@@ -16,12 +16,18 @@ import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
 import uk.cf.ac.LegalandGeneralTeam11.answers.Answer;
 import uk.cf.ac.LegalandGeneralTeam11.answers.AnswerServiceInter;
+import uk.cf.ac.LegalandGeneralTeam11.domain.Domain;
+import uk.cf.ac.LegalandGeneralTeam11.domain.DomainService;
 import uk.cf.ac.LegalandGeneralTeam11.emails.EmailServiceImpl;
 import uk.cf.ac.LegalandGeneralTeam11.questions.Question;
 import uk.cf.ac.LegalandGeneralTeam11.questions.QuestionServiceInter;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import java.util.Map;
+import java.util.stream.Collectors;
+
 
 @Controller
 
@@ -36,7 +42,15 @@ public class FormControllerImpl {
 
     private EmailServiceImpl emailService;
     @Autowired
+
     public FormControllerImpl(FormServiceImpl formServiceImpl, FormRequestService formRequestService, QuestionServiceInter questionServiceInter, AnswerServiceInter answerServiceInter, EmailServiceImpl emailService) {
+
+    GraphService graphservic;
+    @Autowired
+    DomainService domainService;
+
+    public FormControllerImpl(FormServiceImpl formServiceImpl) {
+
         this.formService = formServiceImpl;
         this.FormRequestService = formRequestService;
         this.questionServiceInter = questionServiceInter;
@@ -60,8 +74,22 @@ public class FormControllerImpl {
     @GetMapping("/get_reviewers/{id}")
     public ModelAndView getReviewers(@PathVariable String id) {
         Form form = formService.getFormById(id);
+<<<<<<< src/main/java/uk/cf/ac/LegalandGeneralTeam11/Form/FormControllerImpl.java
+=======
+        List<Domain> domains = domainService.getAllDomains();
+        List<String> allowedDomains = domains.stream()
+                .filter(Domain::getEnabled)
+                .map(Domain::getDomain)
+                .collect(Collectors.toList());
+
+
+        System.out.println("allowed domains: " + allowedDomains);
+
+
+>>>>>>> src/main/java/uk/cf/ac/LegalandGeneralTeam11/Form/FormControllerImpl.java
         ModelAndView modelAndView = new ModelAndView("forms/reviewer");
         modelAndView.addObject("form", form);
+        modelAndView.addObject("allowedDomains", allowedDomains);
         return modelAndView;
     }
 

@@ -87,7 +87,7 @@
                         </li>
                         <li class="relative px-2 py-1 ">
                             <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
-                               href="#">
+                               th:href="@{/domain}">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="26px"
                                      height="24px" fill="#f2eded" mirror-in-rtl="true">
 
@@ -105,7 +105,7 @@
                                 </svg>
 
 
-                                <span class="ml-4 uppercase">export Results</span>
+                                <span class="ml-4 uppercase">Domain Editor</span>
                             </a>
                         </li>
 
@@ -296,7 +296,7 @@
                         </li>
                         <li class="relative px-2 py-1 ">
                             <a class="inline-flex items-center w-full text-sm font-semibold text-white transition-colors duration-150 cursor-pointer hover:text-green-500"
-                               href=" #">
+                               th:href="@{/domain}">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="26px"
                                      height="24px" fill="#f2eded" mirror-in-rtl="true">
 
@@ -314,7 +314,7 @@
                                 </svg>
 
 
-                                <span class="ml-4 uppercase">export Results</span>
+                                <span class="ml-4 uppercase">Domain Editor</span>
                             </a>
                         </li>
 
@@ -472,7 +472,17 @@
         <main class="flex flex-col justify-around p-4">
 
 
-            <div class="mb-5 sm:mb-0 mt-3 grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+            <style>
+                #stat {
+                    display: grid;
+                    grid-template-columns: repeat(5, 1fr);
+                    gap: 1rem;
+                }
+
+            </style>
+
+
+            <div id="stat" class="mb-5 sm:mb-0 mt-3 grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                 <div class="flex flex-col justify-center px-4 py-4 bg-white border border-gray-300 rounded">
                     <div>
 
@@ -519,7 +529,7 @@
 
 
 
-            <div class="mb-4 sm:mb-0 mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
+            <div class="mb-4 sm:mb-0 mt-4 grid gap-4 grid-cols-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
                 <div class="bg-gray-100 py-5 px-4 flex flex-col space-y-2 items-center cursor-pointer rounded-md hover:bg-gray-150 hover:smooth-hover">
                     <div th:if="${#lists.isEmpty(formRequests)}" class=" text-center">
                         <p class="text-2xlg font-light">There are no recent requests.</p>
