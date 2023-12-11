@@ -15,9 +15,6 @@
     <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
 
 
-
-
-
     <!-- Add these script tags at the end of your body section -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
@@ -25,17 +22,13 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 
-
-
 </head>
 
 <body>
-<button onclick="exportToPDF()">Export to PDF</button>
 <div class="container">
+    <button onclick="exportToPDF()">Export to PDF</button>
     <div class="row">
-        <div class="col text-center">
-            <h1 class="">Your Graphs</h1>
-        </div>
+        <div class="col text-center"><h1 class="">Your Graphs</h1></div>
     </div>
 </div>
 <div class="container-fluid">
@@ -48,18 +41,23 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4" id="wordCloud" style="width: 100%; height: 400px;"></div>
-        <div class="col-md-4" id="wordCloudImpact" style="width: 100%; height: 400px;"></div>
-        <div id="piechart" class="col-md-4" style="width: 100%; height: 400px;">
-            <!-- Placeholder for the fourth quadrant -->
+        <div id="formTextAnswer" class="col-md-6"><h5>Questions and Answers</h5>
+            <div th:each="entry : ${formTextAnswer}"><h6 th:text="${entry.key}"></h6>
+                <ul class="text-center">
+                    <li th:each="answer : ${entry.value}" th:text="${answer}"></li>
+                </ul>
+            </div>
         </div>
+        <div id="piechart" class="col-md-6">            <!-- Placeholder for the fourth quadrant -->        </div>
     </div>
 </div>
 </body>
 
+
 </html>
 <script th:inline="javascript">
-    var data = /*[[${categoryAverages}]]*/; 'default_value_if_empty';
+    var data = /*[[${categoryAverages}]]*/;
+    'default_value_if_empty';
     var colors = ['#0076D6', '#028844', '#FFD500', '#E22922', '#0076D6', '#028844'];
 
     // Create the chart if data is available
@@ -89,7 +87,7 @@
                 }))
             }],
             tooltip: {
-                formatter: function() {
+                formatter: function () {
                     const point = this.point;
                     const keyword = data[point.index].keyword;
                     return `Term: ${point.category}<br>Average: ${point.y}<br>Keyword: ${keyword}`;
@@ -107,13 +105,7 @@
     }
 
 
-
-
-
-
 </script>
-
-
 
 
 <script th:inline="javascript">
@@ -124,12 +116,12 @@
     var seriesData = [];
     var categories = [];
 
-    dataList.forEach(function(item) {
+    dataList.forEach(function (item) {
         if (!categories.includes(item.category)) {
             categories.push(item.category);
         }
 
-        var seriesIndex = seriesData.findIndex(function(seriesItem) {
+        var seriesIndex = seriesData.findIndex(function (seriesItem) {
             return seriesItem.name === item.relationship;
         });
 
@@ -165,13 +157,12 @@
 </script>
 
 
-
 <script th:inline="javascript">
 
     var relationshipCounts = /*[[${relationshipCounts}]]*/ [];
 
-    var seriesData = relationshipCounts.map(function(item) {
-        return { name: item.relationship, y: item.count };
+    var seriesData = relationshipCounts.map(function (item) {
+        return {name: item.relationship, y: item.count};
     });
 
     var colors = ['#0076D6', '#028844', '#FFD500', '#E22922', '#0076D6', '#028844'];
@@ -190,70 +181,15 @@
         }]
     });
 </script>
-<script>
-    var wordData = [
-        { name: 'Apple', weight: 1 },
-        { name: 'Banana', weight: 2 },
-        { name: 'Orange', weight: 1 },
-        { name: 'Grapes', weight: 3 },
-        { name: 'Mango', weight: 1 }
-    ];
 
-    Highcharts.chart('wordCloud', {
-        chart: {
-            type: 'wordcloud',
-            height: '75%'
-        },
-        title: {
-            text: 'your superpowers'
-        },
-        series: [{
-            type: 'wordcloud',
-            data: wordData,
-            name: 'Words'
-        }]
-    });
-</script>
-<script>
-    var wordData = [
-        { name: 'Apple', weight: 1 },
-        { name: 'Banana', weight: 2 },
-        { name: 'Orange', weight: 1 },
-        { name: 'Grapes', weight: 3 },
-        { name: 'Mango', weight: 1 }
-    ];
-
-    Highcharts.chart('wordCloudImpact', {
-        chart: {
-            type: 'wordcloud',
-            height: '75%'
-        },
-        title: {
-            text: 'your impacts'
-        },
-        series: [{
-            type: 'wordcloud',
-            data: wordData,
-            name: 'Words'
-        }]
-    });
-</script>
-
-
-
-
-
-
-
-<!-- Add this script after your existing scripts -->
 <script th:inline="javascript">
     function exportToPDF() {
         // Capture the charts as images
         var containerElement = document.getElementById('container');
         var chartContainerElement = document.getElementById('chartContainer');
         var piechartElement = document.getElementById('piechart');
+        var formTextAnswerElement = document.getElementById('formTextAnswer');
 
-        // Array to store promises for each chart
         var promises = [];
 
         if (containerElement) {
@@ -274,18 +210,24 @@
             }));
         }
 
-        // Wait for all promises to resolve
-        Promise.all(promises).then(function (chartImages) {
-            // Define your content with the captured images
+        var formTextAnswerText = formTextAnswerElement ? formTextAnswerElement.textContent || formTextAnswerElement.innerText : '';
+
+
+        promises.push(Promise.resolve({ id: 'formTextAnswer', text: formTextAnswerText }));
+
+
+        Promise.all(promises).then(function (contents) {
+            /
             var content = [
                 { text: 'Your Graphs', style: 'header' },
-                { image: chartImages[0].image, width: 400 }, // Adjust the width as needed
-                { image: chartImages[1].image, width: 400 }, // Adjust the width as needed
-                { image: chartImages[2].image, width: 400 },
+                { image: contents[0].image, width: 400 },
+                { image: contents[1].image, width: 400 },
+                { image: contents[2].image, width: 400 },
+                { text: contents[3].text, style: 'body' },
                 { text: 'This is a sample content', style: 'body' }
             ];
 
-            // Define styles (optional)
+
             var styles = {
                 header: {
                     fontSize: 18,
@@ -295,10 +237,20 @@
                 body: {
                     fontSize: 12,
                     margin: [0, 0, 0, 10]
+                },
+                question: {
+                    fontSize: 14,
+                    bold: true,
+                    alignment: 'center',
+                    margin: [0, 10, 0, 5],
+                },
+                answer: {
+                    fontSize: 12,
+                    margin: [0, 0, 0, 10],
                 }
             };
 
-            // Create the PDF document
+
             var docDefinition = {
                 content: content,
                 styles: styles
@@ -308,11 +260,8 @@
             pdfMake.createPdf(docDefinition).download('exported.pdf');
         });
     }
+
 </script>
-
-
-
-
 
 
 </body>
