@@ -57,15 +57,6 @@ public class FormControllerImpl {
     }
 
 
-//    public FormControllerImpl(FormServiceImpl formServiceImpl) {
-////
-////        this.formService = formServiceImpl;
-////        this.FormRequestService = formRequestService;
-////        this.questionServiceInter = questionServiceInter;
-////        this.AnswerServiceInter = answerServiceInter;
-////        this.emailService = emailService;
-////    }
-
 
     @GetMapping("/accept/{id}")
     public String acceptForm(@PathVariable Long id) {
