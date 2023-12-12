@@ -137,6 +137,12 @@ public class FormControllerImpl {
                                @RequestParam(value = "Who", required = false) String Relationship,
                                RedirectAttributes redirectAttributes) {
         try {
+            if (formService.checkFormCompleted(formId)) {
+                formService.updateFormStatus(formId, "Completed");
+                redirectAttributes.addFlashAttribute("flashError", "This form is no longer receiving responses");
+                return "redirect:/review/" + formId;
+            }
+
             ObjectMapper objectMapper = new ObjectMapper();
             List<Answer> answerList = objectMapper.readValue(responses, new TypeReference<List<Answer>>() {
             });
@@ -168,7 +174,6 @@ public class FormControllerImpl {
                     return "redirect:/review/" + formId;
                 }
                 answerList.forEach(answer -> answer.setUsername(username));
-
             }
             answerList.forEach(answer -> answer.setFormId(formId));
             AnswerServiceInter.processAndSaveAnswers(answerList);
@@ -185,24 +190,10 @@ public class FormControllerImpl {
         }
         return "redirect:/account";
     }
-
-
     Boolean isOwner(Form form) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         return form.getUsername().equals(username);
     }
-
-
-    public Boolean checkCanFillForm(String formId, String email, List<String> reviewers) {
-
-        if (reviewers.contains(email) && formService.getIfHasFilledForm(formId, email)) {
-            return true;
-        }
-        return false;
-    }
-
-
-
 
 }

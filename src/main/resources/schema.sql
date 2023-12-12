@@ -88,11 +88,13 @@ CREATE TABLE if not exists 360forms
     Id VARCHAR(45) NOT NULL,
     username VARCHAR(45) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
     progress_status enum('in progress','completed') not NULL default 'in progress',
+    completed_at TIMESTAMP,
     PRIMARY KEY (Id)
 ) engine = InnoDB;
 
-INSERT into 360forms (Id, username) VALUES ('form1', 'user');
+INSERT into 360forms (Id, username,progress_status) VALUES ('form1', 'user', 'completed');
 INSERT into 360forms (Id, username) VALUES ('form789', 'user');
 INSERT into 360forms (Id, username) VALUES ('form567', 'user');
 INSERT into 360forms (Id, username) VALUES ('formt67', 'user');
@@ -139,6 +141,26 @@ CREATE TABLE if not exists domains
     domain VARCHAR(255) NOT NULL,
     enabled BOOLEAN NOT NULL DEFAULT TRUE,
     PRIMARY KEY (Id)) engine = InnoDB;
+
+
+
+
+
+
+
+DELIMITER //
+
+CREATE EVENT IF NOT EXISTS update_form_status_event
+    ON SCHEDULE EVERY 1 DAY
+    DO
+    BEGIN
+        UPDATE 360forms
+        SET progress_status = 'completed', completed_at = CURRENT_TIMESTAMP
+        WHERE progress_status = 'in progress'
+          AND created_at <= NOW() - INTERVAL 2 WEEK;
+    END //
+
+DELIMITER ;
 
 
 

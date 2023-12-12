@@ -100,4 +100,13 @@ public List<Form> getFormByUser(String username) {
     }
 
 
+    public Boolean checkFormCompleted(String formId){
+        return formRepository.checkFormCompleted(formId) || formRepository.checkFormCompletedByStatus(formId);
+    }
+
+    public void updateFormStatus(String formId, String status) {
+        formRepository.updateFormStatus(formId, status);
+    }
+
+
 }

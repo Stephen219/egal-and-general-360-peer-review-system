@@ -31,6 +31,9 @@ public interface FormService {
     public Long getTheNumberOfResponsesForAform(String formId);
 
     public List<Form> getFormsAssignedToUser(String email);
+    public Boolean checkFormCompleted(String formId);
+
+    public void updateFormStatus(String formId, String status);
 
 
 

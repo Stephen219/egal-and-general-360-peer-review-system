@@ -180,60 +180,11 @@ public class AnswerRepo {
 
             return resultMap;
         } catch (Exception e) {
-            // Handle any errors here
+
             e.printStackTrace();
-            return new HashMap<>(); // Return an empty map or handle the error accordingly
+            return new HashMap<>();
         }
     }
-//public Map<String, List<String>> getQuestionAnswersUser(String responder, String formId) {
-//    String sql = "SELECT " +
-//            "  CASE " +
-//            "    WHEN q.category = 'textarea' THEN 'open ended ' " +
-//            "    ELSE q.category " +
-//            "  END AS category, " +
-//            "  q.question, " +
-//            "  CASE " +
-//            "    WHEN a.answer = 1 THEN 'Never' " +
-//            "    WHEN a.answer = 2 THEN 'Rarely' " +
-//            "    WHEN a.answer = 3 THEN 'Sometimes' " +
-//            "    WHEN a.answer = 4 THEN 'Often' " +
-//            "    WHEN a.answer = 5 THEN 'Always' " +
-//            "    ELSE NULL " +
-//            "  END AS descriptive_answer " +
-//            "FROM " +
-//            "  questions q " +
-//            "JOIN " +
-//            "  answers a ON q.Id = a.question_id " +
-//            "WHERE " +
-//            "  a.responder = ? AND a.form_id = ? " +
-//            "GROUP BY q.category, q.question";
-//
-//    try {
-//        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, responder, formId);
-//
-//        Map<String, List<String>> result = new HashMap<>();
-//
-//        for (Map<String, Object> row : rows) {
-//            String category = (String) row.get("category");
-//            String question = (String) row.get("question");
-//            String descriptiveAnswer = (String) row.get("descriptive_answer");
-//
-//            // Check if the category is already in the result map
-//            if (!result.containsKey(category)) {
-//                result.put(category, new ArrayList<>());
-//            }
-//
-//            // Add the descriptive answer to the list under the category
-//            result.get(category).add(question + ": " + descriptiveAnswer);
-//        }
-//
-//        return result;
-//    } catch (Exception e) {
-//        // Handle any errors here
-//        e.printStackTrace();
-//        return new HashMap<>(); // Return an empty map or handle the error accordingly
-//    }
-//}
 
 
 
