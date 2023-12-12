@@ -112,4 +112,13 @@ public class UserRepo implements  UserRepositoryInter{
         int count = jdbc.queryForObject(sql, Integer.class, email);
         return count > 0;
     }
+
+
+    public User getUserByUserName(String username) {
+        String sql = "select * from users where username = ?";
+        return jdbc.queryForObject(sql, userMapper, username);
+    }
+
+
+
 }

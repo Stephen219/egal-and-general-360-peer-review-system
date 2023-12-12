@@ -8,7 +8,7 @@ values (2, 'ROLE_USER');
 insert into users (username, email, password, enabled ,role_id)
 values ('admin','hjbhbhdbdhcbdhcf@dcbdcbjdc', '$2a$12$zKMHlbOC7UXOLCdq5ZibC.ANCzcxgpoGbode97Dc2Fi1zakG2fP6O', true,1);
 insert into users (username,email, password, enabled, role_id)
-values ('user','test@gmail', '$2a$12$J1s9zHrJiu9VKV8J7FFXJ.U0ArVGE.9h3R94.a0OGx7a7ast0bcYi', true, 1);
+values ('user','test@gmail', '$2a$12$J1s9zHrJiu9VKV8J7FFXJ.U0ArVGE.9h3R94.a0OGx7a7ast0bcYi', true, 2);
 
 -- role inserts
 
@@ -73,3 +73,4 @@ insert into reviewers (form_id, email) VALUES ('form1', 'abushvin@gmail.com');
 insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfjiksasfdjfdjdfjjkd@gmailcom');
 insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfsakuasukjfdjfdjdfjjkd@gmailcom');
 insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfsxuiuisxjfdjfdjdfjjkd@gmailcom');
+insert into reviewers (form_id, email) VALUES ('form1', 'pass@gmail.com');

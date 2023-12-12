@@ -36,4 +36,8 @@ public class UserServiceImpl implements UserService {
     public boolean checkUserExists(String email) {
         return usersRepository.checkUserExists(email);
     }
+
+    public User getUserByUserName(String username) {
+        return usersRepository.getUserByUserName(username);
+    }
 }

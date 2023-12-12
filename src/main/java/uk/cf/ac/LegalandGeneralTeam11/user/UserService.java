@@ -12,4 +12,6 @@ public interface UserService {
     void encodePassword(User user);
 
     boolean checkUserExists(String email);
+
+    User getUserByUserName(String username);
 }

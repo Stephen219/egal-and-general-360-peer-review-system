@@ -3,6 +3,7 @@ package uk.cf.ac.LegalandGeneralTeam11.account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,8 @@ import uk.cf.ac.LegalandGeneralTeam11.Form.Form;
 import uk.cf.ac.LegalandGeneralTeam11.Form.FormServiceImpl;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
+import uk.cf.ac.LegalandGeneralTeam11.user.User;
+import uk.cf.ac.LegalandGeneralTeam11.user.UserService;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -33,37 +36,49 @@ public class accountController {
 
     FormServiceImpl formservice;
 
+    UserService userservice;
+
     @Autowired
-    public accountController(FormRequestService formRequestService, FormServiceImpl formservice) {
+    public accountController(FormRequestService formRequestService, FormServiceImpl formservice, UserService userservice){
         this.formservice = formservice;
         this.formRequestService = formRequestService;
+        this.userservice = userservice;
     }
 
 
     @GetMapping("/account")
     public ModelAndView getAccount() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        System.out.println(currentPrincipalName);
-        String username = currentPrincipalName;
+        String username = authentication.getName();
+        String useremail = userservice.getUserByUserName(username).getEmail();
+        System.out.println(useremail);
+
+        List<Form> assignedForms = formservice.getFormsAssignedToUser(useremail);
+
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        List<String> adjustedDates = assignedForms.stream()
+                .map(form -> {
+                    LocalDateTime localDateTime = form.getFormDate().atStartOfDay();
+                    Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+                    LocalDateTime adjustedDateTime = localDateTime.plusWeeks(2);
+                    return adjustedDateTime.format(formatter);
+                })
+                .collect(Collectors.toList());
 
 
 
 
 
-
-
-
-
-
-
-
-
+        System.out.println(assignedForms);
 
 
 
 
         List<Form> forms = formservice.getFormByUser(username);
+        System.out.println(forms);
+
         Map<String, Long> responderCounts = new HashMap<>();
         for (Form form : forms) {
             long responderCount = formservice.getTheNumberOfResponsesForAform(form.getId());
@@ -73,6 +88,8 @@ public class accountController {
 
 
         ModelAndView modelAndView = new ModelAndView("account/dashboard");
+        modelAndView.addObject("assignedForms", assignedForms);
+        modelAndView.addObject("adjustedDates", adjustedDates);
         modelAndView.addObject("forms", forms);
         modelAndView.addObject("responderCounts", responderCounts);
 

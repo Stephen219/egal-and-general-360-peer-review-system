@@ -8,15 +8,20 @@ import java.util.List;
 public interface UserRepositoryInter {
 
 
-
-
     List<User> getUsers();
+
     User getUser(Long id);
-    User getUserEmail(String email);
+
+    User getUserEmail(String username);
+
     public void encodePassword(User user);
+
     void save(User user);
 
 
     boolean checkUserExists(String email);
-    // Implement methods from JpaRepository
+
+    User getUserByUserName(String username);
 }
+
+

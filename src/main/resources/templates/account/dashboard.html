@@ -1,14 +1,14 @@
-
 <!DOCTYPE html>
 
-<html x-data="data()"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="en">
+<html x-data="data()" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" th:href="@{css/main.css}"/>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <a  href="https://icons8.com/icon/40401/bell"></a><a href="https://icons8.com"></a>
+    <a href="https://icons8.com/icon/40401/bell"></a><a href="https://icons8.com"></a>
 </head>
 
 <body>
@@ -21,7 +21,7 @@
                 <div class="flex bg-gray-800">
                     <div class="flex py-3 px-2 items-center">
 
-                        <img  th:src="@{legal.png}" alt="logo" class="h-auto w-1/2 rounded-3xl ml-7">
+                        <img th:src="@{legal.png}" alt="logo" class="h-auto w-1/2 rounded-3xl ml-7">
 
 
                     </div>
@@ -29,7 +29,7 @@
                 <div class="flex flex-col items-center space-y-3">
                     <img alt="user profile picture"
                          src="https://th.bing.com/th/id/OIP.eGHa3HgHxIlTHmcvKNDs7AHaGe?rs=1&pid=ImgDetMain"
-                         class="w-auto h-28 rounded-full mt-3" />
+                         class="w-auto h-28 rounded-full mt-3"/>
                     <span class="text-xl font-semibold capitalize">John member</span>
                 </div>
                 <div class="flex flex-col space-y-16">
@@ -40,7 +40,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                                 </svg>
                                 <span class="ml-4">DASHBOARD</span>
                             </a>
@@ -51,7 +51,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                      stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                                          d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
                                 </svg>
 
                                 <span class="ml-4 uppercase">Analytics</span>
@@ -111,7 +111,6 @@
                                 </svg>
 
 
-
                                 <span class="ml-4 uppercase">support</span>
                             </a>
                         </li>
@@ -135,8 +134,6 @@
                                         </g>
                                     </g>
                                 </svg>
-
-
 
 
                                 <span class="ml-4 uppercase">Account</span>
@@ -198,7 +195,7 @@
                 <div class="flex flex-col items-center space-y-3">
                     <img alt="user profile picture"
                          src="https://th.bing.com/th/id/OIP.eGHa3HgHxIlTHmcvKNDs7AHaGe?rs=1&pid=ImgDetMain"
-                         class="w-auto h-28 rounded-full mt-3" />
+                         class="w-auto h-28 rounded-full mt-3"/>
                     <span class="text-xl font-semibold capitalize">John member</span>
                 </div>
                 <div class="flex flex-col space-y-16">
@@ -209,7 +206,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                                 </svg>
                                 <span class="ml-4">DASHBOARD</span>
                             </a>
@@ -220,7 +217,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                      stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                                          d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
                                 </svg>
 
                                 <span class="ml-4 uppercase">Analytics</span>
@@ -280,7 +277,6 @@
                                 </svg>
 
 
-
                                 <span class="ml-4 uppercase">support</span>
                             </a>
                         </li>
@@ -304,8 +300,6 @@
                                         </g>
                                     </g>
                                 </svg>
-
-
 
 
                                 <span class="ml-4 uppercase">Account</span>
@@ -346,11 +340,11 @@
 
                 <button class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
                         @click="toggleSideMenu" aria-label="Menu">
-                    <x-heroicon-o-menu class="w-6 h-6 text-white" />
+                    <x-heroicon-o-menu class="w-6 h-6 text-white"/>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none"
                          viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M4 6h16M4 12h16M4 18h7" />
+                              d="M4 6h16M4 12h16M4 18h7"/>
                     </svg>
                 </button>
 
@@ -358,33 +352,30 @@
                 <div class="flex justify-center  mt-2 mr-4">
                     <div class="relative flex w-full flex-wrap items-stretch mb-3">
                         <input type="search" placeholder="Search" {{ $attributes }}
-                               class="form-input px-3 py-2 placeholder-gray-400 text-gray-700 relative bg-white rounded-lg text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pr-10" />
+                               class="form-input px-3 py-2 placeholder-gray-400 text-gray-700 relative bg-white rounded-lg text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full pr-10"/>
                         <span
                                 class="z-10 h-full leading-snug font-normal  text-center text-gray-400 absolute bg-transparent rounded text-base items-center justify-center w-8 right-0 pr-3 py-3">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -mt-1" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                 </svg>
                             </span>
                     </div>
                 </div>
 
 
-
                 <ul class="flex items-center flex-shrink-0 space-x-6">
 
 
-
-
                     <li>
-                        <button onclick="toggleConfirmationCard()" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Request Form</button>
+                        <button onclick="toggleConfirmationCard()"
+                                class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                            Request Form
+                        </button>
 
 
-<!--                        <a  th:href="@{/form/new}" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Request Form</a>-->
-
-
-
+                        <!--                        <a  th:href="@{/form/new}" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Request Form</a>-->
 
 
                     <li class="relative">
@@ -396,9 +387,9 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                                      viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
                             </div>
                         </button>
@@ -414,14 +405,16 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none"
                                              viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                  d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                  d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
                                         <span>Profile</span>
                                     </a>
                                 </li>
                                 <li class="flex">
-                                    <form class="text-white inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800" name="logoutForm" th:action="@{/logout}" method="post">
-                                        <input class="text-white inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800" hidden type="submit" value="Logout"/>
+                                    <form class="text-white inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800"
+                                          name="logoutForm" th:action="@{/logout}" method="post">
+                                        <input class="text-white inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800"
+                                               hidden type="submit" value="Logout"/>
                                     </form>
                                 </li>
                             </ul>
@@ -447,27 +440,38 @@
                     }
                 </style>
 
-                <div th:if="${flashMessage}" id="flashMessage" class="bg-green-400 text-white p-4 fixed mt-2 mr-2 top-0 right-0 -z-100 absolute flash-message rounded-md">
+                <div th:if="${flashMessage}" id="flashMessage"
+                     class="bg-green-400 text-white p-4 fixed mt-2 mr-2 top-0 right-0 -z-100 absolute flash-message rounded-md">
                     <p th:text="${flashMessage}" class="inline"></p>
-                    <button onclick="cancelFlash()" class="ml-4 bg-white text-green-500 border border-green-500 px-2 py-1 rounded">Cancel</button>
+                    <button onclick="cancelFlash()"
+                            class="ml-4 bg-white text-green-500 border border-green-500 px-2 py-1 rounded">Cancel
+                    </button>
                 </div>
 
-                <div th:if="${flashError}" id="flashError" class="bg-red-500 text-white p-4 fixed top-0 right-0 z-100 absolute rounded-md ml-2 mt-2">
+                <div th:if="${flashError}" id="flashError"
+                     class="bg-red-500 text-white p-4 fixed top-0 right-0 z-100 absolute rounded-md ml-2 mt-2">
                     <p th:text="${flashError}" class="inline"></p>
-                    <button onclick="cancelFlash()" class="ml-4 bg-white text-red-500 border border-red-500 px-2 py-1 rounded">Cancel</button>
+                    <button onclick="cancelFlash()"
+                            class="ml-4 bg-white text-red-500 border border-red-500 px-2 py-1 rounded">Cancel
+                    </button>
                 </div>
 
-                <div id="confirmationCard" style="display: none;" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-md shadow-md font-light text-center">
-                    <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/228BE6/alarm.png" alt="alarm" class="mx-auto mb-4"/>
+                <div id="confirmationCard" style="display: none;"
+                     class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-md shadow-md font-light text-center">
+                    <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/228BE6/alarm.png" alt="alarm"
+                         class="mx-auto mb-4"/>
                     <p class="font-light text-lg mb-6">Are you sure you want to send the form request?</p>
                     <button onclick="redirectToForm()" class="bg-green-500 text-white px-4 py-2 rounded-md">Yes</button>
-                    <button onclick="cancelFormRequest()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md">Cancel</button>
+                    <button onclick="cancelFormRequest()" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md">
+                        Cancel
+                    </button>
                 </div>
                 <div class="bg-gray-100 py-8 px-4 flex flex-col space-y-2 cursor-pointer rounded-md hover:bg-gray-100 hover:smooth-hover">
                     <div th:if="${#lists.isEmpty(forms)}" class=" text-center">
                         <p>There are no recent forms</p>
                     </div>
-                    <div th:each="request, iStat : ${forms}" th:if="${iStat.index} &lt; 3" class="bg-white p-4 rounded shadow flex flex-col mb-4">
+                    <div th:each="request, iStat : ${forms}" th:if="${iStat.index} &lt; 3"
+                         class="bg-white p-4 rounded shadow flex flex-col mb-4">
                         <a th:href="@{'/get_reviewers/' + ${request.id}}">
                             <div class="bg-white p-4 rounded shadow flex flex-row justify-between items-start">
                                 <div class="flex flex-col">
@@ -475,7 +479,8 @@
                                     <p class="text-gray-500 mb-2" th:text="'Sent: ' + ${request.formDate}"></p>
                                 </div>
                                 <div class="flex flex-col justify-between">
-                                    <p class="text-lg font-semibold mb-2" th:text="'Total Responders: ' + ${responderCounts[request.id]}"></p>
+                                    <p class="text-lg font-semibold mb-2"
+                                       th:text="'Total Responders: ' + ${responderCounts[request.id]}"></p>
 
                                     <div class="flex flex-col items-end">
                                         <p th:text="${request.progressStatus}" class="mb-2"
@@ -483,31 +488,10 @@
                                     </div>
                                 </div>
 
-                            </div>  </a>
-
+                            </div>
+                        </a>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </div>
-
-
-
-
-
 
 
 
@@ -518,29 +502,11 @@
             </div>
 
 
-
-
         </main>
     </div>
 
 
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <script>
@@ -589,6 +555,7 @@
     function sendFormRequest() {
         hideConfirmationCard();
     }
+
     function redirectToForm() {
         window.location.href = '/form/new';
     }
@@ -601,6 +568,7 @@
         var confirmationCard = document.getElementById('confirmationCard');
         confirmationCard.style.display = 'none';
     }
+
     function cancelFlash() {
         var flashMessage = document.getElementById("flashMessage");
         var flashError = document.getElementById("flashError");
@@ -615,7 +583,7 @@
     }
 
 
-    setTimeout(function() {
+    setTimeout(function () {
         var flashMessage = document.getElementById("flashMessage");
         var flashError = document.getElementById("flashError");
 
