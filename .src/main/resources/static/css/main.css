@@ -880,10 +880,6 @@ video {
   width: 100vw;
 }
 
-.min-w-full {
-  min-width: 100%;
-}
-
 .max-w-md {
   max-width: 28rem;
 }
@@ -1130,10 +1126,6 @@ video {
 
 .border-2 {
   border-width: 2px;
-}
-
-.border-b {
-  border-bottom-width: 1px;
 }
 
 .border-blue-200 {
@@ -1682,11 +1674,6 @@ video {
 .hover\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-gray-50:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-green-400:hover {
