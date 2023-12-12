@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import uk.cf.ac.LegalandGeneralTeam11.Form.Form;
@@ -11,7 +12,9 @@ import uk.cf.ac.LegalandGeneralTeam11.Form.FormServiceImpl;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
 import uk.cf.ac.LegalandGeneralTeam11.Graphs.Graph;
+import uk.cf.ac.LegalandGeneralTeam11.Graphs.GraphService;
 import uk.cf.ac.LegalandGeneralTeam11.Graphs.GraphServiceImpl;
+import uk.cf.ac.LegalandGeneralTeam11.answers.AnswerServiceInter;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -29,12 +32,16 @@ public class adminLinks {
 
     FormServiceImpl formService;
 
-    GraphServiceImpl graphService;
+    GraphService graphService;
+
+    AnswerServiceInter answerServiceInter;
 
     @Autowired
-    public adminLinks(FormRequestService formRequestService, FormServiceImpl formservice) {
+    public adminLinks(FormRequestService formRequestService, FormServiceImpl formservice, GraphService graphService, AnswerServiceInter answerServiceInter) {
         this.formService = formservice;
         this.formRequestService = formRequestService;
+        this.graphService = graphService;
+        this.answerServiceInter = answerServiceInter;
     }
 
 
@@ -45,6 +52,16 @@ public class adminLinks {
         List<Form> allForms = formService.getAllForms();
         List<Form> inProgressForms = formService.getFormsByStatus("In Progress");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        System.out.println("hello we are here");
+
+
+        System.out.println("questionansweer " +  answerServiceInter.getQuestionAnswersUser("abushvin@gmail.com","form1"));
+        System.out.println("bye we are here");
+
+
+
+
+
         List<String> adjustedDates = inProgressForms.stream()
                 .map(form -> {
                     LocalDateTime localDateTime = form.getFormDate().atStartOfDay();
@@ -91,6 +108,18 @@ public class adminLinks {
         modelAndView.addObject("responderCounts", responderCounts);
         return modelAndView;
     }
+
+
+    @GetMapping("admin/results/{id}/{responder_id}")
+    public ModelAndView getAnswersPerFormPerUser(@PathVariable String id, @PathVariable String responder_id) {
+        ModelAndView modelAndView = new ModelAndView("account/individualAnswers");
+        modelAndView.addObject("questionAnswers", answerServiceInter.getFormAnswersForaUser(responder_id, id));
+
+        return modelAndView;
+    }
+
+
+
 
     /**
      * This method sorts the forms based on the sortBy parameter passed in the url query but if the sortBy parameter is null, it sorts the forms by the date
