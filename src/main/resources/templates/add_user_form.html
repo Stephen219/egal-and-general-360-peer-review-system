@@ -1,21 +1,60 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>Add User</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h2>Add User</h2>-->
+<!--<form action="/api/users/add" method="post" th:object="${user}">-->
+<!--  &lt;!&ndash; Input fields for user information &ndash;&gt;-->
+<!--  <label for="email">Email:</label>-->
+<!--  <input type="text" id="email" name="email" th:field="*{email}" required>-->
+
+<!--  <label for="password">Password:</label>-->
+<!--  <input type="password" id="password" name="password" th:field="*{password}" required>-->
+
+<!--  <button type="submit">Add User</button>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add User</title>
+  <title>Add User Form</title>
 </head>
 <body>
+
 <h2>Add User</h2>
-<form action="/api/users/add" method="post" th:object="${user}">
-  <!-- Input fields for user information -->
+
+<form th:action="@{/admin/add}" method="post" th:object="${user}">
   <label for="email">Email:</label>
   <input type="text" id="email" name="email" th:field="*{email}" required>
+  <br>
+
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" th:field="*{username}" required>
+  <br>
 
   <label for="password">Password:</label>
   <input type="password" id="password" name="password" th:field="*{password}" required>
+  <br>
+
+  <label>Role:</label>
+  <input type="radio" id="admin" name="role" th:field="*{roleId}" th:value="1">
+  <label for="admin">Admin</label>
+
+  <input type="radio" id="employee" name="role" th:field="*{roleId}" th:value="2">
+  <label for="employee">Employee</label>
+  <br>
 
   <button type="submit">Add User</button>
 </form>
+
 </body>
 </html>

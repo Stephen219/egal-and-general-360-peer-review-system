@@ -1,16 +1,17 @@
 use legalandgeneral;
-drop table if exists roles;
-drop table if exists users_roles;
-drop table if exists form_requests;
-drop table if exists self_assessment;
-drop table if exists reviewers;
-drop table if exists answers;
+
 
 
 drop schema if exists legalandgeneral;
 CREATE SCHEMA legalandgeneral;
 use legalandgeneral;
+drop table if exists answers;
 
+drop table if exists roles;
+drop table if exists users_roles;
+drop table if exists form_requests;
+drop table if exists self_assessment;
+drop table if exists reviewers;
 
  -- create a sequence for generating the answer  id
 
@@ -27,22 +28,27 @@ Create TABLE IF NOT EXISTS form_requests (
 );
 
 -- users and roles for security -----------------------------
-
-drop table if exists users;
-create table if not exists users (
-    id int not null auto_increment primary key,
-    username varchar(255) not null,
-    password varchar(255) not null,
-    category_id int not null default 1,
-    enabled boolean not null default true
-)engine=InnoDB;
-
 drop table if exists roles;
 CREATE TABLE if not exists roles
 (
     role_id int(11)     NOT NULL AUTO_INCREMENT primary key,
     name    varchar(45) NOT NULL
 ) engine = InnoDB;
+
+
+
+drop table if exists users;
+create table if not exists users (
+    id int not null auto_increment primary key,
+    username varchar(255) not null,
+    email varchar(255) not null ,
+    password varchar(255) not null,
+    role_id int not null,
+    enabled boolean not null default true,
+    foreign key (role_id) references roles(role_id)
+
+)engine=InnoDB;
+
 
 CREATE TABLE if not exists users_roles
 (
