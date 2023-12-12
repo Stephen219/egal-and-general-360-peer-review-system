@@ -9,4 +9,6 @@ public interface QuestionRepoInter {
     public List<Question> getAllQuestions();
 
     public List<Question> getTextAreaQuestions();
+
+    public List<String> getAllCategories();
 }
