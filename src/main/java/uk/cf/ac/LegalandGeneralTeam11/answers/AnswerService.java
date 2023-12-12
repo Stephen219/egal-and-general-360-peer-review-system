@@ -31,7 +31,9 @@ public class AnswerService implements AnswerServiceInter{
         return answerRepo.getQuestionAnswersUser(responder, formId);
     }
 
-
+    public List<String> GetAllReviewers(String formId) {
+        return answerRepo.GetAllReviewers(formId);
+    }
 
 
 

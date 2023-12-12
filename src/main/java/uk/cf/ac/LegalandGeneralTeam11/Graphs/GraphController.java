@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import uk.cf.ac.LegalandGeneralTeam11.Form.FormService;
+import uk.cf.ac.LegalandGeneralTeam11.answers.AnswerService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,9 @@ public class GraphController{
     GraphService graphservice;
     @Autowired
     FormService formservice;
+
+    @Autowired
+    AnswerService answerService;
 
 
     @GetMapping("/account/averages/{id}")
@@ -56,6 +60,9 @@ public class GraphController{
     public String getResults(@PathVariable String id, Model model) {
         List<Map<String, Object>> graphInt = graphservice.getCategoryAverages(id);
         Map<String, List<String>> graphString = graphservice.getFormTextAnswer(id);
+        List<String> reviewers = answerService.GetAllReviewers(id);
+        System.out.println(reviewers);
+        model.addAttribute("Reviewers", reviewers);
         model.addAttribute("NumberAnswer", graphInt);
         model.addAttribute("TextAnswer", graphString);
         return "account/seeAllResults";

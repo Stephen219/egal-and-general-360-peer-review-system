@@ -185,6 +185,16 @@ public class AnswerRepo {
             return new HashMap<>(); // Return an empty map or handle the error accordingly
         }
     }
+
+    public List<String> GetAllReviewers(String formId) {
+        String sql = "SELECT DISTINCT responder FROM answers WHERE form_id = ?";
+        return jdbcTemplate.queryForList(sql, String.class, formId);
+    }
+
+
+
+
+
 //public Map<String, List<String>> getQuestionAnswersUser(String responder, String formId) {
 //    String sql = "SELECT " +
 //            "  CASE " +
