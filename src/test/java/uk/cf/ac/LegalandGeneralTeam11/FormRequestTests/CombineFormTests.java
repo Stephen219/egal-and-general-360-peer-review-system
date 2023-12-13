@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith({MockitoExtension.class, SpringExtension.class})
-class CombinedFormTests {
+class CombineFormTests {
 
     @Mock
     private FormRequestRepository formRequestRepository;
@@ -83,6 +83,5 @@ class CombinedFormTests {
         assertEquals(assignedForms, result);
     }
 
-    // Add more combined tests...
 
 }
