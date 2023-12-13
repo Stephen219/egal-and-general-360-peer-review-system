@@ -1,5 +1,6 @@
 package uk.cf.ac.LegalandGeneralTeam11.user;
 
+import com.structurizr.annotation.UsedByPerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import uk.cf.ac.LegalandGeneralTeam11.domain.Domain;
 
 import java.util.List;
-
+@UsedByPerson(name = "admin", description = "manages users", technology = "http(s)")
 @Controller
 public class UserController {
 
