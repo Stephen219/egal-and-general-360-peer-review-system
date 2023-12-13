@@ -246,7 +246,9 @@
 
         //const allowedDomains = ['gmail.com', 'outlook.com', 'cardiff.ac.uk'];
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        //const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[^\s@<>\/"']+@[^\s@<>\/"']+\.[^\s@<>\/"']+$/;
+
         if (emailRegex.test(email)) {
             const domain = email.split('@')[1];
             if (allowedDomains.includes(domain)) {
@@ -329,8 +331,8 @@
 
     function updateSubmitButtonState() {
         const submitButton = document.getElementById('submitButton');
-        submitButton.disabled = uniqueEmails.size >= 5;
-        if (uniqueEmails.size >= 5) {
+        submitButton.disabled = uniqueEmails.size < 5;
+        if (uniqueEmails.size < 5) {
             document.getElementById('errorDiv').innerText = 'Please add more than 5 reviewers.';
         }
     }

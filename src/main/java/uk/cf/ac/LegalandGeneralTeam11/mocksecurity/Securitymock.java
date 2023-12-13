@@ -36,6 +36,8 @@ public class Securitymock {
             "/review/**",
             "favicon-32x32.png",
             "/icons/**",
+            "logso.png",
+            "/404/",
             "/home"
     };
 
@@ -44,7 +46,13 @@ public class Securitymock {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        http.headers(headersConfigurer -> headersConfigurer
+                        .contentSecurityPolicy(csp -> csp.policyDirectives("form-action 'self'; report-uri /csp-report-endpoint"))
+                        .frameOptions(frame -> frame.sameOrigin())
+                        .frameOptions(frame -> frame.deny())
+                        .frameOptions(frame -> frame.disable())
+                        .httpStrictTransportSecurity(hsts -> hsts.includeSubDomains(true).maxAgeInSeconds(31536000))
+                )
 
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
@@ -130,16 +138,10 @@ public class Securitymock {
     @Bean
     UserDetailsService userDetailsService() {
 
-        //we can replace this with another implementation of UserDetailsService.
-        //that could use JPA to access the DB, or use LDAP instead.
-        //quite often, Spring will provide default implementations. Read before writing!
-        //The user details service interface provides a method to get a user by username.
-        //That user will contain the authorities. With that object graph, Spring Security can do the rest.
-
         JdbcDaoImpl jdbcUserDetails = new JdbcDaoImpl();
         jdbcUserDetails.setDataSource(dataSource);
         jdbcUserDetails.setUsersByUsernameQuery("select username, password, enabled from users where username=?");
-        jdbcUserDetails.setAuthoritiesByUsernameQuery("select username, authority from user_authorities where username=?");
+        jdbcUserDetails.setAuthoritiesByUsernameQuery("select username, name from users u join roles r on r.role_id = u.role_id where username=?");
         return jdbcUserDetails;
     }
 

@@ -1,14 +1,16 @@
 use legalandgeneral;
-insert into users (username, password, enabled)
-values ('admin', '$2a$12$zKMHlbOC7UXOLCdq5ZibC.ANCzcxgpoGbode97Dc2Fi1zakG2fP6O', true);
-insert into users (username, password, enabled)
-values ('user', '$2a$12$J1s9zHrJiu9VKV8J7FFXJ.U0ArVGE.9h3R94.a0OGx7a7ast0bcYi', true);
+
+insert into roles (role_id, name)
+values (1, 'ROLE_ADMIN');
+insert into roles (role_id, name)
+values (2, 'ROLE_USER');
+
+insert into users (username, email, password, enabled ,role_id)
+values ('admin','hjbhbhdbdhcbdhcf@dcbdcbjdc', '$2a$12$zKMHlbOC7UXOLCdq5ZibC.ANCzcxgpoGbode97Dc2Fi1zakG2fP6O', true,1);
+insert into users (username,email, password, enabled, role_id)
+values ('user','test@gmail', '$2a$12$J1s9zHrJiu9VKV8J7FFXJ.U0ArVGE.9h3R94.a0OGx7a7ast0bcYi', true, 2);
 
 -- role inserts
-insert into roles (role_id, name)
-values (1, 'ADMIN');
-insert into roles (role_id, name)
-values (2, 'USER');
 
 -- assigning users roles
 insert into users_roles (username, role_id)
@@ -71,9 +73,4 @@ insert into reviewers (form_id, email) VALUES ('form1', 'abushvin@gmail.com');
 insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfjiksasfdjfdjdfjjkd@gmailcom');
 insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfsakuasukjfdjfdjdfjjkd@gmailcom');
 insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfsxuiuisxjfdjfdjdfjjkd@gmailcom');
-
-insert into domains (domain_name) VALUES ('landg.com');
-insert into domains (domain_name) VALUES ('landghomefinance.com');
-insert into domains (domain_name) VALUES ('lgsurvey.co.uk');
-insert into domains (domain_name) VALUES ('theidol.com');
-insert into domains (domain_name) VALUES ('lgim.com');
+insert into reviewers (form_id, email) VALUES ('form1', 'pass@gmail.com');

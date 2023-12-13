@@ -66,9 +66,9 @@ public class FormRequestRepoImpl implements FormRequestRepository{
     //TODO: change to username
 
 
-    public List<FormRequest> getAllByUser(Long userId) {
+    public List<FormRequest> getAllByUser(String username) {
         String sql = "SELECT * FROM form_requests WHERE username = ?";
-        return jdbcTemplate.query(sql, FormRequestMapper, userId);
+        return jdbcTemplate.query(sql, FormRequestMapper, username);
 
     }
     /**

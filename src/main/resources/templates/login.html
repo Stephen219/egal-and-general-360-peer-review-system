@@ -51,7 +51,9 @@
     </div>
 
     <!-- Form for login -->
-    <form th:action="@{/login}" method="post">
+    <form th:action="@{/login}" method="post" onsubmit="return validateForm()">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
         <label class="block mb-2">
             Username:
             <input type="text" class="border border-gray-300 rounded-md p-2 w-full mt-1" name="username">
@@ -60,6 +62,7 @@
             Password:
             <input type="password" class="border border-gray-300 rounded-md p-2 w-full mt-1" name="password">
         </label>
+        <div id="error-message" class="text-red-500"></div>
         <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 mt-2">Login</button>
     </form>
 </div>
@@ -72,5 +75,24 @@
 </footer> -->
 
 </body>
+<script>
+    function validateForm() {
+        var username = document.getElementsByName('username')[0].value;
+        var password = document.getElementsByName('password')[0].value;
+        var errorDiv = document.getElementById('error-message');
+        var regex = /^[a-zA-Z0-9]*$/;
+
+        if (username === '' || password === '') {
+            errorDiv.innerText = 'Please enter both username and password';
+            return false;
+        } else if (!regex.test(username)) {
+            errorDiv.innerText = 'Username should not contain special characters';
+            return false;
+        } else {
+            errorDiv.innerText = '';
+        }
+        return true;
+    }
+</script>
 </html>
 
