@@ -62,6 +62,8 @@ public class GraphController{
         Map<String, List<String>> graphString = graphservice.getFormTextAnswer(id);
         List<String> reviewers = answerService.GetAllReviewers(id);
         System.out.println(reviewers);
+        System.out.println(graphInt);
+        System.out.println(graphString);
         model.addAttribute("Reviewers", reviewers);
         model.addAttribute("NumberAnswer", graphInt);
         model.addAttribute("TextAnswer", graphString);
