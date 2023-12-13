@@ -47,24 +47,11 @@ public class Securitymock {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.headers(headersConfigurer -> headersConfigurer
-                        .contentSecurityPolicy(csp -> csp.policyDirectives("form-action 'self'"))
-                                //.xssProtection(xss -> xss.enable().block(true))
-
-
-
-                                //xssProtection(xss -> xss.notify())
-                        //.xssProtection(xss -> xss.notifyAll())
-
+                        .contentSecurityPolicy(csp -> csp.policyDirectives("form-action 'self'; report-uri /csp-report-endpoint"))
                         .frameOptions(frame -> frame.sameOrigin())
                         .frameOptions(frame -> frame.deny())
                         .frameOptions(frame -> frame.disable())
-//
                         .httpStrictTransportSecurity(hsts -> hsts.includeSubDomains(true).maxAgeInSeconds(31536000))
-
-
-
-//
-//
                 )
 
                 .authorizeHttpRequests(request -> request
@@ -150,12 +137,6 @@ public class Securitymock {
 
     @Bean
     UserDetailsService userDetailsService() {
-
-        //we can replace this with another implementation of UserDetailsService.
-        //that could use JPA to access the DB, or use LDAP instead.
-        //quite often, Spring will provide default implementations. Read before writing!
-        //The user details service interface provides a method to get a user by username.
-        //That user will contain the authorities. With that object graph, Spring Security can do the rest.
 
         JdbcDaoImpl jdbcUserDetails = new JdbcDaoImpl();
         jdbcUserDetails.setDataSource(dataSource);
