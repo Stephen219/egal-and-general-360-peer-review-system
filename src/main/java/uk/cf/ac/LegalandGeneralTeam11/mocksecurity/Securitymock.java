@@ -59,6 +59,7 @@ public class Securitymock {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
                         .requestMatchers("css/**").permitAll()
+                        .requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers("/form/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/domain/**").hasRole("ADMIN")

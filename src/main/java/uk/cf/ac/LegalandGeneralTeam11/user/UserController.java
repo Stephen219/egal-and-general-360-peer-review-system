@@ -26,7 +26,6 @@ public class UserController {
         //User user = new User(0L, "HJJSJNBDJCDC ", " CJDBCHJDHBCJDC", " 78378272778",2L);
         User user = new User();
         System.out.println(user);
-        System.out.println("inrfnjnf get maopjedjed");
 
         ModelAndView n = new ModelAndView("add_user_form");
         n.addObject("user", user);
