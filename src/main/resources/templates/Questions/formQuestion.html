@@ -88,7 +88,7 @@
         <div class="mt-auto">
 
             <p class="my-4 text-xs text-center text-gray-400">
-                <span>Copyright © 2021</span>
+                <span>Copyright © 2023</span>
             </p>
         </div>
     </nav>
@@ -111,7 +111,7 @@
                 <div class="btn-group">
                     <form th:action="@{/question/delete/{id}(id=${question.id})}" method="post">
                         <input type="hidden" name="id" th:value="${question.id}" />
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                        <button type="submit" class="btn btn-danger text-black" onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
                 </div>
             </td>
