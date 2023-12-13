@@ -186,7 +186,10 @@ public class FormControllerImpl {
                 answerList.forEach(answer -> answer.setUsername(username));
             }
             answerList.forEach(answer -> answer.setFormId(formId));
+            String email = userservice.getUserByUserName(formService.getFormOwner(formId)).getEmail();
+
             AnswerServiceInter.processAndSaveAnswers(answerList);
+            formService.updateReviewersAfterSubmission(formId, email, "self");
         }
         catch (JsonProcessingException e) {
             e.printStackTrace();
