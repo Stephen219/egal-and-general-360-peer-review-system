@@ -19,7 +19,7 @@ public class DomainController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/domain")
-    public ModelAndView getMenu() {
+    public ModelAndView getDomains() {
         ModelAndView modelAndView = new ModelAndView("Domain/domainEditor");
         List<Domain> Domains = domainService.getAllDomains();
         modelAndView.addObject("Domains", Domains);
