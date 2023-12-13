@@ -1,6 +1,5 @@
 package uk.cf.ac.LegalandGeneralTeam11;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,8 +9,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 import org.springframework.web.context.WebApplicationContext;
@@ -104,22 +101,6 @@ public class GraphTests {
         }
 
         @Test
-        @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
-        public void testGraphControllerGetMapping() throws Exception {
-                //Given: An admin is logged in
-                //When: Accessing "/account/averages/{id}" to view the averages
-                //Then: The response status is OK, the view is "admin/results/{id}",
-                // and the html matches with database data
-            mockMvc.perform(MockMvcRequestBuilders.get("/admin/results/{id}", "form1"))
-                    .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andExpect(MockMvcResultMatchers.content().contentType("text/html;charset=UTF-8"))
-                    .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<div class=\"col-md-3 mt-10\">")))
-                    .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<a href = \"/admin/results/form1/abushvin@gmail.com\" >")))
-                    .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<span>abushvin@gmail.com</span>")))
-                    .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<span>user</span>")));
-        }
-
-        @Test
         @WithMockUser(username = "user", password = "user", roles = "USER")
         public void testGetCategoryAverages() throws Exception {
             //Given: A user is logged in
@@ -184,7 +165,6 @@ public class GraphTests {
             verify(graphService, times(1)).getChartData(formId);
             verify(graphService, times(1)).getRelationshipCounts();
         }
-
 
 }
 

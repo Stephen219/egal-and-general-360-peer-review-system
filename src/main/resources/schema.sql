@@ -132,5 +132,11 @@ create table if not exists answers
 
 )engine=InnoDB;
 
+create table if not exists domains
+(
+    id int not null auto_increment primary key,
+    domain_name varchar(255) not null,
+    enabled boolean not null default true);
+
 
 
