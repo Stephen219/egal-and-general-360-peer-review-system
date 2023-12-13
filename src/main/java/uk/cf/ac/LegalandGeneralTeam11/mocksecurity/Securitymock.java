@@ -36,6 +36,8 @@ public class Securitymock {
             "/review/**",
             "favicon-32x32.png",
             "/icons/**",
+            "logso.png",
+            "/404/",
             "/home"
     };
 
