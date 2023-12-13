@@ -76,6 +76,7 @@ insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfsxuiuisxjfdjfdjdf
 insert into reviewers (form_id, email) VALUES ('form1', 'pass@gmail.com');
 
 insert into domains (domain_name) VALUES ('landg.com');
+insert into domains (domain_name) VALUES ('gmail.com');
 insert into domains (domain_name) VALUES ('landghomefinance.com');
 insert into domains (domain_name) VALUES ('theidol.com');
 insert into domains (domain_name) VALUES ('lgim.com');
