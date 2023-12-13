@@ -10,4 +10,5 @@ public interface AnswerServiceInter {
     public void processAndSaveAnswers(List<Answer> answerList);
     public Map<String, String> getFormAnswersForaUser(String responder, String formId);
     public Map<String, List<String>> getQuestionAnswersUser(String responder, String formId);
+    public List<String> GetAllReviewers(String formId);
 }
