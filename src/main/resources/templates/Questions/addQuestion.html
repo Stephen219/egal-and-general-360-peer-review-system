@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Question</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+
+<h1 class="text-center mb-4">Add Question</h1>
+
+<form th:action="@{/addQuestion}" th:object="${Question}" method="post">
+  <div class="form-group">
+    <label for="question">Question Name:</label>
+    <input type="text" class="form-control" id="question" th:field="*{content}" placeholder="Enter Question name" required/>
+  </div>
+
+  <div class="form-group">
+    <label for="questionCategory">Question Category:</label>
+    <select class="form-control" id="questionCategory"  placeholder="Enter Question Category" th:field="*{category}"required>
+<!--      <option hidden disabled selected value=null> &#45;&#45; select an option &#45;&#45; </option>-->
+      <option th:each="category : ${Categories}" th:text="${category}" th:value="${category}"></option>
+    </select>
+
+  </div>
+
+
+
+
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
