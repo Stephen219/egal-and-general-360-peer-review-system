@@ -1,8 +1,10 @@
 package uk.cf.ac.LegalandGeneralTeam11.user;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,14 +33,27 @@ public class UserController {
     }
 
     @PostMapping("/admin/add")
-    public ModelAndView  getUserForm(User user) {
+    public ModelAndView  getUserForm(@Valid User user, BindingResult bindingResult, Model model) {
 
-        userService.save(user);
+        if (bindingResult.hasErrors()) {
+            //model.addAttribute("errors", bindingResult.getAllErrors());
+            ModelAndView modelAndView = new ModelAndView("add_user_form", model.asMap());
+            modelAndView.addObject("user", user);
+            return modelAndView;
+        }
+        try{
+            userService.save(user);
+        }
+        catch ( RuntimeException e){
+            model.addAttribute("errors", e.getMessage());
+            ModelAndView modelAndView = new ModelAndView("add_user_form", model.asMap());
+            modelAndView.addObject("user", user);
+            return modelAndView;
+        }
 
         System.out.print(user);
         System.out.print("we are arfbfmnbvhjfdvbfmnvjdfhjbfrew");
-        ModelAndView m = new ModelAndView("redirect:/");
-
+        ModelAndView m = new ModelAndView("redirect:/admin");
         return m;
     }
 

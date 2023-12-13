@@ -263,11 +263,9 @@
         <div th:each="question : ${textQuestions}">
             <div>
 
-<!--                <p>Question ID: <span th:text="${question.id}"></span></p>-->
                 <p> <span th:text="${question.content}"></span></p>
 
-                <textarea th:id="${'question_' + question.id}" th:name="${'question_' + question.id}" rows="4" cols="50"
-                          required></textarea>
+                <textarea th:id="${'question_' + question.id}" th:name="${'question_' + question.id}" rows="4" cols="50" pattern="^[A-Za-z0-9,\.]{10,50}$" title="Enter letters or numbers only (10-50 characters)" required></textarea>
             </div>
         </div>
 
@@ -349,6 +347,36 @@
 
 
     window.onload = openBlockingModalWithDelay;
+
+
+    function cancelFlash() {
+        var flashMessage = document.getElementById("flashMessage");
+        var flashError = document.getElementById("flashError");
+
+        if (flashMessage) {
+            flashMessage.style.display = "none";
+        }
+
+        if (flashError) {
+            flashError.style.display = "none";
+        }
+    }
+
+
+    setTimeout(function () {
+        var flashMessage = document.getElementById("flashMessage");
+        var flashError = document.getElementById("flashError");
+
+        if (flashMessage) {
+            flashMessage.style.display = "none";
+        }
+
+        if (flashError) {
+            flashError.style.display = "none";
+        }
+    }, 5000);
+
+
 </script>
 
 </body>

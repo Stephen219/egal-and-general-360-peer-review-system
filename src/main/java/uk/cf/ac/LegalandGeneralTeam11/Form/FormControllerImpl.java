@@ -85,7 +85,7 @@ public class FormControllerImpl {
                 .collect(Collectors.toList());
 
 
-        System.out.println("allowed domains: " + allowedDomains);
+       // System.out.println("allowed domains: " + allowedDomains);
 
         ModelAndView modelAndView = new ModelAndView("forms/reviewer");
         modelAndView.addObject("form", form);
@@ -94,16 +94,21 @@ public class FormControllerImpl {
     }
 
     @PostMapping("/submit_reviewers/{id}")
-    public ModelAndView submitReviewers(@RequestParam List<String> uniqueEmails, @PathVariable String id) {
+    public ModelAndView submitReviewers(@RequestParam("emails")
+                                            List<String> uniqueEmails, @PathVariable String id) {
         System.out.println("Submitted Emails: " + uniqueEmails);
+
+        System.out.println("fbhfmffbfdmfvb,fdfvfdvmhbhmbfrjehmfbrekjgfrkjegfjkbrefkjlert,jc,ketncjnhje,fmhemgvrjmgmjrvnhjmgrhjmnghjmhjnmgthjmnjhmt");
 
         String username = formService.getFormOwner(id);
         String owneremail = userservice.getUserByUserName(username).getEmail();
         uniqueEmails.add(owneremail);
+        System.out.println("Submitted Emails: " + uniqueEmails);
+        System.out.println("Form ID: " + id);
 
 
         formService.addFormReviewers(id, uniqueEmails);
-        // TODO: enable the user to see his own results easily, their email also needs to be added to the list of reviewers
+        //  enable the user to see his own results easily, their email also needs to be added to the list of reviewers
 
         for (String email : uniqueEmails) {
             sendReviewInvitationEmail(email, id);

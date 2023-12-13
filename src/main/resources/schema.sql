@@ -78,8 +78,8 @@ from users u
 CREATE TABLE if not exists reviewers
 (
     Id INT NOT NULL AUTO_INCREMENT,
-    form_id VARCHAR(45) NOT NULL,
-    email VARCHAR(45) NOT NULL,
+    form_id VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
     hasFilledForm BOOLEAN NOT NULL DEFAULT FALSE,
     relationship VARCHAR(45)  DEFAULT null,
     PRIMARY KEY (Id)
@@ -103,7 +103,7 @@ CREATE TABLE if not exists 360forms
     PRIMARY KEY (Id)
 ) engine = InnoDB;
 
-INSERT into 360forms (Id, username) VALUES ('form1', 'user');
+INSERT into 360forms (Id, username) VALUES ('form1', 'Henry');
 INSERT into 360forms (Id, username) VALUES ('form2', 'tom');
 INSERT into 360forms (Id, username, created_at) VALUES ('form3', 'jerry', '2020-10-10 10:10:10');
 INSERT into 360forms (Id, username, created_at) VALUES ('form456789', 'kendi', '2021-10-10 10:10:10');
