@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import org.springframework.boot.test.mock.mockito.MockBean;
 import uk.cf.ac.LegalandGeneralTeam11.Form.Form;
 import uk.cf.ac.LegalandGeneralTeam11.Form.FormService;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
@@ -27,7 +28,7 @@ import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 public class FormAcceptanceTest {
 
-    @Autowired
+    @MockBean
     private FormRequestService formRequestService;
     @Autowired
     private FormService formService;

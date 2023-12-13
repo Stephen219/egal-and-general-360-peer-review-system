@@ -31,11 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class FormRequestTest {
     @Autowired
     private MockMvc mockMvc;
-
-    //  Incase this tests fail, please comment because it uses a mocked security context
-
-    //please dont tpuch this test, am implementing it
-    @WithMockUser(username = "uk/cf/ac/LegalandGeneralTeam11/user", password = "password", roles = "USER")
+    @WithMockUser(username = "user", password = "password", roles = "USER")
     @Test
     public void testGetForm() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/form/new"))
@@ -45,12 +41,16 @@ public class FormRequestTest {
                 .andReturn() ;
         String flashMessage = (String) result.getFlashMap().get("flashMessage");
         assertEquals("your form request has been submited!", flashMessage);
+        System.out.println(flashMessage);
+
+        System.out.println(result.getResponse().getContentAsString());
+
     }
 
 
 
 
-    @WithMockUser(username = "uk/cf/ac/LegalandGeneralTeam11/user", password = "password", roles = "USER")
+    @WithMockUser(username = "user", password = "password", roles = "USER")
     @Test
     public void testGetFormWithSecondAttempt() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/form/new"))
