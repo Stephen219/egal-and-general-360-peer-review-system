@@ -33,6 +33,7 @@ public class GraphController{
         Map<String, List<String>> formTextAnswer = graphservice.getFormTextAnswer(id);
 
         List<Map<String, Object>> chartData = graphservice.getChartData(id);
+        System.out.println(chartData);
         model.addAttribute("chartData", chartData);
         System.out.println("we are here getting the chart data");
         System.out.println(chartData);

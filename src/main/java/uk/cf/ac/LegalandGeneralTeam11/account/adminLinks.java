@@ -15,6 +15,8 @@ import uk.cf.ac.LegalandGeneralTeam11.Graphs.Graph;
 import uk.cf.ac.LegalandGeneralTeam11.Graphs.GraphService;
 import uk.cf.ac.LegalandGeneralTeam11.Graphs.GraphServiceImpl;
 import uk.cf.ac.LegalandGeneralTeam11.answers.AnswerServiceInter;
+import uk.cf.ac.LegalandGeneralTeam11.user.User;
+import uk.cf.ac.LegalandGeneralTeam11.user.UserService;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -36,12 +38,15 @@ public class adminLinks {
 
     AnswerServiceInter answerServiceInter;
 
+    UserService userService;
+
     @Autowired
-    public adminLinks(FormRequestService formRequestService, FormServiceImpl formservice, GraphService graphService, AnswerServiceInter answerServiceInter) {
+    public adminLinks(FormRequestService formRequestService, FormServiceImpl formservice, GraphService graphService, AnswerServiceInter answerServiceInter, UserService userService) {
         this.formService = formservice;
         this.formRequestService = formRequestService;
         this.graphService = graphService;
         this.answerServiceInter = answerServiceInter;
+        this.userService = userService;
     }
 
 
@@ -51,12 +56,12 @@ public class adminLinks {
         List<FormRequest> formRequests = formRequestService.getAllByStatus("Pending");
         List<Form> allForms = formService.getAllForms();
         List<Form> inProgressForms = formService.getFormsByStatus("In Progress");
+        List<User> users = userService.getUsers();
+        List<User> usersNotHavingFormThisYear = userService.getUsersNotHavingFormThisYear();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
-        System.out.println("hello we are here");
-
 
         System.out.println("questionansweer " +  answerServiceInter.getQuestionAnswersUser("abushvin@gmail.com","form1"));
-        System.out.println("bye we are here");
+
 
 
 
@@ -75,6 +80,8 @@ public class adminLinks {
         modelAndView.addObject("inProgressForms", inProgressForms);
         modelAndView.addObject("formRequests", formRequests);
         modelAndView.addObject("adjustedDates", adjustedDates);
+        modelAndView.addObject("users", users);
+        modelAndView.addObject("usersNotHavingFormThisYear", usersNotHavingFormThisYear);
         System.out.println(formRequests);
 
         return modelAndView;

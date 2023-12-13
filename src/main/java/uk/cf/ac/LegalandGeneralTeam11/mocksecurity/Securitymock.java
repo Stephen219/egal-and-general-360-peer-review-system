@@ -46,6 +46,7 @@ public class Securitymock {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http.headers(headersConfigurer -> headersConfigurer
                         .contentSecurityPolicy(csp -> csp.policyDirectives("form-action 'self'; report-uri /csp-report-endpoint"))
                         .frameOptions(frame -> frame.sameOrigin())

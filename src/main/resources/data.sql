@@ -6,9 +6,9 @@ insert into roles (role_id, name)
 values (2, 'ROLE_USER');
 
 insert into users (username, email, password, enabled ,role_id)
-values ('admin','hjbhbhdbdhcbdhcf@dcbdcbjdc', '$2a$12$zKMHlbOC7UXOLCdq5ZibC.ANCzcxgpoGbode97Dc2Fi1zakG2fP6O', true,1);
+values ('John','admin@gmail.com', '$2a$12$zKMHlbOC7UXOLCdq5ZibC.ANCzcxgpoGbode97Dc2Fi1zakG2fP6O', true,1);
 insert into users (username,email, password, enabled, role_id)
-values ('user','test@gmail', '$2a$12$J1s9zHrJiu9VKV8J7FFXJ.U0ArVGE.9h3R94.a0OGx7a7ast0bcYi', true, 2);
+values ('Henry','test@gmail', '$2a$12$J1s9zHrJiu9VKV8J7FFXJ.U0ArVGE.9h3R94.a0OGx7a7ast0bcYi', true, 2);
 
 -- role inserts
 
@@ -20,7 +20,7 @@ values ('user', 2);
 
 INSERT INTO questions (question, category) VALUES
                                                ('Building meaningful relationships across teams and projects.', 'Collaborative'),
-                                               ('Sharing your experiences openly so that people can learn.', 'Collaborative'),
+                                               ('Sharing experiences openly so that people can learn.', 'Collaborative'),
                                                ('Actively seeking out opportunities to support others in work.', 'Collaborative'),
                                                ('Being open and approachable.', 'Collaborative');
 
@@ -60,19 +60,19 @@ INSERT INTO questions (question, category) VALUES
                                                ('Pushing boundaries to create opportunities for future success.', 'Ambitious'),
                                                ('Thinking about the future and changes that are needed.', 'Ambitious');
 
-insert into questions (question, category) VALUEs('What do you consider to be your superpower? :', 'textarea');
-insert into questions (question, category) VALUEs('What is the one thing you could do to improve your impact? :', 'textarea');
+insert into questions (question, category) VALUEs('What do you consider to be your/this person\'s superpower? :', 'textarea');
+insert into questions (question, category) VALUEs('What is one thing you could do to improve your impact, or what is one thing they could do to improve their impact :', 'textarea');
 
 
 
 
-insert into reviewers (form_id, email) VALUES ('form1', 'ubbur@hcbdhchhc.com');
-insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfjfdjfdjdfjjkd@gmailcom');
+insert into reviewers (form_id, email) VALUES ('form1', 'test4@gmail.com');
+insert into reviewers (form_id, email) VALUES ('form1', 'htest4@gmailcom');
 
 insert into reviewers (form_id, email) VALUES ('form1', 'abushvin@gmail.com');
-insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfjiksasfdjfdjdfjjkd@gmailcom');
-insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfsakuasukjfdjfdjdfjjkd@gmailcom');
-insert into reviewers (form_id, email) VALUES ('form1', 'hjdjjfsxuiuisxjfdjfdjdfjjkd@gmailcom');
+insert into reviewers (form_id, email) VALUES ('form1', 'test1@gmailcom');
+insert into reviewers (form_id, email) VALUES ('form1', 'test2@gmailcom');
+insert into reviewers (form_id, email) VALUES ('form1', 'test3@gmailcom');
 insert into reviewers (form_id, email) VALUES ('form1', 'pass@gmail.com');
 
 insert into domains (domain_name) VALUES ('landg.com');
@@ -80,3 +80,5 @@ insert into domains (domain_name) VALUES ('landghomefinance.com');
 insert into domains (domain_name) VALUES ('theidol.com');
 insert into domains (domain_name) VALUES ('lgim.com');
 insert into domains (domain_name) VALUES ('lgsurvey.co.uk');
+insert into domains (domain_name) VALUES ('gmail.com');
+insert into domains (domain_name) VALUES ('cardiff.ac.uk');

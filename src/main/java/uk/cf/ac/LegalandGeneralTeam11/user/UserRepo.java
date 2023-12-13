@@ -67,7 +67,7 @@ public class UserRepo implements  UserRepositoryInter{
 
     public void save(User user) {
 
-        if (checkUserExists(user.getEmail())) {
+        if (checkUserExists(user.getEmail(), user.getUsername())) {
             throw new RuntimeException("User already exists");
         }
         insert(user);
@@ -107,8 +107,9 @@ public class UserRepo implements  UserRepositoryInter{
                 user.getId());
     }
 
-    public boolean checkUserExists(String email) {
-        String sql = "select count(*) from users where email = ?";
+    public boolean checkUserExists(String email, String username) {
+        String sql = "select count(*) from users where email = ? or username = ?";
+        //String sql = "select count(*) from users where email = ?";
         int count = jdbc.queryForObject(sql, Integer.class, email);
         return count > 0;
     }
@@ -123,7 +124,13 @@ public class UserRepo implements  UserRepositoryInter{
 //        String sql = "update users set username = ?, email = ?, password = ? where id = ?";
 //        jdbc.update(sql, user.getUsername(), user.getEmail(), user.getPassword(), user.getId());
 //    }
+// getting users not having a form this year
 
+
+    public List<User> getUsersNotHavingFormThisYear() {
+        String sql = "select * from users join 360forms on users.username =360forms.username where users.username not in (select username from 360forms where created_at = year(now()))";
+        return jdbc.query(sql, userMapper);
+    }
 
 
 }

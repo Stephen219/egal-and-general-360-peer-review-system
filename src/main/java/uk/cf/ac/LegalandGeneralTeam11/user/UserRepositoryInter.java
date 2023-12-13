@@ -19,12 +19,14 @@ public interface UserRepositoryInter {
     void save(User user);
 
 
-    boolean checkUserExists(String email);
+    boolean checkUserExists(String email, String username);
 
     User getUserByUserName(String username);
 
 
     void updateUser(User user);
+
+    public List<User> getUsersNotHavingFormThisYear();
 }
 
 

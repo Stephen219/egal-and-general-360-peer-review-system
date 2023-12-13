@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta name="_csrf" th:content="${_csrf.token}" />
-  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
-  <div th:replace="~{fragments/testfile :: meta-fragments}"></div>
+<!--  <meta name="_csrf" th:content="${_csrf.token}" />-->
+<!--  <meta name="_csrf_header" th:content="${_csrf.headerName}" />-->
+<!--  <div th:replace="~{fragments/testfile :: meta-fragments}"></div>-->
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Reviewers Form</title>
     </style>
 </head>
@@ -186,14 +187,14 @@
 
 
 
-    <form id="form" class="w-full max-w-sm bg-white flex flex-col py-5 px-8 rounded-lg shadow-lg m-6 " th:action="@{'/submit_reviewers/' + ${form.id}}" method="post">
+    <form id="form" class="w-full max-w-sm bg-white flex flex-col py-5 px-8 rounded-lg shadow-lg m-6 " th:action="@{'/submit_reviewers/'+ ${form.id}}" method="post">
 
         <h1 class="text-2xl font-bold text-center mb-4">Add Reviewers</h1>
         ensure that you include your manage.
 
 
         <input type="hidden" name="id" th:value="${form.id}"/>
-        <input type="hidden" id="uniqueEmailsInput" name="uniqueEmails"/>
+        <input type="hidden" id="uniqueEmailsInput" name="emails"/>
 
         <div class="flex items-center space-x-2">
             <label for="emailInput" class="mr-2">Email:</label>
@@ -225,7 +226,7 @@
 
 
     </form>
-    <ul id="emailList" class="list-none space-y-2">
+    <ul id="emailList" class="list-none space-y-2" name = "emailList">
 
     </ul>
 </div>
@@ -242,12 +243,9 @@
         const email = emailInput.value.trim();
         console.log(allowedDomains);
 
-        //const allowedDomains = ['gmail.com', 'outlook.com', 'cardiff.ac.uk'];
 
-        //const allowedDomains = ['gmail.com', 'outlook.com', 'cardiff.ac.uk'];
-
-        //const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const emailRegex = /^[^\s@<>\/"']+@[^\s@<>\/"']+\.[^\s@<>\/"']+$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        //const emailRegex = /^[^\s@<>\/"']+@[^\s@<>\/"']+\.[^\s@<>\/"']+$/;
 
         if (emailRegex.test(email)) {
             const domain = email.split('@')[1];
@@ -294,6 +292,10 @@
             document.getElementById('errorDiv').innerText = 'Invalid email format.';
         }
         document.getElementById('uniqueEmailsInput').value = Array.from(uniqueEmails).join(',');
+
+        console.log(uniqueEmails);
+        console.log(Array.from(uniqueEmails).join(','));
+        console.log(document.getElementById('uniqueEmailsInput').value);
     }
 
     function removeEmail(email) {
@@ -339,29 +341,29 @@
 
 
 
-    document.getElementById('form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        showLoadingSpinner();
-
-
-        setTimeout(function() {
-
-            hideLoadingSpinner();
-
-
-            var formId = /*[[${form.id}]]*/;
-            window.location.href = '/review/' + formId;
-        }, 10000);
-    });
-
-    function showLoadingSpinner() {
-        document.getElementById('loadingSpinner').style.display = 'block';
-    }
-
-    function hideLoadingSpinner() {
-        document.getElementById('loadingSpinner').style.display = 'none';
-    }
+    // document.getElementById('form').addEventListener('submit', function(event) {
+    //     event.preventDefault(); // Prevent the default form submission
+    //
+    //     showLoadingSpinner();
+    //
+    //
+    //     setTimeout(function() {
+    //
+    //         hideLoadingSpinner();
+    //
+    //
+    //         var formId = /*[[${form.id}]]*/;
+    //         window.location.href = '/review/' + formId;
+    //     }, 5000);
+    // });
+    //
+    // function showLoadingSpinner() {
+    //     document.getElementById('loadingSpinner').style.display = 'block';
+    // }
+    //
+    // function hideLoadingSpinner() {
+    //     document.getElementById('loadingSpinner').style.display = 'none';
+    // }
 
     /*]]>*/
 </script>

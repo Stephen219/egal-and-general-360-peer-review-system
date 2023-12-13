@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
         usersRepository.encodePassword(user);
     }
 
-    public boolean checkUserExists(String email) {
-        return usersRepository.checkUserExists(email);
+    public boolean checkUserExists(String email, String username) {
+        return usersRepository.checkUserExists(email, username);
     }
 
     public User getUserByUserName(String username) {
@@ -43,6 +43,9 @@ public class UserServiceImpl implements UserService {
 
     public void updateUser(User user) {
         usersRepository.updateUser(user);
+    }
+    public List<User> getUsersNotHavingFormThisYear() {
+        return usersRepository.getUsersNotHavingFormThisYear();
     }
 
 }
