@@ -20,6 +20,12 @@ public class QuestionService implements QuestionServiceInter {
         public List<String> getAllCategories(){
             return QuestionRepoInter.getAllCategories();
         }
+        public void addQuestion(Question question) {
+        QuestionRepoInter.addQuestion(question);
+        }
+        public void deleteQuestion(Long Id){
+            QuestionRepoInter.deleteQuestion(Id);
+        };
 
 
 

@@ -44,10 +44,15 @@ public class QuestionRepo implements QuestionRepoInter{
         return jdbcTemplate.queryForList(sql, String.class);
     }
 
-//    public void  addQuestion(Question question) {
-//        String sql = "INSERT INTO questions (Id, question, category ) VALUES (?, ?, ?)";
-//        jdbcTemplate.update(sql, domain.getDomain(),domain.getEnabled());
-//    }
+    public void  addQuestion(Question question) {
+        String sql = "INSERT INTO questions (question, category) VALUES (?, ?)";
+        jdbcTemplate.update(sql,question.getContent(),question.getCategory());
+
+    }
+    public void deleteQuestion(Long id) {
+        String sql = "DELETE FROM questions WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 
 
 

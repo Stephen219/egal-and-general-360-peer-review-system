@@ -10,17 +10,19 @@
 
 <h1 class="text-center mb-4">Add Question</h1>
 
-<form th:action="@{/admin/addQuestion}" th:object="${Question}" method="get">
+<form th:action="@{/addQuestion}" th:object="${Question}" method="post">
   <div class="form-group">
-    <label for="questionName">Question Name:</label>
-    <input type="text" class="form-control" id="questionName" th:field="*{content}" placeholder="Enter Question name" required/>
+    <label for="question">Question Name:</label>
+    <input type="text" class="form-control" id="question" th:field="*{content}" placeholder="Enter Question name" required/>
   </div>
 
   <div class="form-group">
     <label for="questionCategory">Question Category:</label>
-    <select class="form-control" id="questionCategory"  placeholder="Enter Question Category" required>
-    <option th:each="category : ${Categories}" th:text="${category}"></option>
+    <select class="form-control" id="questionCategory"  placeholder="Enter Question Category" th:field="*{category}"required>
+<!--      <option hidden disabled selected value=null> &#45;&#45; select an option &#45;&#45; </option>-->
+      <option th:each="category : ${Categories}" th:text="${category}" th:value="${category}"></option>
     </select>
+
   </div>
 
 
