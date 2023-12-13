@@ -19,9 +19,7 @@ import static org.assertj.core.api.BDDAssumptions.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.BDDMockito.willReturn;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -37,7 +35,7 @@ public class FormRequestTest {
     //  Incase this tests fail, please comment because it uses a mocked security context
 
     //please dont tpuch this test, am implementing it
-    @WithMockUser(username = "user", password = "password", roles = "USER")
+    @WithMockUser(username = "uk/cf/ac/LegalandGeneralTeam11/user", password = "password", roles = "USER")
     @Test
     public void testGetForm() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/form/new"))
@@ -52,7 +50,7 @@ public class FormRequestTest {
 
 
 
-    @WithMockUser(username = "user", password = "password", roles = "USER")
+    @WithMockUser(username = "uk/cf/ac/LegalandGeneralTeam11/user", password = "password", roles = "USER")
     @Test
     public void testGetFormWithSecondAttempt() throws Exception {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/form/new"))

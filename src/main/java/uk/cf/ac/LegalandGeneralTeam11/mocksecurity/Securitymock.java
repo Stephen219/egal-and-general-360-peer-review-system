@@ -141,7 +141,7 @@ public class Securitymock {
         JdbcDaoImpl jdbcUserDetails = new JdbcDaoImpl();
         jdbcUserDetails.setDataSource(dataSource);
         jdbcUserDetails.setUsersByUsernameQuery("select username, password, enabled from users where username=?");
-        jdbcUserDetails.setAuthoritiesByUsernameQuery("select username, authority from user_authorities where username=?");
+        jdbcUserDetails.setAuthoritiesByUsernameQuery("select username, name from users u join roles r on r.role_id = u.role_id where username=?");
         return jdbcUserDetails;
     }
 

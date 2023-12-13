@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 @Repository
 
@@ -148,7 +149,12 @@ public class FormRepositoryImpl implements FormRepoInterface {
     }
 
     public List<Form> getFormsAssignedToUser(String email) {
-        String sql = "SELECT f.* FROM 360forms f JOIN reviewers r ON f.id = r.form_id WHERE r.email = ?";
+
+      String sql =   "SELECT f.*\n" +
+                "FROM 360forms f\n" +
+                "JOIN reviewers r ON f.id = r.form_id\n" +
+                "WHERE r.email = ? AND r.hasFilledForm = false;\n";
+       // String sql = "SELECT f.* FROM 360forms f JOIN reviewers r ON f.id = r.form_id WHERE r.email = ?";
 
         try {
             return jdbcTemplate.query(sql, preparedStatement -> {
@@ -159,6 +165,60 @@ public class FormRepositoryImpl implements FormRepoInterface {
             return Collections.emptyList();
         }
     }
+
+    public void updateFormStatus(String formId, String status) {
+        String sql = "UPDATE 360forms SET progress_status = ? WHERE id = ?";
+        jdbcTemplate.update(sql, status, formId);
+    }
+
+
+//    public Boolean checkFormCompleted(String formId) {
+//        String sql = "SELECT COUNT(DISTINCT responder) FROM answers " +
+//                "JOIN reviewers r ON answers.form_id = r.form_id " +
+//                "WHERE form_id = ? AND hasFilledForm = false";
+//
+//        int count = jdbcTemplate.queryForObject(sql, Integer.class, formId);
+//
+//        if (count > 0) {
+//            throw new IllegalArgumentException("The form is no longer receiving responses.");
+//        }
+//
+//        return true;
+//    }
+
+
+    public Boolean checkFormCompleted(String formId) {
+        String sql = "SELECT COUNT(DISTINCT r.email) AS count_reviewers, " +
+                "COUNT(DISTINCT CASE WHEN a.responder IS NOT NULL THEN r.email END) AS count_matched_emails " +
+                "FROM reviewers r LEFT JOIN answers a ON r.email = a.responder " +
+                "WHERE r.form_id = ?";
+
+        Map<String, Object> result = jdbcTemplate.queryForMap(sql, formId);
+
+        long countReviewers = (long) result.get("count_reviewers");
+        long countMatchedEmails = (long) result.get("count_matched_emails");
+
+        return countReviewers > 0 && countReviewers == countMatchedEmails;
+    }
+
+
+
+    public boolean checkFormCompletedByStatus(String formId) {
+        String sql = "SELECT progress_status FROM 360forms WHERE id = ?";
+        String progressStatus = jdbcTemplate.queryForObject(sql, String.class, formId);
+        return "completed".equalsIgnoreCase(progressStatus);
+    }
+    public String getFormOwner(String formId) {
+        String sql = "SELECT username FROM 360forms WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, String.class, formId);
+    }
+
+
+
+
+
+
+
 
 
 }

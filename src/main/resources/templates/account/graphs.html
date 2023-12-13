@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Graphs</title>
+    <!-- Include Highcharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+<body>
+<h1>Your Graphs</h1>
+<div id="container" style="width: 100%; height: 400px;"></div>
+<h1>Questions and Answers</h1>
+<div th:each="entry : ${formTextAnswer}">
+    <h3 th:text="${entry.key}"></h3>
+    <ul>
+        <li th:each="answer : ${entry.value}" th:text="${answer}"></li>
+    </ul>
+</div>
+<script th:inline="javascript">
+    /*[[${categoryAverages}]]*/;
+    var data = /*[[${categoryAverages}]]*/; 'default_value_if_empty';
+
+    // Create the chart if data is available
+    if (data !== 'default_value_if_empty') {
+        Highcharts.chart('container', {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Likert Averages and Keywords'
+            },
+            xAxis: {
+                categories: data.map(item => item.category),
+                title: {
+                    text: 'Terms'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Likert Average'
+                }
+            },
+            series: [{
+                name: 'Likert Average',
+                data: data.map(item => item.average)
+            }],
+            tooltip: {
+                formatter: function() {
+                    const point = this.point;
+                    const keyword = data[point.index].keyword;
+                    return `Term: ${point.category}<br>Average: ${point.y}<br>Keyword: ${keyword}`;
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

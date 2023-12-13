@@ -11,14 +11,24 @@
     <title>Your Graphs</title>
     <!-- Include Highcharts -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
+
+
+    <!-- Add these script tags at the end of your body section -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+    <!-- Add this script tag at the end of your body section -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+
 </head>
 
 <body>
 <div class="container">
+    <button onclick="exportToPDF()" class="btn btn-secondary mt-3">Export to PDF</button>
     <div class="row">
-        <div class="col text-center">
-            <h1 class="">Your Graphs</h1>
-        </div>
+        <div class="col text-center"><h1 class="">Your Graphs</h1></div>
     </div>
 </div>
 <div class="container-fluid">
@@ -31,25 +41,23 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <h5>Questions and Answers</h5>
-            <div th:each="entry : ${formTextAnswer}">
-                <h6 th:text="${entry.key}"></h6>
-                <ul>
+        <div id="formTextAnswer" class="col-md-6"><h5>Questions and Answers</h5>
+            <div th:each="entry : ${formTextAnswer}"><h6 th:text="${entry.key}"></h6>
+                <ul class="text-center">
                     <li th:each="answer : ${entry.value}" th:text="${answer}"></li>
                 </ul>
             </div>
         </div>
-        <div id="piechart" class="col-md-6">
-            <!-- Placeholder for the fourth quadrant -->
-        </div>
+        <div id="piechart" class="col-md-6">            <!-- Placeholder for the fourth quadrant -->        </div>
     </div>
 </div>
 </body>
 
+
 </html>
 <script th:inline="javascript">
-    var data = /*[[${categoryAverages}]]*/; 'default_value_if_empty';
+    var data = /*[[${categoryAverages}]]*/;
+    'default_value_if_empty';
     var colors = ['#0076D6', '#028844', '#FFD500', '#E22922', '#0076D6', '#028844'];
 
     // Create the chart if data is available
@@ -79,7 +87,7 @@
                 }))
             }],
             tooltip: {
-                formatter: function() {
+                formatter: function () {
                     const point = this.point;
                     const keyword = data[point.index].keyword;
                     return `Term: ${point.category}<br>Average: ${point.y}<br>Keyword: ${keyword}`;
@@ -97,13 +105,7 @@
     }
 
 
-
-
-
-
 </script>
-
-
 
 
 <script th:inline="javascript">
@@ -114,12 +116,12 @@
     var seriesData = [];
     var categories = [];
 
-    dataList.forEach(function(item) {
+    dataList.forEach(function (item) {
         if (!categories.includes(item.category)) {
             categories.push(item.category);
         }
 
-        var seriesIndex = seriesData.findIndex(function(seriesItem) {
+        var seriesIndex = seriesData.findIndex(function (seriesItem) {
             return seriesItem.name === item.relationship;
         });
 
@@ -155,13 +157,12 @@
 </script>
 
 
-
 <script th:inline="javascript">
 
     var relationshipCounts = /*[[${relationshipCounts}]]*/ [];
 
-    var seriesData = relationshipCounts.map(function(item) {
-        return { name: item.relationship, y: item.count };
+    var seriesData = relationshipCounts.map(function (item) {
+        return {name: item.relationship, y: item.count};
     });
 
     var colors = ['#0076D6', '#028844', '#FFD500', '#E22922', '#0076D6', '#028844'];
@@ -180,6 +181,169 @@
         }]
     });
 </script>
+
+<script th:inline="javascript">
+    function exportToPDF() {
+        // Capture the charts as images
+        var containerElement = document.getElementById('container');
+        var chartContainerElement = document.getElementById('chartContainer');
+        var piechartElement = document.getElementById('piechart');
+        var formTextAnswerElement = document.getElementById('formTextAnswer');
+
+        var promises = [];
+
+        if (containerElement) {
+            promises.push(html2canvas(containerElement).then(function (canvas) {
+                return { id: 'container', image: canvas.toDataURL('image/png') };
+            }));
+        }
+
+        if (chartContainerElement) {
+            promises.push(html2canvas(chartContainerElement).then(function (canvas) {
+                return { id: 'chartContainer', image: canvas.toDataURL('image/png') };
+            }));
+        }
+
+        if (piechartElement) {
+            promises.push(html2canvas(piechartElement).then(function (canvas) {
+                return { id: 'piechart', image: canvas.toDataURL('image/png') };
+            }));
+        }
+
+        var formTextAnswerText = formTextAnswerElement ? formTextAnswerElement.textContent || formTextAnswerElement.innerText : '';
+
+
+        promises.push(Promise.resolve({ id: 'formTextAnswer', text: formTextAnswerText }));
+
+
+        Promise.all(promises).then(function (contents) {
+
+            var content = [
+                { text: 'Your Graphs', style: 'header' },
+                { image: contents[0].image, width: 400 },
+                { image: contents[1].image, width: 400 },
+                { image: contents[2].image, width: 400 },
+                { text: contents[3].text, style: 'body' },
+                { text: 'This is a sample content', style: 'body' }
+            ];
+
+
+            var styles = {
+                header: {
+                    fontSize: 18,
+                    bold: true,
+                    margin: [0, 0, 0, 10]
+                },
+                body: {
+                    fontSize: 12,
+                    margin: [0, 0, 0, 10]
+                },
+                question: {
+                    fontSize: 14,
+                    bold: true,
+                    alignment: 'center',
+                    margin: [0, 10, 0, 5],
+                },
+                answer: {
+                    fontSize: 12,
+                    margin: [0, 0, 0, 10],
+                }
+            };
+
+
+            var docDefinition = {
+                content: content,
+                styles: styles
+            };
+
+            // Generate and download the PDF
+            pdfMake.createPdf(docDefinition).download('exported.pdf');
+        });
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script th:inline="javascript">
+    // Function to fetch data and generate report
+    async function generateReport() {
+        try {
+            // Fetch data from the server (you need to implement this endpoint)
+            const response = await fetch('/api/getUserData'); // Update the endpoint as needed
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const userData = await response.json();
+
+            // Extract categories and scores from userData
+            const categories = userData.categories;
+            const scores = userData.scores;
+
+            // Generate a 30-word report
+            const report = `User ${userData.username} has scores in categories: ${categories.join(', ')}. Overall, the performance is ${calculateOverallPerformance(scores)}.`;
+
+            // Display or use the generated report as needed
+            console.log('Generated Report:', report);
+        } catch (error) {
+            console.error('Error fetching data:', error.message);
+        }
+    }
+
+    // Calculate overall performance based on scores (you can adjust this function)
+    function calculateOverallPerformance(scores) {
+        // Implement your logic to calculate overall performance here
+        // For example, calculate the average score
+        const averageScore = scores.reduce((sum, score) => sum + score, 0) / scores.length;
+
+        // Return a descriptive performance label based on your criteria
+        if (averageScore >= 80) {
+            return 'excellent';
+        } else if (averageScore >= 60) {
+            return 'good';
+        } else {
+            return 'needs improvement';
+        }
+    }
+
+    // Call the function to generate the report when the button is clicked
+    document.querySelector('button').addEventListener('click', generateReport);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>
