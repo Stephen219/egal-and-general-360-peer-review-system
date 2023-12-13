@@ -46,9 +46,9 @@ public class FormRequestServiceImpl implements FormRequestService{
          * @return List of form requests for a specific user
          */
 
-        public List<FormRequest> getAllByUser(Long userId) {
+        public List<FormRequest> getAllByUser(String username) {
 
-            return formRequestRepository.getAllByUser(userId);
+            return formRequestRepository.getAllByUser(username);
         }
         /**
          * Creates a form request

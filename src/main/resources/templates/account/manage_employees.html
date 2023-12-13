@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Table</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Add your custom styles here */
+        /* Example: */
+        .edit-btn {
+            background-color: #3490dc;
+            color: #ffffff;
+        }
+
+        .delete-btn {
+            background-color: #e3342f;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+
+<h1 class="text-2xl font-bold mb-4">Employee List</h1>
+
+<table class="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden">
+    <thead class="bg-gray-200">
+    <tr>
+        <th class="px-6 py-3 border-b border-gray-300 text-left font-semibold">ID</th>
+        <th class="px-6 py-3 border-b border-gray-300 text-left font-semibold">Username</th>
+        <th class="px-6 py-3 border-b border-gray-300 text-left font-semibold">Email</th>
+        <th class="px-6 py-3 border-b border-gray-300 text-left font-semibold">Role</th>
+        <th class="px-6 py-3 border-b border-gray-300 text-left font-semibold">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Loop through the users -->
+    <tr th:each="user : ${users}">
+        <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300" th:text="${user.id}"></td>
+        <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300" th:text="${user.username}"></td>
+        <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300" th:text="${user.email}"></td>
+        <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300">
+            <span th:if="${user.roleId == 1}">Admin</span>
+            <span th:if="${user.roleId == 2}">Employee</span>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap border-b border-gray-300">
+            <!-- Edit Button -->
+            <a th:href="@{/admin/manage_employees/edit/{id}(id=${user.id})}">Edit</a>
+            <!-- Delete Button -->
+            <button class="delete-btn px-4 py-2 rounded" th:onclick="'deleteUser(\'' + ${user.id} + '\')'">Delete</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script th:inline="javascript">
+    /* Add your JavaScript functions for edit and delete here */
+    function editUser(userId) {
+        // Implement edit functionality
+        console.log('Edit user with ID:', userId);
+    }
+
+    function deleteUser(userId) {
+        // Implement delete functionality
+        console.log('Delete user with ID:', userId);
+    }
+</script>
+
+</body>
+</html>

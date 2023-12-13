@@ -22,6 +22,8 @@ import uk.cf.ac.LegalandGeneralTeam11.domain.DomainService;
 import uk.cf.ac.LegalandGeneralTeam11.emails.EmailServiceImpl;
 import uk.cf.ac.LegalandGeneralTeam11.questions.Question;
 import uk.cf.ac.LegalandGeneralTeam11.questions.QuestionServiceInter;
+import uk.cf.ac.LegalandGeneralTeam11.user.User;
+import uk.cf.ac.LegalandGeneralTeam11.user.UserService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -45,6 +47,8 @@ public class FormControllerImpl {
     GraphService graphservic;
     @Autowired
     DomainService domainService;
+    @Autowired
+    UserService userservice;
 
     @Autowired
 
@@ -92,6 +96,12 @@ public class FormControllerImpl {
     @PostMapping("/submit_reviewers/{id}")
     public ModelAndView submitReviewers(@RequestParam List<String> uniqueEmails, @PathVariable String id) {
         System.out.println("Submitted Emails: " + uniqueEmails);
+
+        String username = formService.getFormOwner(id);
+        String owneremail = userservice.getUserByUserName(username).getEmail();
+        uniqueEmails.add(owneremail);
+
+
         formService.addFormReviewers(id, uniqueEmails);
         // TODO: enable the user to see his own results easily, their email also needs to be added to the list of reviewers
 
@@ -137,6 +147,12 @@ public class FormControllerImpl {
                                @RequestParam(value = "Who", required = false) String Relationship,
                                RedirectAttributes redirectAttributes) {
         try {
+            if (formService.checkFormCompleted(formId)) {
+                formService.updateFormStatus(formId, "Completed");
+                redirectAttributes.addFlashAttribute("flashError", "This form is no longer receiving responses");
+                return "redirect:/review/" + formId;
+            }
+
             ObjectMapper objectMapper = new ObjectMapper();
             List<Answer> answerList = objectMapper.readValue(responses, new TypeReference<List<Answer>>() {
             });
@@ -168,10 +184,12 @@ public class FormControllerImpl {
                     return "redirect:/review/" + formId;
                 }
                 answerList.forEach(answer -> answer.setUsername(username));
-
             }
             answerList.forEach(answer -> answer.setFormId(formId));
+            String email = userservice.getUserByUserName(formService.getFormOwner(formId)).getEmail();
+
             AnswerServiceInter.processAndSaveAnswers(answerList);
+            formService.updateReviewersAfterSubmission(formId, email, "self");
         }
         catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -185,24 +203,10 @@ public class FormControllerImpl {
         }
         return "redirect:/account";
     }
-
-
     Boolean isOwner(Form form) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         return form.getUsername().equals(username);
     }
-
-
-    public Boolean checkCanFillForm(String formId, String email, List<String> reviewers) {
-
-        if (reviewers.contains(email) && formService.getIfHasFilledForm(formId, email)) {
-            return true;
-        }
-        return false;
-    }
-
-
-
 
 }

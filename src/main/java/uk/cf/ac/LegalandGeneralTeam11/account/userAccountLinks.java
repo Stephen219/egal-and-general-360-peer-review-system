@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import uk.cf.ac.LegalandGeneralTeam11.Form.Form;
 import uk.cf.ac.LegalandGeneralTeam11.Form.FormServiceImpl;
+import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestService;
 import uk.cf.ac.LegalandGeneralTeam11.Graphs.GraphService;
+import uk.cf.ac.LegalandGeneralTeam11.user.User;
+import uk.cf.ac.LegalandGeneralTeam11.user.UserService;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -31,11 +34,14 @@ public class userAccountLinks {
 
     GraphService graphService;
 
+    UserService userService;
+
     @Autowired
-    public userAccountLinks(FormRequestService formRequestService, FormServiceImpl formservice, GraphService graphService) {
+    public userAccountLinks(FormRequestService formRequestService, FormServiceImpl formservice, GraphService graphService, UserService userService) {
         this.formService = formservice;
         this.formRequestService = formRequestService;
         this.graphService = graphService;
+        this.userService = userService;
     }
 
     /**
@@ -129,6 +135,14 @@ public class userAccountLinks {
         String username = currentPrincipalName;
         List<Form> forms = formService.getFormByUser(username);
 
+        String email = userService.getUserByUserName(username).getEmail();
+        Long id = userService.getUserByUserName(username).getId();
+        List<FormRequest> allFormRequests = formRequestService.getAllByUser(username);
+
+        List<Form> assignedForms = formService.getFormsAssignedToUser(email);
+
+        List<String> adjustedDates = adjustDates(assignedForms);
+
 
         List<Map<String, Object>> averages = graphService.getAverageAnswersForUser(username);
         Map<String, Float> averageMap = new HashMap<>();
@@ -146,11 +160,37 @@ public class userAccountLinks {
         modelAndView.addObject("forms", forms);
         modelAndView.addObject("responderCounts", responderCounts);
         modelAndView.addObject("chartData", averageMap);
+        modelAndView.addObject("formRequests", allFormRequests);
+        System.out.println(allFormRequests);
+
+        modelAndView.addObject("assignedForms", assignedForms);
+        modelAndView.addObject("adjustedDates", adjustedDates);
         System.out.println(averageMap);
 
         return modelAndView;
 
 
     }
+
+
+    @GetMapping("/my_info")
+    public ModelAndView getMyInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        String username = currentPrincipalName;
+        User user = userService.getUserByUserName(username);
+
+
+        String email = userService.getUserByUserName(username).getEmail();
+        Long id = userService.getUserByUserName(username).getId();
+        ModelAndView modelAndView = new ModelAndView("account/user_info");
+        modelAndView.addObject("email", email);
+       // modelAndView.addObject(("user", user))
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
+
+
 
 }
