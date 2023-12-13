@@ -1,5 +1,11 @@
 use legalandgeneral;
 
+drop table if exists users_roles;
+drop table if exists form_requests;
+drop table if exists self_assessment;
+drop table if exists reviewers;
+drop table if exists answers;
+drop table if exists domains;
 
 
 drop schema if exists legalandgeneral;
