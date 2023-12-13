@@ -12,7 +12,7 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #fff;
+            background-color: #ccffe6;
             color: #333;
             margin: 0;
             padding: 0;
@@ -22,7 +22,7 @@
             max-width: 600px;
             margin: 50px auto;
             padding: 30px;
-            background-color: #eee;
+            background-color: rgb(227,242,253);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             border: 5px solid #ddd;
@@ -91,7 +91,7 @@
         }
 
         .modal-content {
-            background-color: #fff;
+            background-color: 	 #e6ffee;
             padding: 20px;
             border-radius: 10px;
             max-width: 600px;
@@ -119,7 +119,7 @@
         }
 
         .modal-content {
-            background-color: #fff;
+            background-color: #b3ccff;
             padding: 20px;
             border-radius: 10px;
             max-width: 600px;
@@ -168,16 +168,22 @@
 <div class="container">
 
 
+    <div>
+        <img src="https://imagetolink.com/ib/agHqtnyyYJ.png" alt="legal and general logo" class="w-28">
+        <h1> Legal and general 360 review form</h1>
+    </div>
+
+
     <th:block th:if="${!isOwner}">
         <label>
-            <h4>Peer Review Questionnaire for <span th:text="${form.username}"></span></h4>
+            <h5>Peer Review Questionnaire for <span th:text="${form.username}"></span></h5>
 
         </label>
     </th:block>
 
     <th:block th:if="${isOwner}">
         <label>
-            <h1>Please Fill Out Your Self Review Questionnaire</h1>
+            <h5>Please Fill Out Your Self Review Questionnaire</h5>
         </label>
     </th:block>
 
@@ -193,7 +199,7 @@
         <th:block th:if="${!isOwner}">
             <label>
                 Whats your Email? please provide the email you received the form at.
-                <input type="email" th:name="email" required>
+                <input type="email" th:name="email"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required>
             </label>
             <div th:if="${flashError}" id="flashError" class="bg-red-500 text-white p-4 fixed top-0 right-0 z-100 absolute rounded-md ml-2 mt-2">
                 <p th:text="${flashError}" class="inline"></p>
@@ -201,7 +207,7 @@
             </div>
             <label>
                 <h2>You are...</h2>
-                <select name="Who" required>
+                <select name="Who" class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required  >
                     <option value="colleague">This person's peer / colleague</option>
                     <option value="manager">This person's manager</option>
                     <option value="team member">Within this person's team</option>
@@ -224,7 +230,7 @@
             <div>
 
 
-                <h4 th:text="${question.content}"></h4>
+                <h6 th:text="${question.content}"></h6>
                 <label>
                     <input type="radio" th:name="${'responses[' + question.id + '].answer'}" th:value="1" required>
                     Never [1]
@@ -256,8 +262,8 @@
         <div th:each="question : ${textQuestions}">
             <div>
 
-                <p>Question ID: <span th:text="${question.id}"></span></p>
-                <p>Question Text: <span th:text="${question.content}"></span></p>
+<!--                <p>Question ID: <span th:text="${question.id}"></span></p>-->
+                <p> <span th:text="${question.content}"></span></p>
 
                 <textarea th:id="${'question_' + question.id}" th:name="${'question_' + question.id}" rows="4" cols="50"
                           required></textarea>
