@@ -22,6 +22,8 @@ import uk.cf.ac.LegalandGeneralTeam11.domain.DomainService;
 import uk.cf.ac.LegalandGeneralTeam11.emails.EmailServiceImpl;
 import uk.cf.ac.LegalandGeneralTeam11.questions.Question;
 import uk.cf.ac.LegalandGeneralTeam11.questions.QuestionServiceInter;
+import uk.cf.ac.LegalandGeneralTeam11.user.User;
+import uk.cf.ac.LegalandGeneralTeam11.user.UserService;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -45,6 +47,8 @@ public class FormControllerImpl {
     GraphService graphservic;
     @Autowired
     DomainService domainService;
+    @Autowired
+    UserService userservice;
 
     @Autowired
 
@@ -92,6 +96,12 @@ public class FormControllerImpl {
     @PostMapping("/submit_reviewers/{id}")
     public ModelAndView submitReviewers(@RequestParam List<String> uniqueEmails, @PathVariable String id) {
         System.out.println("Submitted Emails: " + uniqueEmails);
+
+        String username = formService.getFormOwner(id);
+        String owneremail = userservice.getUserByUserName(username).getEmail();
+        uniqueEmails.add(owneremail);
+
+
         formService.addFormReviewers(id, uniqueEmails);
         // TODO: enable the user to see his own results easily, their email also needs to be added to the list of reviewers
 

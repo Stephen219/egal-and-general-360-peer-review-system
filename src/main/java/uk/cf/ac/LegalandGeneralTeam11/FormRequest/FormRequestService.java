@@ -30,7 +30,7 @@ public interface FormRequestService {
      *
      * @return List of form requests for a specific user.
      */
-    List<FormRequest> getAllByUser(Long userId);
+    List<FormRequest> getAllByUser(String username);
     /**
      * Create a form request.
      *

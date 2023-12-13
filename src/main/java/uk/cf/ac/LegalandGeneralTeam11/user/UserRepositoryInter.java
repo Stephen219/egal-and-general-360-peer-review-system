@@ -22,6 +22,9 @@ public interface UserRepositoryInter {
     boolean checkUserExists(String email);
 
     User getUserByUserName(String username);
+
+
+    void updateUser(User user);
 }
 
 

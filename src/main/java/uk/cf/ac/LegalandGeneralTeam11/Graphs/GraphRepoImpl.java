@@ -103,7 +103,7 @@ public class GraphRepoImpl implements GraphRepo {
                 "FROM answers a " +
                 "JOIN questions q ON a.question_id = q.id " +
                 "JOIN 360forms f ON a.form_id = f.Id " +
-                "WHERE f.username = ? " +
+                "WHERE f.username = ?  and q.category <> 'textarea' " +
                 "GROUP BY q.category";
 
         return jdbcTemplate.queryForList(sql, username);

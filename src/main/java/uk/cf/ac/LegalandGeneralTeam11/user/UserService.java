@@ -14,4 +14,7 @@ public interface UserService {
     boolean checkUserExists(String email);
 
     User getUserByUserName(String username);
+
+    void updateUser(User user);
+
 }

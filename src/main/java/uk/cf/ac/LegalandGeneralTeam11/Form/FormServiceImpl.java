@@ -109,4 +109,9 @@ public List<Form> getFormByUser(String username) {
     }
 
 
+    public String getFormOwner(String formId) {
+        return formRepository.getFormOwner(formId);
+    }
+
+
 }

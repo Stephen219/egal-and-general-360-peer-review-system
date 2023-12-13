@@ -40,4 +40,9 @@ public class UserServiceImpl implements UserService {
     public User getUserByUserName(String username) {
         return usersRepository.getUserByUserName(username);
     }
+
+    public void updateUser(User user) {
+        usersRepository.updateUser(user);
+    }
+
 }

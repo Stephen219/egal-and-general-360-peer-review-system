@@ -91,7 +91,7 @@ public class UserRepo implements  UserRepositoryInter{
 
     }
 
-    public void update(User user) {
+    public void updateUser(User user) {
         String userUpdateSql =
                 "update users set " +
                         "username = ?, " +
@@ -118,6 +118,11 @@ public class UserRepo implements  UserRepositoryInter{
         String sql = "select * from users where username = ?";
         return jdbc.queryForObject(sql, userMapper, username);
     }
+
+//    public void updateUser(User user) {
+//        String sql = "update users set username = ?, email = ?, password = ? where id = ?";
+//        jdbc.update(sql, user.getUsername(), user.getEmail(), user.getPassword(), user.getId());
+//    }
 
 
 

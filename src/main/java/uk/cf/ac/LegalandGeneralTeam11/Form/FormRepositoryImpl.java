@@ -149,7 +149,12 @@ public class FormRepositoryImpl implements FormRepoInterface {
     }
 
     public List<Form> getFormsAssignedToUser(String email) {
-        String sql = "SELECT f.* FROM 360forms f JOIN reviewers r ON f.id = r.form_id WHERE r.email = ?";
+
+      String sql =   "SELECT f.*\n" +
+                "FROM 360forms f\n" +
+                "JOIN reviewers r ON f.id = r.form_id\n" +
+                "WHERE r.email = ? AND r.hasFilledForm = false;\n";
+       // String sql = "SELECT f.* FROM 360forms f JOIN reviewers r ON f.id = r.form_id WHERE r.email = ?";
 
         try {
             return jdbcTemplate.query(sql, preparedStatement -> {
@@ -202,6 +207,10 @@ public class FormRepositoryImpl implements FormRepoInterface {
         String sql = "SELECT progress_status FROM 360forms WHERE id = ?";
         String progressStatus = jdbcTemplate.queryForObject(sql, String.class, formId);
         return "completed".equalsIgnoreCase(progressStatus);
+    }
+    public String getFormOwner(String formId) {
+        String sql = "SELECT username FROM 360forms WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, String.class, formId);
     }
 
 
