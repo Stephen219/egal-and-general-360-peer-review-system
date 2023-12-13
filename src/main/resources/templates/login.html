@@ -3,6 +3,9 @@
 <head>
 <!--    <div th:replace="~{fragments/testfile :: meta-fragments}"></div>-->
     <title>Login Page</title>
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/icons/favicon-32x32.png}"/>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Security-Policy" content="form-action 'self';">
