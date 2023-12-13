@@ -18,6 +18,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @SpringBootTest
@@ -38,6 +40,8 @@ public class FormAcceptanceTest {
         formService.grantFormAccess(formRequest.getUsername(), LocalDate.now());
         List<Form> forms = formService.getFormByUser(ownerUsername);
         assertTrue("A new form with the owner's username should be present.", formExistsForOwner(forms, ownerUsername));
+        assertThat("A new form with the owner's username should be present.",
+                forms, hasItem(hasProperty("username", equalTo(ownerUsername))));
     }
 
     private boolean formExistsForOwner(List<Form> forms, String ownerUsername) {

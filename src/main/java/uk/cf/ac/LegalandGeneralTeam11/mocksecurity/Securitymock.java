@@ -46,7 +46,26 @@ public class Securitymock {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        http.headers(headersConfigurer -> headersConfigurer
+                        .contentSecurityPolicy(csp -> csp.policyDirectives("form-action 'self'"))
+                                //.xssProtection(xss -> xss.enable().block(true))
+
+
+
+                                //xssProtection(xss -> xss.notify())
+                        //.xssProtection(xss -> xss.notifyAll())
+
+                        .frameOptions(frame -> frame.sameOrigin())
+                        .frameOptions(frame -> frame.deny())
+                        .frameOptions(frame -> frame.disable())
+//
+                        .httpStrictTransportSecurity(hsts -> hsts.includeSubDomains(true).maxAgeInSeconds(31536000))
+
+
+
+//
+//
+                )
 
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
