@@ -61,7 +61,7 @@ public class FormRequestRepoImpl implements FormRequestRepository{
     }
     /**
      * Get all form requests by user
-     * @param userId
+     * @param username The username of the user.
      */
     //TODO: change to username
 
@@ -146,6 +146,10 @@ public class FormRequestRepoImpl implements FormRequestRepository{
                 formRequest.getId()
         );
     }
+
+    /**
+     *  updating a form request  with a rejection
+     */
 
     public void rejectFormRequest(FormRequest formRequest) {
         String sql = "UPDATE form_requests SET approval_status = 'REJECTED', updated_at = ? WHERE id = ?";

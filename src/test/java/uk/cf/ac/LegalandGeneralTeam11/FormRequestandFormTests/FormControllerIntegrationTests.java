@@ -39,10 +39,13 @@ public class FormControllerIntegrationTests {
         String content = result.getResponse().getContentAsString();
         assertTrue(content.contains("<input type=\"hidden\" name=\"formId\" value=\"form1\"/>"));
         assertTrue(content.contains("<form id=\"reviewForm\" action=\"/review/form1\" method=\"post\">"));
-        //assertTrue(content.contains("<label> While working, to what extent do you experience yourself... </label> "));
-        //assertTrue(content.contains("<input type=\"submit\" value=\"Submit\"> "));
 
 
 
     }
+
+
+
+
+
 }

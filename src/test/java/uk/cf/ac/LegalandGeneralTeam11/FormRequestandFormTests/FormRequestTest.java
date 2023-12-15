@@ -29,6 +29,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 
 public class FormRequestTest {
+
+    /**
+     * this test is to check if the user can submit a form request
+     */
     @Autowired
     private MockMvc mockMvc;
     @WithMockUser(username = "user", password = "password", roles = "USER")
@@ -48,7 +52,10 @@ public class FormRequestTest {
     }
 
 
-
+    /**
+     * this test is to check if the user can submit a form request more than twice
+     * @throws Exception
+     */
 
     @WithMockUser(username = "user", password = "password", roles = "USER")
     @Test
@@ -73,6 +80,10 @@ public class FormRequestTest {
 
     }
 
+    /**
+     * this test is to check if the user can submit a form request more than twice
+     * @throws Exception
+     */
 
     @Test
     @WithAnonymousUser
