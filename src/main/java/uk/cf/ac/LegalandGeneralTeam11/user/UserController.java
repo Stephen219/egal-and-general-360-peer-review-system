@@ -1,20 +1,16 @@
 package uk.cf.ac.LegalandGeneralTeam11.user;
 
-import jakarta.validation.Valid;
-import com.structurizr.annotation.UsedByPerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import uk.cf.ac.LegalandGeneralTeam11.domain.Domain;
 
 import java.util.List;
-@UsedByPerson(name = "admin", description = "manages users", technology = "http(s)")
+
 @Controller
 public class UserController {
 
@@ -27,6 +23,7 @@ public class UserController {
         //User user = new User(0L, "HJJSJNBDJCDC ", " CJDBCHJDHBCJDC", " 78378272778",2L);
         User user = new User();
         System.out.println(user);
+        System.out.println("inrfnjnf get maopjedjed");
 
         ModelAndView n = new ModelAndView("add_user_form");
         n.addObject("user", user);
@@ -34,27 +31,14 @@ public class UserController {
     }
 
     @PostMapping("/admin/add")
-    public ModelAndView  getUserForm(@Valid User user, BindingResult bindingResult, Model model) {
+    public ModelAndView  getUserForm(User user) {
 
-        if (bindingResult.hasErrors()) {
-            //model.addAttribute("errors", bindingResult.getAllErrors());
-            ModelAndView modelAndView = new ModelAndView("add_user_form", model.asMap());
-            modelAndView.addObject("user", user);
-            return modelAndView;
-        }
-        try{
-            userService.save(user);
-        }
-        catch ( RuntimeException e){
-            model.addAttribute("errors", e.getMessage());
-            ModelAndView modelAndView = new ModelAndView("add_user_form", model.asMap());
-            modelAndView.addObject("user", user);
-            return modelAndView;
-        }
+        userService.save(user);
 
         System.out.print(user);
         System.out.print("we are arfbfmnbvhjfdvbfmnvjdfhjbfrew");
-        ModelAndView m = new ModelAndView("redirect:/admin");
+        ModelAndView m = new ModelAndView("redirect:/");
+
         return m;
     }
 

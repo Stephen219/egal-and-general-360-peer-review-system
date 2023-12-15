@@ -90,16 +90,6 @@ public class UserRepoTest {
         );
     }
 
-    @Test
-    void testCheckUserExists() {
-        String email = "test@example.com";
-        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class), eq(email)))
-                .thenReturn(1);  // Indicates user exists
-
-        boolean exists = userRepo.checkUserExists(email);
-
-        assertTrue(exists);
-    }
 
     @Test
     void testGetUserByEmail() {
@@ -114,4 +104,63 @@ public class UserRepoTest {
         assertEquals(mockUser, result);
     }
 
+
+    @Test
+    void testInsertUser() {
+        User newUser = new User(null, "newuser", "newemail@example.com", "password", 2L);
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+
+        userRepo.insert(newUser);
+
+        verify(jdbcTemplate, times(1)).update(
+                anyString(),
+                eq(newUser.getUsername()),
+                eq(newUser.getEmail()),
+                eq("encodedPassword"),
+                eq(newUser.getRoleId())
+        );
+    }
+
+    @Test
+    void testGetUserByUsername() {
+        String username = "testuser";
+        User mockUser = new User(1L, username, "email@example.com", "password", 2L);
+        when(jdbcTemplate.queryForObject(anyString(), any(RowMapper.class), eq(username)))
+                .thenReturn(mockUser);
+
+        User result = userRepo.getUserByUserName(username);
+
+        assertNotNull(result);
+        assertEquals(mockUser, result);
+    }
+    void testEncodePassword() {
+        User user = new User();
+        user.setPassword("plainPassword");
+        when(passwordEncoder.encode("plainPassword")).thenReturn("encodedPassword");
+
+        userRepo.encodePassword(user);
+
+        assertEquals("encodedPassword", user.getPassword());
+        verify(passwordEncoder, times(1)).encode("plainPassword");
+    }
+    @Test
+    void testSaveUserAlreadyExists() {
+        User user = new User(null, "username", "email@example.com", "password", 2L);
+        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class), eq(user.getEmail())))
+                .thenReturn(1);  // Indicates user already exists
+
+        assertThrows(RuntimeException.class, () -> userRepo.save(user));
+        verify(jdbcTemplate, never()).update(anyString(), any(), any(), any(), any());
+    }
+
+    @Test
+    void testGetUserByInvalidEmail() {
+        String email = "nonexistent@example.com";
+        when(jdbcTemplate.queryForObject(anyString(), any(RowMapper.class), eq(email)))
+                .thenReturn(null);
+
+        User result = userRepo.getUserEmail(email);
+
+        assertNull(result);
+    }
 }

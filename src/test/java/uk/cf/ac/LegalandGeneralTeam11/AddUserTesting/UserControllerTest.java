@@ -35,13 +35,6 @@ public class UserControllerTest {
         assertEquals("add_user_form", modelAndView.getViewName());
         assertNotNull(modelAndView.getModel().get("user"));
     }
-    @Test
-    void testGetUserForm() {
-        User user = new User();
-        ModelAndView modelAndView = userController.getUserForm(user);
-        verify(userService, times(1)).save(user);
-        assertEquals("redirect:/", modelAndView.getViewName());
-    }
 
     @Test
     void testManageEmployees() {
@@ -53,12 +46,22 @@ public class UserControllerTest {
         assertSame(userList, modelAndView.getModel().get("users"));
     }
 
+    @Test
+    void testGetUserFormWithValidData() {
+        User user = new User();
+        userController.getUserForm(user);
+
+        verify(userService, times(1)).save(user);
+    }
+
 
     @Test
-    void testUpdateUser() {
+    void testGetUserForm() {
         User user = new User();
-        Long userId = 1L;
-        userController.updateUser(userId, user);
-        verify(userService, times(1)).updateUser(user);
+        ModelAndView modelAndView = userController.getUserForm(user);
+        assertEquals("redirect:/", modelAndView.getViewName());
+        verify(userService, times(1)).save(user);
     }
+
+
 }

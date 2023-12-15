@@ -66,5 +66,25 @@ public class UserServiceImplTest {
 
         verify(userRepository, times(1)).updateUser(existingUser);
     }
+    @Test
+    void testGetUserEmail() {
+        String email = "user@example.com";
+        User mockUser = new User(1L, "username", "user@example.com", "password", 2L);
+        when(userRepository.getUserEmail(email)).thenReturn(mockUser);
 
+        User result = userService.getUserEmail(email);
+
+        assertNotNull(result);
+        assertEquals(email, result.getEmail());
+    }
+
+    @Test
+    void testEncodePassword() {
+        User user = new User(1L, "username", "user@example.com", "plainPassword", 2L);
+        doNothing().when(userRepository).encodePassword(user);
+
+        userService.encodePassword(user);
+
+        verify(userRepository, times(1)).encodePassword(user);
+    }
 }
