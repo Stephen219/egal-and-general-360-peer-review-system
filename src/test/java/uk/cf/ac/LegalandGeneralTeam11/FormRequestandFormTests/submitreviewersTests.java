@@ -1,4 +1,4 @@
-package uk.cf.ac.LegalandGeneralTeam11.FormRequestTests;
+package uk.cf.ac.LegalandGeneralTeam11.FormRequestandFormTests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +34,13 @@ public class submitreviewersTests {
                         .post("/submit_reviewers/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("emails", emails.toArray(new String[0])))
-                .andExpect(status().is3xxRedirection()) // Assuming you are redirecting upon successful submission
+                .andExpect(status().is3xxRedirection())
                 .andReturn();
         // Verify the response
         MockHttpServletResponse response = mvcResult.getResponse();
         assertEquals(302, response.getStatus());
-        //assertEquals("redirect:/review/" + id, response.getRedirectedUrl()); // Assuming you are redirecting to the correct URL
-        assertEquals("/review/" + id, response.getRedirectedUrl()); // Assum
+        //assertEquals("redirect:/review/" + id, response.getRedirectedUrl());
+        assertEquals("/review/" + id, response.getRedirectedUrl()); //
 
     }
 }

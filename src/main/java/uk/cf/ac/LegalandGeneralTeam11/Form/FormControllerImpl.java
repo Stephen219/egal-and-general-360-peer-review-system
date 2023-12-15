@@ -112,6 +112,11 @@ public class FormControllerImpl {
         modelAndView.addObject("allowedDomains", allowedDomains);
         return modelAndView;
     }
+    /**
+     * submits the reviewers
+     * @param id
+     * @return
+     */
 
     @PostMapping("/submit_reviewers/{id}")
     public ModelAndView submitReviewers(@RequestParam("emails")

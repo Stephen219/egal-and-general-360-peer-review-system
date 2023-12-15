@@ -1,4 +1,4 @@
-package uk.cf.ac.LegalandGeneralTeam11.FormRequestTests;
+package uk.cf.ac.LegalandGeneralTeam11.FormRequestandFormTests;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import uk.cf.ac.LegalandGeneralTeam11.Form.Form;
 import uk.cf.ac.LegalandGeneralTeam11.Form.FormRepositoryImpl;
 import uk.cf.ac.LegalandGeneralTeam11.Form.FormServiceImpl;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;

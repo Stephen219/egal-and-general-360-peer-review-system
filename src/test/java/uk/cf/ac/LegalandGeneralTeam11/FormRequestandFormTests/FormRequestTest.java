@@ -1,4 +1,4 @@
-package uk.cf.ac.LegalandGeneralTeam11.FormRequestTests;
+package uk.cf.ac.LegalandGeneralTeam11.FormRequestandFormTests;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
