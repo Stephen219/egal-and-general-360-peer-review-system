@@ -25,4 +25,20 @@ Before proceeding with the steps below, ensure that you have **Node** installed,
 To integrate Tailwind CSS into your templates, include the following line in the `<head>` section of your template:
 
 ```html
-<link rel="stylesheet" th:href="@{/build.css}" />
+<link rel="stylesheet" th:href="@{/main.css}" />
+```
+
+
+
+## Running the Application
+
+Before building, ensure that the application is up and running. You can start the application using the following command:
+
+```bash
+./gradlew bootRun
+```
+
+## Building the Application  (for windows)
+```bash
+./gradlew clean build   
+```
