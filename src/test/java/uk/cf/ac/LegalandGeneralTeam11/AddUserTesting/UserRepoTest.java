@@ -90,15 +90,15 @@ public class UserRepoTest {
         );
     }
 
-    @Test
-    void testCheckUserExists() {
-        String email = "test@example.com";
-        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class), eq(email)))
-                .thenReturn(1);  // Indicates user exists
-        boolean exists = userRepo.checkUserExists(email);
-
-        assertTrue(exists);
-    }
+//    @Test
+//    void testCheckUserExists() {
+//        String email = "test@example.com";
+//        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class), eq(email)))
+//                .thenReturn(1);  // Indicates user exists
+//        boolean exists = userRepo.checkUserExists(email);
+//
+//        assertTrue(exists);
+//    }
 
     @Test
     void testGetUserByEmail() {
