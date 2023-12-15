@@ -95,7 +95,6 @@ public class UserRepoTest {
 //        String email = "test@example.com";
 //        when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class), eq(email)))
 //                .thenReturn(1);  // Indicates user exists
-//
 //        boolean exists = userRepo.checkUserExists(email);
 //
 //        assertTrue(exists);
@@ -107,9 +106,7 @@ public class UserRepoTest {
         User mockUser = new User(1L, "testuser", email, "password", 2L);
         when(jdbcTemplate.queryForObject(anyString(), any(RowMapper.class), eq(email)))
                 .thenReturn(mockUser);
-
         User result = userRepo.getUserEmail(email);
-
         assertNotNull(result);
         assertEquals(mockUser, result);
     }

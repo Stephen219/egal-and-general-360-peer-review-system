@@ -5,7 +5,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -115,6 +114,12 @@ public class FormRepositoryImpl implements FormRepoInterface {
         String sql = "SELECT email FROM reviewers WHERE form_id = ?";
         return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("email"), formId);
     }
+    /**
+     * get if a user has filled a form
+     * @param formId the id of the form
+     * @param email the email of the user
+     * @return true if the user has filled the form
+     */
 
     public Boolean getIfHasFilledForm(String formId, String email) {
         String sql = "SELECT hasFilledForm FROM reviewers WHERE form_id = ? AND email = ?";
@@ -122,6 +127,12 @@ public class FormRepositoryImpl implements FormRepoInterface {
 
         return hasFilledForm;
     }
+    /**
+     * check if a user has self reviewed
+     * @param formId the id of the form
+     * @param email the email of the user
+     * @return true if the user has self reviewed
+     */
     public Boolean ifUserHasSelfReviewed(String formId, String email) {
         try {
             String sql = "SELECT COUNT(DISTINCT responder) FROM answers WHERE form_id = ? AND responder = ?";
@@ -132,21 +143,40 @@ public class FormRepositoryImpl implements FormRepoInterface {
             return false;
         }
     }
+    /**
+     * get all forms
+     * @return a list of forms
+     */
 
     public List<Form> getAllForms() {
         String sql = "SELECT * FROM 360forms";
         return jdbcTemplate.query(sql, FormMapper);
     }
+    /**
+     * get all forms by status
+     * @param status the status of the form
+     * @return a list of forms
+     */
 
     public List<Form> getFormsByStatus(String status) {
         String sql = "SELECT * FROM 360forms WHERE progress_status = ?";
         return  jdbcTemplate.query(sql, FormMapper, status);
     }
+    /**
+     * get the number of responses for a form
+     * @param formId the id of the form
+     * @return the number of responses
+     */
 
     public Long getTheNumberOfResponsesForAform(String formId) {
         String sql = "SELECT COUNT(DISTINCT responder) FROM answers WHERE form_id = ?";
         return jdbcTemplate.queryForObject(sql, Long.class, formId);
     }
+    /**
+     * get all forms assigned to a user
+     * @param email the email of the user
+     * @return a list of forms
+     */
 
     public List<Form> getFormsAssignedToUser(String email) {
 
@@ -165,6 +195,12 @@ public class FormRepositoryImpl implements FormRepoInterface {
             return Collections.emptyList();
         }
     }
+
+    /**
+     * update the status of a form
+     * @param formId the id of the form
+     * @param status the status of the form
+     */
 
     public void updateFormStatus(String formId, String status) {
         String sql = "UPDATE 360forms SET progress_status = ? WHERE id = ?";
@@ -186,6 +222,11 @@ public class FormRepositoryImpl implements FormRepoInterface {
 //        return true;
 //    }
 
+    /**
+     * check if a form is completed
+     * @param formId the id of the form
+     * @return true if the form is completed
+     */
 
     public Boolean checkFormCompleted(String formId) {
         String sql = "SELECT COUNT(DISTINCT r.email) AS count_reviewers, " +
@@ -201,6 +242,12 @@ public class FormRepositoryImpl implements FormRepoInterface {
         return countReviewers > 0 && countReviewers == countMatchedEmails;
     }
 
+    /**
+     * check if a form is completed by status
+     * @param formId the id of the form
+     * @return true if the form is completed
+     */
+
 
 
     public boolean checkFormCompletedByStatus(String formId) {
@@ -208,6 +255,12 @@ public class FormRepositoryImpl implements FormRepoInterface {
         String progressStatus = jdbcTemplate.queryForObject(sql, String.class, formId);
         return "completed".equalsIgnoreCase(progressStatus);
     }
+
+    /**
+     * get the owner of a form
+     * @param formId the id of the form
+     * @return the owner of the form
+     */
     public String getFormOwner(String formId) {
         String sql = "SELECT username FROM 360forms WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, String.class, formId);

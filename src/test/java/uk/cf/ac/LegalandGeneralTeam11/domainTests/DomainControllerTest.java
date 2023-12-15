@@ -56,18 +56,6 @@ class DomainControllerTest {
                 .andExpect(view().name("Domain/addDomain"))
                 .andExpect(model().attributeExists("domain"));
     }
-//    @Test
-//    @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
-//    void testAddDomainPost() throws Exception {
-//        CsrfToken csrfToken = new DefaultCsrfToken("X-CSRF-TOKEN", "_csrf", "abc123def456ghi789");
-//
-//        mockMvc.perform(post("/addDomain")
-//                        .param("domain", "@example.com")
-//                        .param("enabled", "true")
-//                        .with(csrf().token(csrfToken)))
-//                .andExpect(status().is3xxRedirection())
-//                .andExpect(redirectedUrl("/domain"));
-//    }
 
     @Test
     @WithMockUser(username ="admin", password = "admin", roles = "ADMIN")
