@@ -1,4 +1,4 @@
-package uk.cf.ac.LegalandGeneralTeam11;
+package uk.cf.ac.LegalandGeneralTeam11.GraphTests;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -21,6 +21,12 @@ public class FormRequestController {
         this.formRequestService = aformRequestService;
     }
 
+    /**
+     * This method is used to create a new form request
+     * @param redirectAttributes
+     * @return
+     */
+
 
 
     @GetMapping("form/new")
@@ -48,6 +54,11 @@ public class FormRequestController {
         return new ModelAndView("redirect:/account");
 
     }
+    /**
+     * This method is used to get a form request by id
+     * @param id the id of the form request
+     * @return the form request
+     */
 
 
 

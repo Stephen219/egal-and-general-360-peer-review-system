@@ -36,28 +36,23 @@ public class QuestionControllerTest {
     @MockBean
     private QuestionRepoInter questionRepoInter;
 
-    //@Test
+    @Test
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void testFormQuestionPage() throws Exception {
         mvc.perform(get("/admin/questions"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(
                         Matchers.containsString("<h1>Question Editor</h1>")));
-//                )).andExpect(MockMvcResultMatchers.content().string(
-//                        Matchers.containsString("Questions")
-//                ))
-//                .andExpect(MockMvcResultMatchers.content().string(
-//                        Matchers.containsString("Add Question")
-//                ));
+
 
     }
-    //@Test
+    @Test
     @WithMockUser(username = "admin", password = "admin", roles = "ADMIN")
     public void testAddQuestionPage() throws Exception {
         mvc.perform(get("/admin/questions/add"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(
-                        Matchers.containsString("<h1 class=\'text-center mb-4\'>Add Question</h1>")
+                        Matchers.containsString("<label for=\"questionCategory\">Question Category:</label>")
                 ));
 
     }

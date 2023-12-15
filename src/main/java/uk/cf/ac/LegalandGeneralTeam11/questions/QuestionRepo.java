@@ -21,7 +21,7 @@ public class QuestionRepo implements QuestionRepoInter{
         setQuestionMapper();
     }
 
-    private void setQuestionMapper() {
+    public void setQuestionMapper() {
         QuestionMapper = (rs, i) -> new Question(
                 rs.getLong("Id"),
                 rs.getString("question"),

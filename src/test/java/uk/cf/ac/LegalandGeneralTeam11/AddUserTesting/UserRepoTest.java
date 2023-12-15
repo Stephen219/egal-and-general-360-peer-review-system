@@ -97,9 +97,7 @@ public class UserRepoTest {
         User mockUser = new User(1L, "testuser", email, "password", 2L);
         when(jdbcTemplate.queryForObject(anyString(), any(RowMapper.class), eq(email)))
                 .thenReturn(mockUser);
-
         User result = userRepo.getUserEmail(email);
-
         assertNotNull(result);
         assertEquals(mockUser, result);
     }

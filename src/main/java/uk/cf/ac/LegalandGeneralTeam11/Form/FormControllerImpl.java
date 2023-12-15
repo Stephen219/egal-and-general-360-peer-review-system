@@ -54,6 +54,15 @@ public class FormControllerImpl {
     @Autowired
     UserService userservice;
 
+    /**
+     * Constructor for FormControllerImpl
+     * @param formServiceImpl
+     * @param formRequestService
+     * @param questionServiceInter
+     * @param answerServiceInter
+     * @param emailService
+     */
+
     @Autowired
     public FormControllerImpl(FormServiceImpl formServiceImpl, FormRequestService formRequestService, QuestionServiceInter questionServiceInter, AnswerServiceInter answerServiceInter, EmailServiceImpl emailService) {
         this.formService = formServiceImpl;
@@ -62,6 +71,12 @@ public class FormControllerImpl {
         this.AnswerServiceInter = answerServiceInter;
         this.emailService = emailService;
     }
+
+    /**
+     * Gets the form request page
+     * @param id
+     * @return
+     */
 
 
 
@@ -75,6 +90,11 @@ public class FormControllerImpl {
         formService.grantFormAccess(username, formDate);
         return "redirect:/admin";
     }
+    /**
+     * Gets the form request page
+     * @param id
+     * @return
+     */
 
 
     @GetMapping("/get_reviewers/{id}")
@@ -87,29 +107,23 @@ public class FormControllerImpl {
                 .map(Domain::getDomain)
                 .collect(Collectors.toList());
 
-
-       // System.out.println("allowed domains: " + allowedDomains);
-
         ModelAndView modelAndView = new ModelAndView("forms/reviewer");
         modelAndView.addObject("form", form);
         modelAndView.addObject("allowedDomains", allowedDomains);
         return modelAndView;
     }
+    /**
+     * submits the reviewers
+     * @param id
+     * @return
+     */
 
     @PostMapping("/submit_reviewers/{id}")
     public ModelAndView submitReviewers(@RequestParam("emails")
                                             List<String> uniqueEmails, @PathVariable String id) {
-        System.out.println("Submitted Emails: " + uniqueEmails);
-
-        System.out.println("fbhfmffbfdmfvb,fdfvfdvmhbhmbfrjehmfbrekjgfrkjegfjkbrefkjlert,jc,ketncjnhje,fmhemgvrjmgmjrvnhjmgrhjmnghjmhjnmgthjmnjhmt");
-
         String username = formService.getFormOwner(id);
         String owneremail = userservice.getUserByUserName(username).getEmail();
         uniqueEmails.add(owneremail);
-        System.out.println("Submitted Emails: " + uniqueEmails);
-        System.out.println("Form ID: " + id);
-
-
         formService.addFormReviewers(id, uniqueEmails);
         //  enable the user to see his own results easily, their email also needs to be added to the list of reviewers
 
@@ -121,6 +135,12 @@ public class FormControllerImpl {
         modelAndView.addObject("form", form);
         return modelAndView;
     }
+
+    /**
+     * Sends an email to the reviewer with a link to the form
+     * @param to the email address of the reviewer
+     * @param formId the id of the form
+     */
 
     private void sendReviewInvitationEmail(String to, String formId) {
         Context context = new Context();
