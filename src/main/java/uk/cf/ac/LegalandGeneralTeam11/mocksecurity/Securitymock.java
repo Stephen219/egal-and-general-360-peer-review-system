@@ -37,7 +37,7 @@ public class Securitymock {
             "favicon-32x32.png",
             "/icons/**",
             "logso.png",
-            "/404/",
+            "/404/","/logout/",
             "/home"
     };
 
@@ -52,7 +52,7 @@ public class Securitymock {
                         .frameOptions(frame -> frame.sameOrigin())
                         .frameOptions(frame -> frame.deny())
                         .frameOptions(frame -> frame.disable())
-                        .httpStrictTransportSecurity(hsts -> hsts.includeSubDomains(true).maxAgeInSeconds(31536000))
+                        //.httpStrictTransportSecurity(hsts -> hsts.includeSubDomains(true).maxAgeInSeconds(31536000))
                 )
 
                 .authorizeHttpRequests(request -> request

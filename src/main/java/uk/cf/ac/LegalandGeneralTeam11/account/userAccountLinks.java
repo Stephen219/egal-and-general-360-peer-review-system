@@ -1,5 +1,6 @@
 package uk.cf.ac.LegalandGeneralTeam11.account;
 
+import com.structurizr.annotation.UsedByPerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
+@UsedByPerson(name = "employees", description = "uses the 360 assessment ", technology = "http(s)")
 
 public class userAccountLinks {
     FormRequestService formRequestService;

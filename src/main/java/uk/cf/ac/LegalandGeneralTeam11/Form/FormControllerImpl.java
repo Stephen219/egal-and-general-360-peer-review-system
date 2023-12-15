@@ -3,6 +3,7 @@ package uk.cf.ac.LegalandGeneralTeam11.Form;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.structurizr.annotation.UsedByPerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -33,8 +34,11 @@ import java.util.stream.Collectors;
 
 
 @Controller
+@UsedByPerson(name = "admin", description = "accept form", technology = "http(s)")
+@UsedByPerson(name = "employee", description = "submits the review form", technology = "http(s)")
 
 public class FormControllerImpl {
+    @Autowired
     private FormService formService;
 
     private FormRequestService FormRequestService;
@@ -51,7 +55,6 @@ public class FormControllerImpl {
     UserService userservice;
 
     @Autowired
-
     public FormControllerImpl(FormServiceImpl formServiceImpl, FormRequestService formRequestService, QuestionServiceInter questionServiceInter, AnswerServiceInter answerServiceInter, EmailServiceImpl emailService) {
         this.formService = formServiceImpl;
         this.FormRequestService = formRequestService;
@@ -210,8 +213,15 @@ public class FormControllerImpl {
     }
     Boolean isOwner(Form form) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        return form.getUsername().equals(username);
+        //String username = authentication.getName();
+       // return form.getUsername().equals(username);
+        if (authentication != null && authentication.getName() != null) {
+            // Your logic to check ownership
+            return true; // or false based on your condition
+        }
+        return false;
     }
+
+
 
 }

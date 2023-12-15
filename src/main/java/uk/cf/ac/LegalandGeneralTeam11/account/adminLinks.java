@@ -1,5 +1,6 @@
 package uk.cf.ac.LegalandGeneralTeam11.account;
 
+import com.structurizr.annotation.UsedByPerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
+@UsedByPerson(name = "admin", description = "manages the sysytem", technology = "http(s)")
 
 
 public class adminLinks {
