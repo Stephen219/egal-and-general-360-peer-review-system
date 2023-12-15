@@ -1,5 +1,6 @@
 package uk.cf.ac.LegalandGeneralTeam11.Graphs;
 
+import com.structurizr.annotation.UsedByPerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+@UsedByPerson(name = "admin", description = "view the results", technology = "http(s)")
+@UsedByPerson(name = "admin", description = "view the results", technology = "http(s)")
 
 @Controller
 public class GraphController{

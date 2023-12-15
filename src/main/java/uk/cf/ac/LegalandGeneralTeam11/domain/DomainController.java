@@ -1,5 +1,6 @@
 package uk.cf.ac.LegalandGeneralTeam11.domain;
 
+import com.structurizr.annotation.UsedByPerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+
+@UsedByPerson(name = "admin", description = "manage domains", technology = "http(s)")
 
 @Controller
 public class DomainController {
