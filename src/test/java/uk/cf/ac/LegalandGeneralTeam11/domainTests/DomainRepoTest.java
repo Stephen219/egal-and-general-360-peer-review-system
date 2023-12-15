@@ -33,11 +33,12 @@ class DomainRepoTest {
             Domain expectedDomain = new Domain(1L, "example.com", true);
             when(mockDomainRepo.getDomainById(1L)).thenReturn(expectedDomain);
             //When
-            // Call the method under test
+
+            // Call the method
             Domain resultDomain = domainService.getDomainById(1L);
 
             //Then
-            // Verify that the method called in DomainRepoImpl with the specified argument
+            // Verify that the method called
             Mockito.verify(mockDomainRepo, Mockito.times(1)).getDomainById(1L);
 
             // Assert the result
@@ -54,10 +55,10 @@ class DomainRepoTest {
         // Create a domain object for testing
         Domain expectedDomain = new Domain(1L, "example.com", true);
 
-        // Call the method under test (void method)
+        // Call the method
         mockDomainRepo.updateDomain(expectedDomain);
         //Then
-        // Verify that the method called in DomainRepoImpl with the specified argument
+        // Verify that the method called
         Mockito.verify(mockDomainRepo, Mockito.times(1)).updateDomain(expectedDomain);
     }
     @Test
@@ -69,7 +70,7 @@ class DomainRepoTest {
         // Create a domain object for testing
         Domain expectedDomain = new Domain(1L, "example.com", true);
 
-        // Call the method under test (void method)
+        // Call the method
         mockDomainRepo.addDomain(expectedDomain);
         //Then
         // Verify that the method called in DomainRepoImpl with the specified argument
@@ -84,7 +85,7 @@ class DomainRepoTest {
         // Create a domain object for testing
         Domain expectedDomain = new Domain(1L, "example.com", true);
 
-        // Call the method under test (void method)
+        // Call the method
         mockDomainRepo.deleteDomain(1L);
         //Then
         // Verify that the method called in DomainRepoImpl with the specified argument
