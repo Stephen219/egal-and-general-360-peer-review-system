@@ -50,7 +50,7 @@ public class GenerateModel {
 
         ComponentFinder componentFinder = new ComponentFinder(
                 webApplication,
-                "uk.ac.LegalandGeneralTeam11",
+                "uk.cf.ac.LegalandGeneralTeam11",
                 new SpringComponentFinderStrategy(
                         new ReferencedTypesSupportingTypesStrategy()
                 ));

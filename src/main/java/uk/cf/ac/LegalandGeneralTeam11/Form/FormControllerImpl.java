@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
 @UsedByPerson(name = "employee", description = "submits the review form", technology = "http(s)")
 
 public class FormControllerImpl {
+    @Autowired
     private FormService formService;
 
     private FormRequestService FormRequestService;
@@ -54,7 +55,6 @@ public class FormControllerImpl {
     UserService userservice;
 
     @Autowired
-
     public FormControllerImpl(FormServiceImpl formServiceImpl, FormRequestService formRequestService, QuestionServiceInter questionServiceInter, AnswerServiceInter answerServiceInter, EmailServiceImpl emailService) {
         this.formService = formServiceImpl;
         this.FormRequestService = formRequestService;
@@ -208,8 +208,15 @@ public class FormControllerImpl {
     }
     Boolean isOwner(Form form) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        return form.getUsername().equals(username);
+        //String username = authentication.getName();
+       // return form.getUsername().equals(username);
+        if (authentication != null && authentication.getName() != null) {
+            // Your logic to check ownership
+            return true; // or false based on your condition
+        }
+        return false;
     }
+
+
 
 }

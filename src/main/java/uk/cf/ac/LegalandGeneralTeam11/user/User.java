@@ -35,6 +35,9 @@ public class User implements UserDetails {
         this(0L, "hilkia", "hhh", "hhhhhhhh", 2L);
     }
 
+    public User(String testOwner, String s) {
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
