@@ -3,6 +3,10 @@ HELP.md
 build/
 node_modules/
 
+## the structurizr workspace json files
+structurizr-88542-*
+structurizr-88542-*.json
+
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
