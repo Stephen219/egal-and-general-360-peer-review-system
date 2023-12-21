@@ -110,7 +110,7 @@ public class UserRepo implements  UserRepositoryInter{
     public boolean checkUserExists(String email, String username) {
         String sql = "select count(*) from users where email = ? or username = ?";
         //String sql = "select count(*) from users where email = ?";
-        int count = jdbc.queryForObject(sql, Integer.class, email);
+        int count = jdbc.queryForObject(sql, Integer.class, email, username);
         return count > 0;
     }
 

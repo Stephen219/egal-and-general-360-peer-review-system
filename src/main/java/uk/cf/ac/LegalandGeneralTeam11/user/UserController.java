@@ -20,7 +20,6 @@ public class UserController {
     @GetMapping("/admin/add")
     public ModelAndView  getAddUserForm() {
 
-        //User user = new User(0L, "HJJSJNBDJCDC ", " CJDBCHJDHBCJDC", " 78378272778",2L);
         User user = new User();
         System.out.println(user);
         System.out.println("inrfnjnf get maopjedjed");
@@ -33,10 +32,11 @@ public class UserController {
     @PostMapping("/admin/add")
     public ModelAndView  getUserForm(User user) {
 
+        System.out.println(user);
+        System.out.println(user);
+
         userService.save(user);
 
-        System.out.print(user);
-        System.out.print("we are arfbfmnbvhjfdvbfmnvjdfhjbfrew");
         ModelAndView m = new ModelAndView("redirect:/");
 
         return m;

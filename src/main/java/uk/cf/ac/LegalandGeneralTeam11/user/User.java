@@ -30,15 +30,6 @@ public class User implements UserDetails {
     private String password;
     private  Long roleId;
 
-//    public User(long id, String username, String email, String password, long roleId) {
-//        this.email = email;
-//        this.id = id;
-//        this.roleId = roleId;
-//        this.password = password;
-//        this.username = username;
-//    }
-
-
     public User() {
         this(0L, " ", " ", " ", 2L);
     }
