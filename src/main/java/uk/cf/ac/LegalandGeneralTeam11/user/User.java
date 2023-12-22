@@ -22,7 +22,7 @@ public class User implements UserDetails {
     @NotEmpty(message = "Please provide a username")
     private String username;
 
-    @NotEmpty(message = "Please provide a full name")
+    @NotEmpty(message = "Please provide an email")
     @Email(message = "Please provide a valid email address")
     private String email;
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
@@ -31,7 +31,7 @@ public class User implements UserDetails {
     private  Long roleId;
 
     public User() {
-        this(0L, " ", " ", " ", 2L);
+        this(0L, " ", " ", " ", null);
     }
 
     public User(String testOwner, String s) {

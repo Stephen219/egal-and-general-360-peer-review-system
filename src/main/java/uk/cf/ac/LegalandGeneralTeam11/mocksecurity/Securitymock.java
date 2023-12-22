@@ -38,6 +38,11 @@ public class Securitymock {
             "/icons/**",
             "logso.png",
             "/404/","/logout/",
+            "/activate/**",
+            "/csp-report-endpoint",
+            "/reset-password/**",
+            "/forgot-password/**",
+            "/password/**",
             "/home"
     };
 
@@ -74,6 +79,7 @@ public class Securitymock {
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/submit_reviewers/**")).hasRole("USER")
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/domain/**")).hasRole("ADMIN")
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/addDomain/**")).hasRole("ADMIN")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/activate/**")).hasRole("ADMIN")
 
                         .requestMatchers("/account/**").hasAnyRole( "USER")
                         .requestMatchers("/accept/**").hasAnyRole("ADMIN")
@@ -133,18 +139,13 @@ public class Securitymock {
 
         return provider;
     }
-
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
-//    }
-
     @Bean
     UserDetailsService userDetailsService() {
 
         JdbcDaoImpl jdbcUserDetails = new JdbcDaoImpl();
         jdbcUserDetails.setDataSource(dataSource);
-        jdbcUserDetails.setUsersByUsernameQuery("select username, password, enabled from users where username=?");
-        jdbcUserDetails.setAuthoritiesByUsernameQuery("select username, name from users u join roles r on r.role_id = u.role_id where username=?");
+        jdbcUserDetails.setUsersByUsernameQuery("select email, password, enabled from users where email=?");
+        jdbcUserDetails.setAuthoritiesByUsernameQuery("select email, name from users u join roles r on r.role_id = u.role_id where email=?");
         return jdbcUserDetails;
     }
 

@@ -233,15 +233,13 @@ public class FormControllerImpl {
     }
     Boolean isOwner(Form form) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //String username = authentication.getName();
-       // return form.getUsername().equals(username);
+        String username = authentication.getName();
         if (authentication != null && authentication.getName() != null) {
-            // Your logic to check ownership
-            return true; // or false based on your condition
+
+            if (form.getUsername().equals(username)) {
+                return true;
+            }
         }
         return false;
     }
-
-
-
 }

@@ -2,6 +2,7 @@ package uk.cf.ac.LegalandGeneralTeam11.account;
 
 import com.structurizr.annotation.UsedByPerson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,9 +51,6 @@ public class adminLinks {
         this.answerServiceInter = answerServiceInter;
         this.userService = userService;
     }
-
-
-
     @GetMapping("/admin")
     public ModelAndView getAdmin(Model model) {
         List<FormRequest> formRequests = formRequestService.getAllByStatus("Pending");
@@ -61,15 +59,7 @@ public class adminLinks {
         List<User> users = userService.getUsers();
         List<User> usersNotHavingFormThisYear = userService.getUsersNotHavingFormThisYear();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
-
-        System.out.println("questionansweer " +  answerServiceInter.getQuestionAnswersUser("abushvin@gmail.com","form1"));
-
-
-
-
-
-
-        List<String> adjustedDates = inProgressForms.stream()
+          List<String> adjustedDates = inProgressForms.stream()
                 .map(form -> {
                     LocalDateTime localDateTime = form.getFormDate().atStartOfDay();
                     Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
@@ -84,11 +74,11 @@ public class adminLinks {
         modelAndView.addObject("adjustedDates", adjustedDates);
         modelAndView.addObject("users", users);
         modelAndView.addObject("usersNotHavingFormThisYear", usersNotHavingFormThisYear);
+        modelAndView.addObject("username",  userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).getUsername());
         System.out.println(formRequests);
 
         return modelAndView;
     }
-
 
     @GetMapping("admin/all_forms")
     public ModelAndView getAllForms(@RequestParam(name = "sortBy", required = false) String sortBy) {
@@ -118,7 +108,6 @@ public class adminLinks {
         return modelAndView;
     }
 
-
     @GetMapping("admin/results/{id}/{responder_id}")
     public ModelAndView getAnswersPerFormPerUser(@PathVariable String id, @PathVariable String responder_id) {
         ModelAndView modelAndView = new ModelAndView("account/individualAnswers");
@@ -126,10 +115,6 @@ public class adminLinks {
 
         return modelAndView;
     }
-
-
-
-
     /**
      * This method sorts the forms based on the sortBy parameter passed in the url query but if the sortBy parameter is null, it sorts the forms by the date
      * can be moved to a service class
@@ -160,19 +145,6 @@ public class adminLinks {
         }
         return forms;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

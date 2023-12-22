@@ -157,23 +157,16 @@ public class userAccountLinks {
             long responderCount = formService.getTheNumberOfResponsesForAform(form.getId());
             responderCounts.put(form.getId(), responderCount);
         }
-
         ModelAndView modelAndView = new ModelAndView("account/dashboard");
         modelAndView.addObject("forms", forms);
         modelAndView.addObject("responderCounts", responderCounts);
         modelAndView.addObject("chartData", averageMap);
         modelAndView.addObject("formRequests", allFormRequests);
-        System.out.println(allFormRequests);
-
         modelAndView.addObject("assignedForms", assignedForms);
         modelAndView.addObject("adjustedDates", adjustedDates);
-        System.out.println(averageMap);
-
+        modelAndView.addObject("username",  userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).getUsername());
         return modelAndView;
-
-
     }
-
 
     @GetMapping("/my_info")
     public ModelAndView getMyInfo() {
@@ -181,18 +174,12 @@ public class userAccountLinks {
         String currentPrincipalName = authentication.getName();
         String username = currentPrincipalName;
         User user = userService.getUserByUserName(username);
-
-
         String email = userService.getUserByUserName(username).getEmail();
         Long id = userService.getUserByUserName(username).getId();
         ModelAndView modelAndView = new ModelAndView("account/user_info");
         modelAndView.addObject("email", email);
-       // modelAndView.addObject(("user", user))
         modelAndView.addObject("user", user);
         return modelAndView;
     }
-
-
-
 
 }

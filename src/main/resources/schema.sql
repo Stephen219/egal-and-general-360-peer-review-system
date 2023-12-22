@@ -47,7 +47,7 @@ drop table if exists users;
 create table if not exists users (
     id int not null auto_increment primary key,
     username varchar(255) not null,
-    email varchar(255) not null ,
+    email varchar(255) not null unique,
     password varchar(255) not null,
     role_id int not null,
     enabled boolean not null default true,
@@ -137,6 +137,24 @@ create table if not exists domains
     id int not null auto_increment primary key,
     domain_name varchar(255) not null,
     enabled boolean not null default true);
+
+
+
+drop table if exists activation_tokens;
+
+
+
+
+CREATE TABLE activation_tokens (
+   token_id SERIAL PRIMARY KEY,
+   email varchar(255) not null ,
+   token VARCHAR(255) NOT NULL UNIQUE ,
+   expiry TIMESTAMP,
+   is_used BOOLEAN DEFAULT FALSE,
+   type VARCHAR(255) NOT NULL  ,
+    FOREIGN KEY (email) REFERENCES users (email)
+);
+
 
 
 

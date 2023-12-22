@@ -27,6 +27,24 @@ public interface UserRepositoryInter {
     void updateUser(User user);
 
     public List<User> getUsersNotHavingFormThisYear();
+
+    public String generateActivationToken(User user, String type);
+    public boolean isTokenUsed(String token);
+    public boolean isTokenExpired(String token);
+
+
+    public TokenDto getActivationToken(String token);
+
+    public void setTokenUsed(String token);
+
+    public User getUserByEmail(String email);
+
+
+
+
+
+
+
 }
 
 

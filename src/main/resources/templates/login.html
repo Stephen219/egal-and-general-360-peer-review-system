@@ -83,7 +83,9 @@
         var username = document.getElementsByName('username')[0].value;
         var password = document.getElementsByName('password')[0].value;
         var errorDiv = document.getElementById('error-message');
-        var regex = /^[a-zA-Z0-9]*$/;
+        //var regex = /^[a-zA-Z0-9]*$/;
+        var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
 
         if (username === '' || password === '') {
             errorDiv.innerText = 'Please enter both username and password';

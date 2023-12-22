@@ -18,4 +18,17 @@ public interface UserService {
     void updateUser(User user);
     public List<User> getUsersNotHavingFormThisYear();
 
+    public String generateActivationToken(User user ,String type);
+
+
+    public boolean checkTokenUsable(String token);
+    public TokenDto getActivationToken(String token);
+
+    public boolean validatePassword(String password, String confirmPassword);
+
+
+    public void setTokenUsed(String token);
+
+    public User getUserByEmail(String email);
+
 }
