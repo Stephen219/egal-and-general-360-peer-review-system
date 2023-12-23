@@ -31,4 +31,6 @@ public interface UserService {
 
     public User getUserByEmail(String email);
 
+    public boolean validateChangePassword(String oldPassword, String email, String newPassword);
+
 }

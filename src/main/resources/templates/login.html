@@ -52,6 +52,9 @@
     <div th:if="${error != null}" class="text-red-500">
         <p th:text="${error}"></p>
     </div>
+            <div th:if="${message}" id="message" class="text-green-500 text-white p-4  ml-2 mt-2">
+                <p th:text="${message}" class="inline"></p>
+            </div>
 
     <!-- Form for login -->
     <form th:action="@{/login}" method="post" onsubmit="return validateForm()">

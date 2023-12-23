@@ -123,5 +123,10 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    public boolean validateChangePassword(String oldPassword, String email, String newPassword){
+        return usersRepository.validateOldPassword(oldPassword,email) && !usersRepository.CheckIfNewPasswordIsSameAsOldPassword(newPassword,email);
+    }
+
+
 
 }

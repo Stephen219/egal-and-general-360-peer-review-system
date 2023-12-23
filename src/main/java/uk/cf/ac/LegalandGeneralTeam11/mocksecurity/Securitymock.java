@@ -65,7 +65,7 @@ public class Securitymock {
                         .requestMatchers(ENDPOINTS_WHITELIST).permitAll()
                         .requestMatchers("css/**").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers("/my_info").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/my_info/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/form/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/domain/**").hasRole("ADMIN")

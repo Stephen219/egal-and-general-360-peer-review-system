@@ -172,14 +172,22 @@ public class userAccountLinks {
     public ModelAndView getMyInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        String username = currentPrincipalName;
-        User user = userService.getUserByUserName(username);
-        String email = userService.getUserByUserName(username).getEmail();
-        Long id = userService.getUserByUserName(username).getId();
+        String email = currentPrincipalName;
+        User user = userService.getUserByEmail(email);
+        //String email = userService.getUserByUserName(username).getEmail();
+        Long id = user.getId();
         ModelAndView modelAndView = new ModelAndView("account/user_info");
         modelAndView.addObject("email", email);
         modelAndView.addObject("user", user);
         return modelAndView;
     }
+
+
+
+
+
+
+
+
 
 }

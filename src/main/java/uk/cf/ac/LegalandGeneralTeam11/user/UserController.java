@@ -4,6 +4,7 @@ import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,11 +54,6 @@ public class UserController {
         String token = userService.generateActivationToken(user, "activation");
         sendTokenEmail(user.getEmail(), token, "Account Activation", "account/activate-email");
         return m;
-//        userService.save(user);
-//        String token = userService.generateActivationToken(user, "activation");
-//        sendTokenEmail(user.getEmail(), token, "Account Activation", "account/activate-email");
-//        ModelAndView m = new ModelAndView("redirect:/admin");
-//        return m;
     }
 
     private String getBaseUrl() {
@@ -263,6 +259,52 @@ public class UserController {
         model.addAttribute("resetError", "Invalid or expired reset token.");
         return "account/ResetPassword";
     }
+
+    @GetMapping("my_info/update-password")
+    public String showUpdatePasswordForm(Model model, Authentication authentication) {
+        String userEmail = authentication.getName();
+        model.addAttribute("userEmail", userEmail);
+        return "account/update_password";
+    }
+
+
+    @PostMapping("/my_info/update-password")
+    public String updatePassword(Model model,
+                                 @RequestParam("oldPassword") String oldPassword,
+                                 @RequestParam("newPassword") String newPassword,
+                                 @RequestParam("confirmPassword") String confirmPassword,
+                                 Authentication authentication, RedirectAttributes redirectAttributes) {
+        String userEmail = authentication.getName();
+        model.addAttribute("userEmail", userEmail);
+        if (StringUtils.isBlank(oldPassword) || StringUtils.isBlank(newPassword) || StringUtils.isBlank(confirmPassword)) {
+            model.addAttribute("updateError", "Please provide all the required fields.");
+            return "account/update_password";
+        }
+        try {
+            if (userService.validateChangePassword(oldPassword, userEmail, newPassword) && userService.validatePassword(newPassword, confirmPassword)) {
+                User user = userService.getUserByEmail(userEmail);
+                user.setPassword(newPassword);
+                userService.encodePassword(user);
+                userService.updateUser(user);
+                redirectAttributes.addFlashAttribute("message", "Password updated successfully.");
+                return "redirect:/login";
+            }
+                return "account/update_password";
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("updateError", e.getMessage());
+            return "redirect:/my_info/update-password";
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping("admin/manage_employees")
     public ModelAndView manageEmployees() {

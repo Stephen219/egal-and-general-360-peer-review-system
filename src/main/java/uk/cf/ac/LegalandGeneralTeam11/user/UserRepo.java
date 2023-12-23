@@ -108,10 +108,26 @@ public class UserRepo implements UserRepositoryInter {
     }
 
 
+    /**
+     * this is the method for getting the user by username and it thrrows a null pointer exception if the user is not found
+     * @param username
+     * @return
+     */
+
+
     public User getUserByUserName(String username) {
         String sql = "select * from users where username = ?";
-        return jdbc.queryForObject(sql, userMapper, username);
+        List<User> users = jdbc.query(sql, userMapper, username);
+        if (users.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
+        return users.get(0);
     }
+
+//    public User getUserByUserName(String username) {
+//        String sql = "select * from users where username = ?";
+//        return jdbc.queryForObject(sql, userMapper, username);
+//    }
 
     public List<User> getUsersNotHavingFormThisYear() {
         String sql = "select * from users join 360forms on users.username =360forms.username where users.username not in (select username from 360forms where created_at = year(now()))";
@@ -144,10 +160,8 @@ public class UserRepo implements UserRepositoryInter {
         LocalDateTime expiryDate;
 
         if (type.equals("reset")) {
-            // Set the token expiration to 30 minutes from now for reset type
             expiryDate = LocalDateTime.now().plusMinutes(30);
         } else {
-            // Set the token expiration to 7 days from now for other types
             expiryDate = LocalDateTime.now().plusDays(7);
         }
 
@@ -240,6 +254,41 @@ public class UserRepo implements UserRepositoryInter {
         return users.get(0);
     }
 
+
+
+    /**
+     * validateOldPassword method   throws an exception if the password and confirm password are not same
+     * @param oldPassword
+     * @param email
+     * @return boolean true if the password is same as the old password
+     */
+
+    public boolean validateOldPassword(String oldPassword,String email){
+        String sql = "select password from users where email = ?";
+        String oldPassword1 = jdbc.queryForObject(sql, String.class, email);
+//        if (oldPassword1.equals(oldPassword)){
+//            return true;
+//        }
+        if (passwordEncoder.matches(oldPassword, oldPassword1)) {
+            return true;
+        }
+
+        else {
+            throw new RuntimeException("Password should be the same as the old password");
+        }
+    }
+
+
+    public boolean  CheckIfNewPasswordIsSameAsOldPassword(String newPassword, String email) {
+        String sql = "SELECT password FROM users WHERE email = ?";
+        String oldPasswordHash = jdbc.queryForObject(sql, String.class, email);
+
+        if (passwordEncoder.matches(newPassword, oldPasswordHash)) {
+            throw new RuntimeException("New password is the same as the old password");
+        }
+
+        return false;
+    }
 
 
 
