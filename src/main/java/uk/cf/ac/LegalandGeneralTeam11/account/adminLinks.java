@@ -31,6 +31,11 @@ import java.util.stream.Collectors;
 @UsedByPerson(name = "admin", description = "manages the sysytem", technology = "http(s)")
 
 
+/**
+ * This class contains all the endpoints for the admin dashboard
+ */
+
+
 public class adminLinks {
     FormRequestService formRequestService;
 

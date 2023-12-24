@@ -107,7 +107,7 @@ public class UserController {
      * @param mail the mail
      * @return String  the view
      */
-    @PostMapping("/activate/{token}")
+    @PostMapping("activate/{token}")
     public String activateAccount(Model model,
                                   @PathVariable String token,
                                   @RequestParam("password") String password,
@@ -203,6 +203,15 @@ public class UserController {
     }
 
 
+    /**
+     * This method is used to show the reset password form
+     * @param model the model
+     * @param token the token
+     * @param email the email
+     * @return String  the view
+     */
+
+
 
     @GetMapping("/password/reset-password")
     public String resetPassword(Model model,
@@ -223,6 +232,15 @@ public class UserController {
 
         return "account/ResetPassword";
     }
+    /**
+     * This method is used to reset the user password
+     * @param model the model
+     * @param token the token
+     * @param email the email
+     * @param password the password
+     * @param confirmPassword the confirmPassword
+     * @return String  the view
+     */
 
 
     @PostMapping("/password/reset-password")
@@ -246,6 +264,7 @@ public class UserController {
                     userService.encodePassword(user);
                     userService.updateUser(user);
                     userService.setTokenUsed(token);
+                    sendTokenEmail(user.getEmail(), null, "password Reset", "account/passwordResetConfirmationEmail");
                     return "redirect:/login";
                 }
             } else {
@@ -260,12 +279,29 @@ public class UserController {
         return "account/ResetPassword";
     }
 
+    /**
+     * This method is used to show the user profile
+     * @param model the model
+     * @param authentication the authentication
+     * @return String  the view
+     */
+
     @GetMapping("my_info/update-password")
     public String showUpdatePasswordForm(Model model, Authentication authentication) {
         String userEmail = authentication.getName();
         model.addAttribute("userEmail", userEmail);
         return "account/update_password";
     }
+    /**
+     * This method is used to update the user password
+     * @param model the model
+     * @param oldPassword the old password
+     * @param newPassword the new password
+     * @param confirmPassword the confirm password
+     * @param authentication the authentication
+     * @param redirectAttributes the redirect attributes
+     * @return String  the view
+     */
 
 
     @PostMapping("/my_info/update-password")
@@ -295,15 +331,6 @@ public class UserController {
             return "redirect:/my_info/update-password";
         }
     }
-
-
-
-
-
-
-
-
-
 
 
     @GetMapping("admin/manage_employees")

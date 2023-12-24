@@ -134,7 +134,10 @@ public class userAccountLinks {
     public ModelAndView getAccount() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-        String username = currentPrincipalName;
+        String email1 = currentPrincipalName;
+        User user = userService.getUserByEmail(email1);
+        String username = user.getUsername();
+
         List<Form> forms = formService.getFormByUser(username);
 
         String email = userService.getUserByUserName(username).getEmail();

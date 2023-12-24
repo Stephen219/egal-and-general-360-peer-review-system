@@ -42,7 +42,7 @@ public class FormRequestServiceImpl implements FormRequestService{
         }
         /**
          * Gets all form requests for a specific user
-         * @param userId The ID of the user
+         * @param username The ID of the user
          * @return List of form requests for a specific user
          */
 

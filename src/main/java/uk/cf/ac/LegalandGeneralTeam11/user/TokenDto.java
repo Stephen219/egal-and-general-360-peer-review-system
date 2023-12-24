@@ -20,4 +20,7 @@ public class TokenDto {
 
     String type;
 
+    public TokenDto(String token) {
+        this.token = token;
+    }
 }

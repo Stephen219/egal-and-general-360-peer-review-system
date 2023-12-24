@@ -110,7 +110,7 @@ public class UserRepo implements UserRepositoryInter {
 
     /**
      * this is the method for getting the user by username and it thrrows a null pointer exception if the user is not found
-     * @param username
+     * @param username the username of the user
      * @return
      */
 
@@ -278,6 +278,14 @@ public class UserRepo implements UserRepositoryInter {
         }
     }
 
+    /**
+     * validateChangePassword method   throws an exception if the password and confirm password are not same
+     * @param newPassword
+     * @param email
+     * @param newPassword
+     * @return boolean true if the password is same as the old password
+     */
+
 
     public boolean  CheckIfNewPasswordIsSameAsOldPassword(String newPassword, String email) {
         String sql = "SELECT password FROM users WHERE email = ?";
@@ -289,22 +297,5 @@ public class UserRepo implements UserRepositoryInter {
 
         return false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

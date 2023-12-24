@@ -116,11 +116,24 @@ public class UserServiceImpl implements UserService {
     public void setTokenUsed(String token) {
         usersRepository.setTokenUsed(token);}
 
+    /**
+     * getUserByEmail method   throws an exception if the user is not found
+     * @param email
+     * @return
+     */
+
 
 
     public User getUserByEmail(String email) {
         return usersRepository.getUserByEmail(email);
     }
+
+    /**
+     * validateOldPassword method
+     * @param oldPassword
+     * @param email
+     * @return
+     */
 
 
     public boolean validateChangePassword(String oldPassword, String email, String newPassword){

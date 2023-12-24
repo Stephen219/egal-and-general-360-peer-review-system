@@ -50,13 +50,13 @@ public class FormrequestTestProcess {
     // later we change it to Henry and password user
 
     @Test
-    @WithMockUser(username = "Henry", password = "user", roles = "USER")
+    @WithMockUser(username = "test@gmail.com", password = "user", roles = "USER")
     public void testLoginAndAccessDashboard() {
         String pageSource = driver.getPageSource();
         driver.get("https://localhost:8443/login");
         WebElement usernameInput = driver.findElement(By.name("username"));
         WebElement passwordInput = driver.findElement(By.name("password"));
-        usernameInput.sendKeys("Henry");
+        usernameInput.sendKeys("test@gmail.com");
         passwordInput.sendKeys("user");
         WebElement loginForm = driver.findElement(By.cssSelector("form[action='/login']"));
         loginForm.submit();
@@ -84,13 +84,13 @@ public class FormrequestTestProcess {
         driver.get("https://localhost:8443/logout");
     }
     @Test
-    @WithMockUser(username = "John", password = "admin", roles = "ADMIN")
+    @WithMockUser(username = "admin@gmail.com", password = "admin", roles = "ADMIN")
     public void testLoginAndAccessDashboardForAdmin() {
         String pageSource = driver.getPageSource();
         driver.get("https://localhost:8443/login");
         WebElement usernameInput = driver.findElement(By.name("username"));
         WebElement passwordInput = driver.findElement(By.name("password"));
-        usernameInput.sendKeys("John");
+        usernameInput.sendKeys("admin@gmail.com");
         passwordInput.sendKeys("admin");
         WebElement loginForm = driver.findElement(By.cssSelector("form[action='/login']"));
         loginForm.submit();
