@@ -9,6 +9,8 @@ insert into users (username, email, password, enabled ,role_id)
 values ('John','admin@gmail.com', '$2a$12$zKMHlbOC7UXOLCdq5ZibC.ANCzcxgpoGbode97Dc2Fi1zakG2fP6O', true,1);
 insert into users (username,email, password, enabled, role_id)
 values ('Henry','test@gmail.com', '$2a$12$J1s9zHrJiu9VKV8J7FFXJ.U0ArVGE.9h3R94.a0OGx7a7ast0bcYi', true, 2);
+insert into activation_tokens (email, token, expiry, type) values ('test@gmail.com','valid_token', '2024-10-10 10:10:10', 'reset');
+
 
 -- role inserts
 

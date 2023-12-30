@@ -1,6 +1,7 @@
 package uk.cf.ac.LegalandGeneralTeam11.user;
 
 import io.micrometer.common.util.StringUtils;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,10 @@ public class UserController {
     @Autowired
     private EmailService emailService;
 
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping("/admin/add")
     public ModelAndView  getAddUserForm() {
 
@@ -50,9 +55,19 @@ public class UserController {
             bindingResult.rejectValue("email", "error.user", "There is already a user registered with the email provided");
             return new ModelAndView("add_user_form");
         }
-        userService.save(user);
-        String token = userService.generateActivationToken(user, "activation");
-        sendTokenEmail(user.getEmail(), token, "Account Activation", "account/activate-email");
+
+        try {
+            userService.save(user);
+            String token = userService.generateActivationToken(user, "activation");
+            sendTokenEmail(user.getEmail(), token, "Account Activation", "account/activate-email");
+        }
+        catch (RuntimeException e) {
+            bindingResult.rejectValue("email", "error.user", e.getMessage());
+            return new ModelAndView("add_user_form");
+        }
+       // userService.save(user);
+//        String token = userService.generateActivationToken(user, "activation");
+//        sendTokenEmail(user.getEmail(), token, "Account Activation", "account/activate-email");
         return m;
     }
 
@@ -67,7 +82,7 @@ public class UserController {
      */
 
 
-    private void sendTokenEmail(String to, String token, String subject, String template) {
+    public void sendTokenEmail(String to, String token, String subject, String template) {
         User user = userService.getUserByEmail(to);
         String username = user.getUsername();
         Context context = new Context();
@@ -252,10 +267,6 @@ public class UserController {
         TokenDto resetToken = userService.getActivationToken(token);
         model.addAttribute("token", resetToken.getToken());
         model.addAttribute("email", resetToken.getUserEmail());
-        System.out.println("token: " + token);
-        System.out.println("email: " + email);
-        System.out.println("password: " + password);
-        System.out.println("confirmPassword: " + confirmPassword);
         try {
             if (userService.validatePassword(password, confirmPassword)) {
                 if (resetToken != null && userService.checkTokenUsable(token)) {

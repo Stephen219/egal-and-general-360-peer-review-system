@@ -48,6 +48,11 @@ class UserServiceTests {
         assertTrue(result);
     }
 
+    /**
+     * test getActivationToken method in UserService
+     *
+     */
+
     @Test
     void testGetActivationToken() {
         when(usersRepository.getActivationToken("someToken")).thenReturn(new TokenDto("someToken"));

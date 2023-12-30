@@ -23,9 +23,7 @@ import uk.cf.ac.LegalandGeneralTeam11.domain.DomainService;
 import uk.cf.ac.LegalandGeneralTeam11.emails.EmailServiceImpl;
 import uk.cf.ac.LegalandGeneralTeam11.questions.Question;
 import uk.cf.ac.LegalandGeneralTeam11.questions.QuestionServiceInter;
-import uk.cf.ac.LegalandGeneralTeam11.user.User;
 import uk.cf.ac.LegalandGeneralTeam11.user.UserService;
-
 import java.time.LocalDate;
 import java.util.List;
 

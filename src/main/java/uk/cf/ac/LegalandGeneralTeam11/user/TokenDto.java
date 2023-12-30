@@ -10,6 +10,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 
+/**
+ * This class is used to create a token
+ * it contains the token id, the user email, the token, the expiry date, the type of token and whether it has been used or not
+ * type of token can be either "registration" or "reset"
+ */
+
 public class TokenDto {
     private Long tokenId;
     private String userEmail;

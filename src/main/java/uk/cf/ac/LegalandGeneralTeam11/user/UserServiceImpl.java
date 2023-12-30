@@ -2,7 +2,6 @@ package uk.cf.ac.LegalandGeneralTeam11.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.cf.ac.LegalandGeneralTeam11.user.UserRepo;
 
 import java.util.List;
 
@@ -110,7 +109,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * setTokenUsed method
-     * @param token
+     * @param token set the token used
      */
 
     public void setTokenUsed(String token) {

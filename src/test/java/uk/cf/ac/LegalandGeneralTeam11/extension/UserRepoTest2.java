@@ -69,6 +69,7 @@ public class UserRepoTest2 {
     }
     /**
      * test activateUser
+     *  this is to confirm that the user is activated
      */
 
 
@@ -88,6 +89,7 @@ public class UserRepoTest2 {
 
     /**
      * test setTokenUsed
+     * this is that the method is working correctly
      */
 
     @Test
@@ -96,6 +98,12 @@ public class UserRepoTest2 {
         userRepo.setTokenUsed("usedToken");
         verify(jdbcTemplate).update(anyString(), eq("usedToken"));
     }
+
+
+    /**
+     * test getUserByEmail
+     * this is to confirm that the user is activated
+     */
 
 
 
@@ -111,6 +119,11 @@ public class UserRepoTest2 {
         verify(jdbcTemplate).query(anyString(), any(RowMapper.class), eq(email));
     }
 
+    /**
+     * test validateOldPassword
+     * this is to confirm that the user is activated
+     */
+
     @Test
     public void testValidateOldPassword() {
         String email = "test@example.com";
@@ -122,6 +135,11 @@ public class UserRepoTest2 {
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
         assertThrows(RuntimeException.class, () -> userRepo.validateOldPassword(oldPassword, email));
     }
+
+    /**
+     * test validateChangePassword
+     * this is to confirm that the user is activated
+     */
 
     @Test
     public void testCheckIfNewPasswordIsSameAsOldPassword() {

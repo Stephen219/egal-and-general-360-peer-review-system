@@ -80,6 +80,7 @@ public class Securitymock {
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/domain/**")).hasRole("ADMIN")
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/addDomain/**")).hasRole("ADMIN")
                         .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/activate/**")).hasRole("ADMIN")
+                        .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.POST, "/password/reset-password/**")).permitAll()
 
                         .requestMatchers("/account/**").hasAnyRole( "USER")
                         .requestMatchers("/accept/**").hasAnyRole("ADMIN")

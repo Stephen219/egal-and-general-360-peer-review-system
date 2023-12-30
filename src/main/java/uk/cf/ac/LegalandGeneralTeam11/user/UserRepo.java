@@ -89,7 +89,7 @@ public class UserRepo implements UserRepositoryInter {
                         "username = ?, " +
                         "email = ?, " +
                         "password = ?, " +
-                        "enabled = ? " +  // Add a space here
+                        "enabled = ? " +
                         "where id = ?";
         jdbc.update(userUpdateSql,
                 user.getUsername(),
@@ -148,8 +148,8 @@ public class UserRepo implements UserRepositoryInter {
 
 
     /**
-     * generateActivationToken
-     * @param user
+     * generateActivationToken method  to generate the activation token
+     * @param user the user
      * @return String
      */
 
@@ -160,7 +160,7 @@ public class UserRepo implements UserRepositoryInter {
         LocalDateTime expiryDate;
 
         if (type.equals("reset")) {
-            expiryDate = LocalDateTime.now().plusMinutes(30);
+            expiryDate = LocalDateTime.now().plusMinutes(45);
         } else {
             expiryDate = LocalDateTime.now().plusDays(7);
         }
@@ -229,7 +229,7 @@ public class UserRepo implements UserRepositoryInter {
 
     /**
      * setTokenUsed method
-     * @param token
+     * @param token the token of the user
      * @return void
      */
 
@@ -241,7 +241,7 @@ public class UserRepo implements UserRepositoryInter {
 
     /**
      * getUserByEmail method   throws an exception if the user is not found
-     * @param email
+     * @param email the email of the user
      * @return User and throw an exception if the user is not found
      */
 
