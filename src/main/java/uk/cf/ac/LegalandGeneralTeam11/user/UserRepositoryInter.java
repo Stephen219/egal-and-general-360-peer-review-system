@@ -27,6 +27,26 @@ public interface UserRepositoryInter {
     void updateUser(User user);
 
     public List<User> getUsersNotHavingFormThisYear();
+
+    public String generateActivationToken(User user, String type);
+    public boolean isTokenUsed(String token);
+    public boolean isTokenExpired(String token);
+
+
+    public TokenDto getActivationToken(String token);
+
+    public void setTokenUsed(String token);
+
+    public User getUserByEmail(String email);
+    public boolean validateOldPassword(String oldPassword, String email);
+    public boolean CheckIfNewPasswordIsSameAsOldPassword(String newPassword, String email);
+
+
+
+
+
+
+
 }
 
 

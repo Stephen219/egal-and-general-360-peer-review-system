@@ -258,6 +258,7 @@
 
             </div>
         </th:block>
+        <div id="error-message" style="color: red;"></div>
 
 
         <div th:each="question : ${textQuestions}">
@@ -265,7 +266,8 @@
 
                 <p> <span th:text="${question.content}"></span></p>
 
-                <textarea th:id="${'question_' + question.id}" th:name="${'question_' + question.id}" rows="4" cols="50" pattern="^[A-Za-z0-9,\.]{10,50}$" title="Enter letters or numbers only (10-50 characters)" required></textarea>
+                <textarea th:id="${'question_' + question.id}" th:name="${'question_' + question.id}" rows="4" cols="50" pattern="^[A-Za-z0-9,\.]{10,50}$" title="Enter letters or numbers only (10-50 characters)"  required></textarea>
+
             </div>
         </div>
 
@@ -274,16 +276,12 @@
 </div>
 
 
+
 <script>
-    // TODO: Transfer this to a separate JS file
     document.getElementById('reviewForm').addEventListener('submit', function (event) {
-
         event.preventDefault();
-
-
         var responses = [];
-
-        // Loop through radio buttons and collect responses
+        var isValid = true;
         var radioButtons = document.querySelectorAll('input[type="radio"]:checked');
         radioButtons.forEach(function (radio) {
             var questionId = radio.name.replace('responses[', '').replace('].answer', '');
@@ -294,28 +292,34 @@
                 answer: answerValue,
             });
         });
-
-        // Loop through textareas and collect responses
         var textAreas = document.querySelectorAll('textarea');
         textAreas.forEach(function (textarea) {
             var questionId = textarea.name.replace('question_', '');
             var answerValue = textarea.value;
-
-            responses.push({
-                questionId: questionId,
-                answer: answerValue,
-            });
+            if (/^[A-Za-z0-9. ]{10,50}$/.test(answerValue)) {
+                responses.push({
+                    questionId: questionId,
+                    answer: answerValue,
+                });
+            } else {
+                var errorDiv = document.getElementById('error-message');
+                errorDiv.textContent = 'Invalid input. Enter letters, numbers, or a full stop only.';
+                textarea.focus();
+                isValid = false;
+            }
         });
+        if (!isValid) {
+            event.preventDefault();
+            return;
+        }
+            var hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'responses';
+            hiddenInput.value = JSON.stringify(responses);
+            document.getElementById('reviewForm').appendChild(hiddenInput);
+            document.getElementById('reviewForm').submit();
+            openBlockingModalWithDelay();
 
-        // Now, submit the form with responses as an object
-        var hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = 'responses';
-        hiddenInput.value = JSON.stringify(responses);
-        document.getElementById('reviewForm').appendChild(hiddenInput);
-
-        // Now, submit the form
-        document.getElementById('reviewForm').submit();
     });
 
     function openBlockingModalWithDelay() {
@@ -329,7 +333,6 @@
         document.body.style.overflow = 'hidden'; // Disable scrolling on the body
     }
 
-
     function continueWithAgreement() {
         var agreeCheckbox = document.getElementById('agreeCheckbox');
         if (agreeCheckbox.checked) {
@@ -339,12 +342,10 @@
         }
     }
 
-
     function closeBlockingModal() {
         document.getElementById('blockingModal').style.display = 'none';
         document.body.style.overflow = 'auto'; // Enable scrolling on the body
     }
-
 
     window.onload = openBlockingModalWithDelay;
 
@@ -362,7 +363,6 @@
         }
     }
 
-
     setTimeout(function () {
         var flashMessage = document.getElementById("flashMessage");
         var flashError = document.getElementById("flashError");
@@ -376,8 +376,8 @@
         }
     }, 5000);
 
-
 </script>
+
 
 </body>
 </html>

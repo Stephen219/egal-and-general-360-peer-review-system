@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Password Set</title>
+    <!-- Include Tailwind CSS styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100">
+
+<div class="min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6">Password Set</h2>
+
+        <!-- Display activation errors, if any -->
+        <!--        <p th:if="${#activationError}" th:text="${activationError}" class="text-red-500 mb-4"></p>-->
+
+        <!-- Password Set Form -->
+        <form th:action="@{'/activate/' + ${token}}" method="post">
+            <p class="text-center font-light">please set password for <span th:text="${mail}"></span></p>
+            <input type="hidden" name="token" th:value="${token}"/>
+            <input type="hidden" name="mail" th:value="${mail}"/>
+
+
+            <div th:if="${activationError}" id="flashError" class="bg-red-500 text-white p-4  ml-2 mt-2">
+                <p th:text="${activationError}" class="inline"></p>
+            </div>
+
+
+            <!-- New Password -->
+            <div class="mb-4">
+                <label for="password" class="block text-gray-600 text-sm font-semibold mb-2">New Password:</label>
+                <input type="password" id="password" name="password"
+                       class="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500" required/>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-6">
+                <label for="confirmPassword" class="block text-gray-600 text-sm font-semibold mb-2">Confirm
+                    Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword"
+                       class="w-full px-4 py-2 border rounded focus:outline-none focus:border-blue-500" required/>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+                Set Password
+            </button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
