@@ -1,6 +1,7 @@
 package uk.cf.ac.LegalandGeneralTeam11.Form;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
@@ -75,16 +76,28 @@ public class FormRepositoryImpl implements FormRepoInterface {
         return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("username"));
     }
     /**
-     * get a form by id
+     * get a form by id throw an exception if the form is not found
      * @param id the id of the form
      * @return the form
+     *
+     * in this method i have added error handling to check if the form is not found   this was important in cyber security pentest
      */
 
-    public Form getFormById(String id) {
-        String sql = "SELECT * FROM 360forms WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, FormMapper, id);
-    }
 
+public Form getFormById(String id) {
+        String sql = "SELECT * FROM 360forms WHERE id = ?";
+        try {
+            return jdbcTemplate.queryForObject(sql, FormMapper, id);
+        } catch ( EmptyResultDataAccessException e) {
+                e.printStackTrace();
+            throw new IllegalArgumentException("Form not found");
+        }}
+//
+//    public Form getFormById(String id) {
+//        String sql = "SELECT * FROM 360forms WHERE id = ?";
+//        return jdbcTemplate.queryForObject(sql, FormMapper, id);
+//    }
+//
 
     /**
      * add reviewers to a form

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.structurizr.annotation.UsedByPerson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,9 +25,7 @@ import uk.cf.ac.LegalandGeneralTeam11.domain.DomainService;
 import uk.cf.ac.LegalandGeneralTeam11.emails.EmailServiceImpl;
 import uk.cf.ac.LegalandGeneralTeam11.questions.Question;
 import uk.cf.ac.LegalandGeneralTeam11.questions.QuestionServiceInter;
-import uk.cf.ac.LegalandGeneralTeam11.user.User;
 import uk.cf.ac.LegalandGeneralTeam11.user.UserService;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -156,7 +156,14 @@ public class FormControllerImpl {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/review/{formId}")
     public ModelAndView getForm(@PathVariable String formId) {
-        Form form = formService.getFormById(formId);
+
+
+
+
+        // i added this try catch  code to handle null error for cyber security
+        try {
+            Form form = formService.getFormById(formId);
+
         List<Question> questions = questionServiceInter.getAllQuestions();
         List<Question> textQuestions = questionServiceInter.getTextAreaQuestions();
         ModelAndView modelAndView = new ModelAndView("forms/formImpl");
@@ -165,6 +172,12 @@ public class FormControllerImpl {
         modelAndView.addObject("textQuestions", textQuestions);
         modelAndView.addObject("isOwner", isOwner(form));
         return modelAndView;
+    }
+        catch (IllegalArgumentException e) {
+            ModelAndView modelAndView = new ModelAndView("error/FormNotFound");
+            modelAndView.setStatus(HttpStatus.NOT_FOUND);
+            return modelAndView;
+        }
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -233,15 +246,13 @@ public class FormControllerImpl {
     }
     Boolean isOwner(Form form) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //String username = authentication.getName();
-       // return form.getUsername().equals(username);
+        String username = authentication.getName();
         if (authentication != null && authentication.getName() != null) {
-            // Your logic to check ownership
-            return true; // or false based on your condition
+
+            if (form.getUsername().equals(username)) {
+                return true;
+            }
         }
         return false;
     }
-
-
-
 }

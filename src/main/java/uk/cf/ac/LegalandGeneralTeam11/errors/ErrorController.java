@@ -1,6 +1,4 @@
 package uk.cf.ac.LegalandGeneralTeam11.errors;
-
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 

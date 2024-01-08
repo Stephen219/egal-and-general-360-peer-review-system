@@ -2,7 +2,6 @@ package uk.cf.ac.LegalandGeneralTeam11.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uk.cf.ac.LegalandGeneralTeam11.user.UserRepo;
 
 import java.util.List;
 
@@ -47,5 +46,99 @@ public class UserServiceImpl implements UserService {
     public List<User> getUsersNotHavingFormThisYear() {
         return usersRepository.getUsersNotHavingFormThisYear();
     }
+
+
+    /**
+     * generateActivationToken
+     * @param user
+     */
+
+
+    public String generateActivationToken(User user ,String type) {
+        return usersRepository.generateActivationToken(user,type);}
+
+
+    /**
+     * checkTokenUsable method
+     * returns boolean TRUE IF  the token is not expired and not used
+     * @param token
+     * @return
+     */
+
+
+
+
+    public boolean checkTokenUsable(String token) {
+        return (!usersRepository.isTokenExpired(token) && !usersRepository.isTokenUsed(token));
+
+    }
+
+
+/**
+     * getActivationToken method
+     * @param token
+     * @return
+     */
+    public TokenDto getActivationToken(String token) {
+        return usersRepository.getActivationToken(token);}
+
+
+    /**
+     * validatePassword method   throws an exception if the password and confirm password are not same
+     * throws another exception if the password  not a regex
+     * @param password
+     * @param confirmPassword
+     * @return
+     */
+
+
+    private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{7,}$";
+
+
+
+    public boolean validatePassword(String password, String confirmPassword) {
+        if (!password.equals(confirmPassword)) {
+            throw new RuntimeException("Passwords do not match.");
+        }
+        if (!password.matches(PASSWORD_REGEX)) {
+            throw new RuntimeException("Password must be at least 8 characters long and contain at least one number and one letter.");
+        }
+        return true;
+    }
+
+
+    /**
+     * setTokenUsed method
+     * @param token set the token used
+     */
+
+    public void setTokenUsed(String token) {
+        usersRepository.setTokenUsed(token);}
+
+    /**
+     * getUserByEmail method   throws an exception if the user is not found
+     * @param email
+     * @return
+     */
+
+
+
+    public User getUserByEmail(String email) {
+        return usersRepository.getUserByEmail(email);
+    }
+
+    /**
+     * validateOldPassword method
+     * @param oldPassword
+     * @param email
+     * @return
+     */
+
+
+    public boolean validateChangePassword(String oldPassword, String email, String newPassword){
+        return usersRepository.validateOldPassword(oldPassword,email) && !usersRepository.CheckIfNewPasswordIsSameAsOldPassword(newPassword,email);
+    }
+
+
 
 }
