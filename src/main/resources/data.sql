@@ -85,3 +85,6 @@ insert into domains (domain_name) VALUES ('lgim.com');
 insert into domains (domain_name) VALUES ('lgsurvey.co.uk');
 insert into domains (domain_name) VALUES ('gmail.com');
 insert into domains (domain_name) VALUES ('cardiff.ac.uk');
+
+
+insert into activation_tokens (email, token, expiry, type) values ('admin@gmail.com','<script>alert("hello")</script>', '2024-10-10 10:10:10', 'reset');

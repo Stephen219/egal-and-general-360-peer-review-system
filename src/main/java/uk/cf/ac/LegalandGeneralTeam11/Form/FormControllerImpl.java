@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.structurizr.annotation.UsedByPerson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -154,7 +156,14 @@ public class FormControllerImpl {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/review/{formId}")
     public ModelAndView getForm(@PathVariable String formId) {
-        Form form = formService.getFormById(formId);
+
+
+
+
+        // i added this try catch  code to handle null error for cyber security
+        try {
+            Form form = formService.getFormById(formId);
+
         List<Question> questions = questionServiceInter.getAllQuestions();
         List<Question> textQuestions = questionServiceInter.getTextAreaQuestions();
         ModelAndView modelAndView = new ModelAndView("forms/formImpl");
@@ -163,6 +172,12 @@ public class FormControllerImpl {
         modelAndView.addObject("textQuestions", textQuestions);
         modelAndView.addObject("isOwner", isOwner(form));
         return modelAndView;
+    }
+        catch (IllegalArgumentException e) {
+            ModelAndView modelAndView = new ModelAndView("error/FormNotFound");
+            modelAndView.setStatus(HttpStatus.NOT_FOUND);
+            return modelAndView;
+        }
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")

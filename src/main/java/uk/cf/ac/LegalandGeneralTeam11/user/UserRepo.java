@@ -78,6 +78,8 @@ public class UserRepo implements UserRepositoryInter {
                 "insert into users " +
                         "(username, email, password, role_id,enabled)" +
                         " values (?,?,?,?,?)";
+        // call the procedure to insert the user
+        //jdbc.update("call insert_user(?,?,?,?,?)", user.getUsername(), user.getEmail(), user.getPassword(), user.getRoleId(), false);
 
         jdbc.update(userInsertSql, user.getUsername(), user.getEmail(), user.getPassword(), user.getRoleId(), false);
 

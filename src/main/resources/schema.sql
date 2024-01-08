@@ -156,5 +156,11 @@ CREATE TABLE activation_tokens (
 );
 
 
+-- create a procedure to insert a new user
+-- 0nly the admininstrator can create a new user
+-- the admininstrator will be the only one with the role of admin
+
+
+
 
 

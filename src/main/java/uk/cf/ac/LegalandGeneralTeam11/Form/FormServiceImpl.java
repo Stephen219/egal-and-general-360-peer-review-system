@@ -1,6 +1,7 @@
 package uk.cf.ac.LegalandGeneralTeam11.Form;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequest;
 import uk.cf.ac.LegalandGeneralTeam11.FormRequest.FormRequestRepository;
@@ -42,9 +43,32 @@ public List<Form> getFormByUser(String username) {
         return formRepository.getUsers();
     }
 
+
+    /**
+     * get a form by id   i adjusted this method to return a form object to handle null form id by throwing answer exception
+     * @param id the id of the form
+     * @return a form object
+     *
+     *
+     *
+     */
+    // throw an empty result data access exception if the form id is null
     public Form getFormById(String id) {
-        return formRepository.getFormById(id);
+        try {
+            return formRepository.getFormById(id);
+        } catch (IllegalArgumentException e) {
+
+            throw new IllegalArgumentException("Form not found");
+        }
     }
+
+
+
+
+
+//    public Form getFormById(String id) {
+//        return formRepository.getFormById(id);
+//    }
 
     public void addFormReviewers(String FormId, List<String> reviewers) {
         formRepository.addFormReviewers(FormId, reviewers);
