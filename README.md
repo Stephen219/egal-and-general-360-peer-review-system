@@ -1,5 +1,39 @@
 # Setting Up the Project
 
+
+## To download the project
+
+1. Ensure Git Bash is installed on your computer.
+2. Open Git Bash and run the following command to clone the repository:
+   ```bash
+   git clone https://git.cardiff.ac.uk/c22067364/legal-and-general-client-project-team-11-personal.git
+    ```
+   ## Open the Project in IntelliJ
+
+1. Create a MariaDB database named "legalandgeneral" and establish a connection with the project.
+2. Locate SQL Scripts: Navigate to the "src/main/resources" directory in the project to locate the SQL scripts.
+3. Once connected to the MariaDB database, the SQL script will automatically be executed as part of the project setup process.
+   - If the automatic execution doesn't occur, or if you want to run the script manually:
+      - In the Database tool window, right-click on the "legalandgeneral" database connection.
+      - Choose "Run SQL Script" and select the SQL files from the "src/main/resources" directory.
+      - Execute the script and ensure that it runs successfully.
+
+## Load and Run the Project
+
+1. Gradle will automatically load. After loading, run the application.
+2. Ensure the web application is running before proceeding, as Selenium UI tests require it.
+
+## Build and Compile
+
+In the terminal, execute the following commands for a clean build:
+```bash
+./gradlew clean build
+```
+Due to the integration of extended features into the project, certain tests may fail as the code they evaluate was affected during the development of the additional end-to-end feature.
+
+
+
+
 Before proceeding with the steps below, ensure that you have **Node** installed, as it is necessary for setting up Tailwind CSS.
 
 ## Installing Tailwind CSS
