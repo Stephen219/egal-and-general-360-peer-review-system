@@ -99,9 +99,9 @@
         if (username === '' || password === '') {
             errorDiv.innerText = 'Please enter both username and password';
             return false;
-        } else if (!regex.test(username)) {
-            errorDiv.innerText = 'Username should not contain special characters';
-            return false;
+        // } else if (!regex.test(username)) {
+        //     errorDiv.innerText = 'Username should not contain special characters';
+        //     return false;
         } else {
             errorDiv.innerText = '';
         }

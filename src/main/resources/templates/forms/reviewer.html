@@ -325,6 +325,7 @@
         //const emailRegex = /^[^\s@<>\/"']+@[^\s@<>\/"']+\.[^\s@<>\/"']+$/;
 
         if (emailRegex.test(email)) {
+           // var allowedDomains = /*[[${allowedDomains}]]*/ [];
             const domain = email.split('@')[1];
             if (allowedDomains.includes(domain)) {
                 if (!uniqueEmails.has(email)) {
