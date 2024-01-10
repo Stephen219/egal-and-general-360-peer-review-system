@@ -200,7 +200,8 @@ public class UserController {
                 return "forms/resetPasswordEmailForm";
             }
             String token = userService.generateActivationToken(user, "reset");
-            sendTokenEmail(user.getEmail(), token, "Reset Password", "account/resetPasswordEmail");
+            sendTokenEmail(user.getEmail(), token, "Reset Password", "account/resetPasswordemail");
+            sendTokenEmail(user.getEmail(), token, "Reset Password", "account/resetPasswordemail");
             model.addAttribute("message", "An email has been sent to " + email +
                     " with instructions on how to reset your password.");
             redirectAttributes.addFlashAttribute("message", "An email has been sent to " + email +
