@@ -30,6 +30,19 @@ In the terminal, execute the following commands for a clean build:
 ./gradlew clean build
 ```
 Due to the integration of extended features into the project, certain tests may fail as the code they evaluate was affected during the development of the additional end-to-end feature.
+  the application runs on  https://localhost:8443/
+
+## Accessing the Application protected pages
+To access the admins page, use the following credentials:
+```bash
+username: admin@gmail.com
+password: admin
+```
+To access the users page, use the following credentials:
+```bash
+username: test@gmail.com
+password: user
+```
 
 
 
