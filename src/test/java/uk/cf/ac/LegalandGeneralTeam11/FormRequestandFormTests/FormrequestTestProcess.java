@@ -40,6 +40,9 @@ public class FormrequestTestProcess {
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--ignore-certificate-errors");
+        // make the browser headless to avoid opening a browser window during the test run on the CI server (Jenkins) and the local machine
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
         driver = new ChromeDriver(options);
     }
     /**
