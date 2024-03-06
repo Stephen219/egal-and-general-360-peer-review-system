@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.structurizr.annotation.UsedByPerson;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -29,7 +29,6 @@ import uk.cf.ac.LegalandGeneralTeam11.user.UserService;
 import java.time.LocalDate;
 import java.util.List;
 
-import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -40,6 +39,8 @@ import java.util.stream.Collectors;
 public class FormControllerImpl {
     @Autowired
     private FormService formService;
+
+    private HttpServletRequest request;
 
     private FormRequestService FormRequestService;
 
@@ -56,7 +57,9 @@ public class FormControllerImpl {
 
     /**
      * Constructor for FormControllerImpl
-     * @param formServiceImpl
+     *
+     * @param formServiceImpl the form service
+     * @param request the request
      * @param formRequestService
      * @param questionServiceInter
      * @param answerServiceInter
@@ -64,8 +67,9 @@ public class FormControllerImpl {
      */
 
     @Autowired
-    public FormControllerImpl(FormServiceImpl formServiceImpl, FormRequestService formRequestService, QuestionServiceInter questionServiceInter, AnswerServiceInter answerServiceInter, EmailServiceImpl emailService) {
+    public FormControllerImpl(FormServiceImpl formServiceImpl, HttpServletRequest request, FormRequestService formRequestService, QuestionServiceInter questionServiceInter, AnswerServiceInter answerServiceInter, EmailServiceImpl emailService) {
         this.formService = formServiceImpl;
+        this.request = request;
         this.FormRequestService = formRequestService;
         this.questionServiceInter = questionServiceInter;
         this.AnswerServiceInter = answerServiceInter;
@@ -99,6 +103,9 @@ public class FormControllerImpl {
 
     @GetMapping("/get_reviewers/{id}")
     public ModelAndView getReviewers(@PathVariable String id) {
+        String url = buildUrl(request);
+        System.out.println(url);
+        System.out.println(url + "/get_reviewers/" + id);
         Form form = formService.getFormById(id);
 
         List<Domain> domains = domainService.getAllDomains();
@@ -143,13 +150,31 @@ public class FormControllerImpl {
      */
 
     private void sendReviewInvitationEmail(String to, String formId) {
+
+        String url  = buildUrl(request);
         Context context = new Context();
         context.setVariable("formId", formId);
         context.setVariable("to", to);
-        context.setVariable("url", "http://localhost:8080/review/" + formId);
+
+
+        context.setVariable("url", url+ "/review/" + formId);
         String name = formService.getFormById(formId).getUsername();
         context.setVariable("name", name);
         emailService.sendSimpleMessage(to, "Review Form Invitation", "account/fillFormEmail", context);
+    }
+
+    /**
+     * Gets the get url
+     * @param request
+     * @return
+     */
+    private String buildUrl(HttpServletRequest request) {
+        String scheme = request.getScheme();
+        System.out.println(scheme);
+        System.out.println(scheme + "://" + request.getServerName() + ":" + request.getServerPort());
+        String webAddress = request.getServerName();
+        int port = request.getServerPort();
+        return scheme + "://" + webAddress + ":" + port;
     }
 
 

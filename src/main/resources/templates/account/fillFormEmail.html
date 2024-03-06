@@ -14,7 +14,7 @@
 
   <p class="mb-4" th:text="'You have been invited by ' + ${name} + ' to fill out a review form. Click the link below to access the form:'"></p>
 
-  <a th:href="'https://localhost:8443/review/' + ${formId}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Fill out the form</a>
+  <a th:href="${url}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Fill out the form</a>
 
   <p class="mt-4">Thank you!</p>
 
