@@ -29,6 +29,24 @@ checkstyle {
 	ignoreFailures = true
 }
 
+test {
+	testLogging {
+		// Show all test results in the console
+		showStandardStreams = true
+
+
+		// Show all tests that fail in the consol
+		events "passed", "skipped", "failed"
+		exceptionFormat "full"
+//		showExceptions true
+//		showCauses true
+		showStackTraces true
+		showStandardStreams true
+	}
+}
+
+
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
