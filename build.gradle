@@ -36,12 +36,12 @@ test {
 
 
 		// Show all tests that fail in the consol
-		events "passed", "skipped", "failed"
-		exceptionFormat "full"
-//		showExceptions true
+		//events "passed", "skipped", "failed"
+		//exceptionFormat "full"
+//		//showExceptions true
 //		showCauses true
-		showStackTraces true
-		showStandardStreams true
+		//showStackTraces true
+		
 	}
 }
 
