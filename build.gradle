@@ -33,45 +33,38 @@ test {
 	testLogging {
 		// Show all test results in the console
 		showStandardStreams = true
-
-
-		// Show all tests that fail in the consol
-		//events "passed", "skipped", "failed"
-		//exceptionFormat "full"
-//		//showExceptions true
-//		showCauses true
-		//showStackTraces true
-		
+		events("passed", "skipped", "failed")
 	}
-}
 
 
-
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-
+	tasks.named('build') {
+		dependsOn('checkstyleMain')
+	}
 
 
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
 
 
-	//from https://mariadb.com/kb/en/java-connector-using-gradle/
-	// the below line is used for the database connection`
-	implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
-	implementation 'org.springframework.security:spring-security-config:6.1.2'
-	implementation 'org.springframework.security:spring-security-web:6.1.2'
-	testImplementation 'junit:junit:4.13.1'
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
+		implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
 
+		//from https://mariadb.com/kb/en/java-connector-using-gradle/
+		// the below line is used for the database connection`
+		implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
+		implementation 'org.springframework.security:spring-security-config:6.1.2'
+		implementation 'org.springframework.security:spring-security-web:6.1.2'
+		testImplementation 'junit:junit:4.13.1'
+		developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-	// this is for security
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
-	// jpa
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		// this is for security
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+		implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+		// jpa
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 
 //	// https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver
@@ -84,57 +77,47 @@ dependencies {
 //	// ChromeDriver (replace version with the version you need)
 //	implementation 'io.github.bonigarcia:webdrivermanager:5.0.3'
 
-	// Selenium WebDriver
-	implementation 'org.seleniumhq.selenium:selenium-java:4.16.1'
+		// Selenium WebDriver
+		implementation 'org.seleniumhq.selenium:selenium-java:4.16.1'
 
 // ChromeDriver (replace version with the version you need)
-	implementation 'io.github.bonigarcia:webdrivermanager:5.6.2'
+		implementation 'io.github.bonigarcia:webdrivermanager:5.6.2'
 
 
-
-	testImplementation 'org.springframework.security:spring-security-test'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+		testImplementation 'org.springframework.security:spring-security-test'
+		implementation 'org.springframework.boot:spring-boot-starter-mail'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		testImplementation 'org.springframework.security:spring-security-test'
 
-	// printing
-	implementation 'org.xhtmlrenderer:flying-saucer-pdf:9.1.20'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-
-
-	// structorizer
-
-	testImplementation 'com.structurizr:structurizr-core:1.20.0'
-	testImplementation 'com.structurizr:structurizr-client:1.20.0'
-	testImplementation 'com.structurizr:structurizr-spring:1.3.5'
-	implementation 'com.structurizr:structurizr-annotations:1.3.5'
-	implementation 'com.structurizr:structurizr-import:1.2.1'
+		// printing
+		implementation 'org.xhtmlrenderer:flying-saucer-pdf:9.1.20'
+		implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+		// structorizer
+
+		testImplementation 'com.structurizr:structurizr-core:1.20.0'
+		testImplementation 'com.structurizr:structurizr-client:1.20.0'
+		testImplementation 'com.structurizr:structurizr-spring:1.3.5'
+		implementation 'com.structurizr:structurizr-annotations:1.3.5'
+		implementation 'com.structurizr:structurizr-import:1.2.1'
 
 
+		implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
 
+	}
 
+	tasks.named('bootBuildImage') {
+		builder = 'paketobuildpacks/builder-jammy-base:latest'
+	}
 
-
-
-
-
-
-}
-
-tasks.named('bootBuildImage') {
-	builder = 'paketobuildpacks/builder-jammy-base:latest'
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
 }
