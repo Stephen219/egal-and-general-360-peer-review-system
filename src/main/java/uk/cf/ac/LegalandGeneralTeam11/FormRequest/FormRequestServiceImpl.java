@@ -58,7 +58,8 @@ public class FormRequestServiceImpl implements FormRequestService{
         public void createFormRequest(FormRequest formRequest) {
             List<FormRequest> pendingRequests = formRequestRepository.findPendingRequestsByUsername(formRequest.getUsername());
 
-            if (pendingRequests.isEmpty()) {
+//            if (pendingRequests.isEmpty()) {
+            if (1 == 1){
                 formRequestRepository.createFormRequest(formRequest);
             } else {
                 throw new IllegalStateException("Hang on, you already have a pending request!");
