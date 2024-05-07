@@ -34,7 +34,7 @@ test {
 		// Show all test results in the console
 		//showStandardStreams = true
 		events("passed", "skipped", "failed")
-	}}
+	}
 
 
 	tasks.named('build') {
@@ -120,4 +120,4 @@ test {
 	tasks.named('test') {
 		useJUnitPlatform()
 	}
-
+}
