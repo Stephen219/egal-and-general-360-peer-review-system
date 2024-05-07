@@ -5,16 +5,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-
 public class FormRequestServiceImpl implements FormRequestService{
     private FormRequestRepository formRequestRepository;
-
     /**
      * Constructor for FormRequestServiceImpl
      * @param aFormRequestRepository
      */
     @Autowired
-
     public FormRequestServiceImpl(FormRequestRepository aFormRequestRepository) {
             this.formRequestRepository = aFormRequestRepository;
         }
@@ -22,10 +19,8 @@ public class FormRequestServiceImpl implements FormRequestService{
          * Gets all form requests
          * @return List of form requests
          */
-
         public List<FormRequest> getAllFormRequests() {
             return formRequestRepository.getAllFormRequests();
-
         }
         /**
          * Gets a form request by its ID
@@ -58,8 +53,8 @@ public class FormRequestServiceImpl implements FormRequestService{
         public void createFormRequest(FormRequest formRequest) {
             List<FormRequest> pendingRequests = formRequestRepository.findPendingRequestsByUsername(formRequest.getUsername());
 
-//            if (pendingRequests.isEmpty()) {
-            if (1 == 1){
+            if (pendingRequests.isEmpty()) {
+//            if (1 == 1){
                 formRequestRepository.createFormRequest(formRequest);
             } else {
                 throw new IllegalStateException("Hang on, you already have a pending request!");

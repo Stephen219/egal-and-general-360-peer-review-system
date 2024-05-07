@@ -7,6 +7,8 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.context.Context;
 
@@ -14,6 +16,10 @@ import org.thymeleaf.context.Context;
 import java.io.File;
 
 @Component
+@EnableAsync(proxyTargetClass = true)
+
+
+
 public class EmailServiceImpl implements EmailService {
 
     @Autowired
@@ -52,7 +58,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
 
-
+    @Async
     public void sendSimpleMessage(String to, String subject, String templateName, Context context) {
         MimeMessage message = emailSender.createMimeMessage();
         try {

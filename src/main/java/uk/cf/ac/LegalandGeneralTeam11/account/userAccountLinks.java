@@ -47,10 +47,11 @@ public class userAccountLinks {
     }
 
     /**
-     *  This method returns the average score of all forms for each category for a a given user
-     *  It is used to populate the graph on the dashboard page
-     *   it outputs the data in the endpoint /account/averages/ where it is later fetched by the javascript
-     *   idally, this should be done by binding the data to the model and inline javascript acces it but this tampers with the js already written
+     * This method returns the average score of all forms for each category for a a given user
+     * It is used to populate the graph on the dashboard page
+     * it outputs the data in the endpoint /account/averages/ where it is later fetched by the javascript
+     * idally, this should be done by binding the data to the model and inline javascript acces it but this tampers with the js already written
+     *
      * @return
      */
 
@@ -74,11 +75,8 @@ public class userAccountLinks {
     }
 
 
-
-
-
     @GetMapping("/account/my_forms")
-    public ModelAndView getAllUserForms( @RequestParam(name = "sortBy", required = false) String sortBy) {
+    public ModelAndView getAllUserForms(@RequestParam(name = "sortBy", required = false) String sortBy) {
         ModelAndView modelAndView = new ModelAndView("account/allUserForms");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
@@ -99,7 +97,7 @@ public class userAccountLinks {
      * @param forms the list of forms
      * @return
      */
-    public  List<String> adjustDates(List<Form> forms) {
+    public List<String> adjustDates(List<Form> forms) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
         return forms.stream()
                 .map(form -> {
@@ -113,6 +111,7 @@ public class userAccountLinks {
 
     /**
      * this is the method that counts the `number of responders for a form
+     *
      * @param forms
      * @return
      */
@@ -127,9 +126,6 @@ public class userAccountLinks {
     }
 
 
-
-
-
     @GetMapping("/account")
     public ModelAndView getAccount() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -137,24 +133,17 @@ public class userAccountLinks {
         String email1 = currentPrincipalName;
         User user = userService.getUserByEmail(email1);
         String username = user.getUsername();
-
         List<Form> forms = formService.getFormByUser(username);
-
         String email = userService.getUserByUserName(username).getEmail();
         Long id = userService.getUserByUserName(username).getId();
         List<FormRequest> allFormRequests = formRequestService.getAllByUser(username);
-
         List<Form> assignedForms = formService.getFormsAssignedToUser(email);
-
         List<String> adjustedDates = adjustDates(assignedForms);
-
-
         List<Map<String, Object>> averages = graphService.getAverageAnswersForUser(username);
         Map<String, Float> averageMap = new HashMap<>();
         averages.forEach((map) -> {
             averageMap.put((String) map.get("formid"), (Float) map.get("average"));
         });
-
         Map<String, Long> responderCounts = new HashMap<>();
         for (Form form : forms) {
             long responderCount = formService.getTheNumberOfResponsesForAform(form.getId());
@@ -167,7 +156,7 @@ public class userAccountLinks {
         modelAndView.addObject("formRequests", allFormRequests);
         modelAndView.addObject("assignedForms", assignedForms);
         modelAndView.addObject("adjustedDates", adjustedDates);
-        modelAndView.addObject("username",  userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).getUsername());
+        modelAndView.addObject("username", userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).getUsername());
         return modelAndView;
     }
 
@@ -184,13 +173,6 @@ public class userAccountLinks {
         modelAndView.addObject("user", user);
         return modelAndView;
     }
-
-
-
-
-
-
-
 
 
 }

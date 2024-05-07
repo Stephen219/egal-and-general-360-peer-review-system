@@ -7,6 +7,7 @@ import com.structurizr.annotation.UsedByPerson;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +30,8 @@ import uk.cf.ac.LegalandGeneralTeam11.user.UserService;
 import java.time.LocalDate;
 import java.util.List;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -119,49 +122,68 @@ public class FormControllerImpl {
         modelAndView.addObject("allowedDomains", allowedDomains);
         return modelAndView;
     }
+
+
+
     /**
      * submits the reviewers
      * @param id
      * @return
      */
 
-    @PostMapping("/submit_reviewers/{id}")
-    public ModelAndView submitReviewers(@RequestParam("emails")
-                                            List<String> uniqueEmails, @PathVariable String id) {
-        String username = formService.getFormOwner(id);
-        String owneremail = userservice.getUserByUserName(username).getEmail();
-        uniqueEmails.add(owneremail);
-        formService.addFormReviewers(id, uniqueEmails);
-        //  enable the user to see his own results easily, their email also needs to be added to the list of reviewers
+    /**
+    * This method is used to submit the reviewers for a form
+    * @param id the id of the form
+    *
+    * i have changed this to enable async processing of the emails
+    * so the email are handlwed in a separate thread to avoid blocking the main thread after the form is rendered
+     */
 
-        for (String email : uniqueEmails) {
-            sendReviewInvitationEmail(email, id);
-        }
+    @PostMapping("/submit_reviewers/{id}")
+    public ModelAndView submitReviewers(@RequestParam("emails") List<String> uniqueEmails, @PathVariable String id) {
+        String username = formService.getFormOwner(id);
+        String ownerEmail = userservice.getUserByUserName(username).getEmail();
+        //  enable the user to see his own results easily, their email also needs to be added to the list of reviewers
+        uniqueEmails.add(ownerEmail);
+        formService.addFormReviewers(id, uniqueEmails);
         Form form = formService.getFormById(id);
         ModelAndView modelAndView = new ModelAndView("redirect:/review/" + id);
         modelAndView.addObject("form", form);
+        sendReviewInvitationEmailsAsync(uniqueEmails, id);
         return modelAndView;
     }
 
+
+    @Async
+   void sendReviewInvitationEmailsAsync(List<String> emails, String formId) {
+        try {
+            Thread.sleep(5000);
+            for (String email : emails) {
+                Thread.sleep(2000);
+                sendReviewInvitationEmail(email, formId);
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
     /**
      * Sends an email to the reviewer with a link to the form
      * @param to the email address of the reviewer
      * @param formId the id of the form
      */
-
-    private void sendReviewInvitationEmail(String to, String formId) {
-
-        String url  = buildUrl(request);
+    @Async
+     void sendReviewInvitationEmail(String to, String formId) {
+        String url = buildUrl(request);
         Context context = new Context();
         context.setVariable("formId", formId);
         context.setVariable("to", to);
-
-
-        context.setVariable("url", url+ "/review/" + formId);
+        context.setVariable("url", url + "/review/" + formId);
         String name = formService.getFormById(formId).getUsername();
         context.setVariable("name", name);
         emailService.sendSimpleMessage(to, "Review Form Invitation", "account/fillFormEmail", context);
     }
+
+
 
     /**
      * Gets the get url
@@ -212,16 +234,24 @@ public class FormControllerImpl {
                                @RequestParam(value = "email", required = false) String fillerEmail,
                                @RequestParam(value = "Who", required = false) String Relationship,
                                RedirectAttributes redirectAttributes) {
+        System.out.println(responses);
+        System.out.println(responses);
+        System.out.println(responses);
+        System.out.println(responses);
+        System.out.println(responses);
         try {
             if (formService.checkFormCompleted(formId)) {
                 formService.updateFormStatus(formId, "Completed");
                 redirectAttributes.addFlashAttribute("flashError", "This form is no longer receiving responses");
                 return "redirect:/review/" + formId;
             }
+            System.out.println(responses);
 
             ObjectMapper objectMapper = new ObjectMapper();
+            System.out.println(responses);
             List<Answer> answerList = objectMapper.readValue(responses, new TypeReference<List<Answer>>() {
             });
+            System.out.println(answerList);
 
             List<String> reviewers = formService.getReviewersForAForm(formId);
 
